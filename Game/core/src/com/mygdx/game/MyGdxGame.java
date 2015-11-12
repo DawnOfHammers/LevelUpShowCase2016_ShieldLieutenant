@@ -18,26 +18,24 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MyGdxGame extends ApplicationAdapter {
 	GameStage gStage;
-	World world;
+	Test test;
 	Player player;
-	float accumulator = 0;
-	Body playerHitBox;
-	Box2DDebugRenderer debugRenderer;
+
 	@Override
-	public void create () {
+	public void create () { //initializes everything
 
 		Gdx.graphics.setDisplayMode(1366, 768, false);
-		player = new Player();
+		player = new Player(1000,1000);
+		test = new Test();
 		ScreenViewport viewport = new ScreenViewport();
 		gStage = new GameStage(viewport);
 
 		Gdx.input.setInputProcessor(gStage);
 
 		gStage.addActor(player);
+		gStage.addActor(test);
 		gStage.setKeyboardFocus(player);
 
-		//world =  new World(new Vector2(0,0), true);
-		//Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
 
 
@@ -46,22 +44,25 @@ public class MyGdxGame extends ApplicationAdapter {
 
 
 
-
+	public void updateCamera(Stage stage){ //locks the camera onto the player
+		int xOffest = (int)player.getSprite().getWidth()/2;
+		int yOffest = (int)player.getSprite().getHeight()/2;
+		stage.getViewport().getCamera().position.set((int)player.getCoordX()+xOffest,(int)player.getCoordY()+yOffest,0);
+	}
 
 	@Override
-	public void render () {
+	public void render () { //renders stuff
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		gStage.act(0.166f);
 		gStage.draw();
+		updateCamera(gStage);
 
 	}
 
 	@Override
-	public void dispose() {
-		world.dispose();
-		debugRenderer.dispose();
+	public void dispose() { // disposes stuff
 		gStage.dispose();
 
 	}
