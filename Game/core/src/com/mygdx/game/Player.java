@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Affine2;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -21,27 +22,20 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 
 public class Player extends Ship {
-    private Sprite sprite;
     private double maxSpeed;
     private double trueSpeed;
     private double accelX;
     private double accelY;
-    private double coordX;
-    private double coordY;
     private double veloX;
     private double veloY;
     private double angle;
     private double speed;
-    private int health;
-    private int xBound;
-    private int yBound;
     private boolean right;
     private boolean left;
     private boolean forward;
 
-    public Player(int xBound, int yBound){
-        this.coordY = 0;
-        this.coordY = 0;
+    public Player(int x,int y){
+        super(x,y);
         this.accelX = 0;
         this.accelY = 0;
         this.veloY = 0;
@@ -50,9 +44,8 @@ public class Player extends Ship {
         this.angle = 0;
         this.trueSpeed = 0;
         this.speed = 0;
-        this.xBound = xBound;
-        this.yBound = yBound;
         this.health = 100;
+
 
         sprite = new Sprite(new Texture(("S2.png"))); //initializing the sprite of the player
         sprite.setOrigin(sprite.getWidth()/2,sprite.getHeight()/2);
@@ -109,10 +102,7 @@ public class Player extends Ship {
 
     }
 
-    public boolean withinBounds(int xBound, int yBound){ //checks if the spaceship is within the set arena
-        return(this.coordX > xBound || this.coordX< -xBound || this.coordY > yBound || this.coordY < -yBound);
 
-    }
 
 
 
@@ -123,14 +113,13 @@ public class Player extends Ship {
 
     @Override
     public void draw(Batch batch, float parentAlpha) { //draws and moves the actor
-        inputExecute(left,right,forward);
-        move();
+
         sprite.draw(batch);
     }
 
 
     @Override
-    public void move(){//moves space ship
+    protected void move(){//moves space ship
 
         accelX = Math.sin(Math.toRadians(angle)) * speed; //acceleration calcs
         accelY = Math.cos(Math.toRadians(angle)) * speed;
@@ -145,16 +134,16 @@ public class Player extends Ship {
         coordX -= veloX; //changes the position based on current velocity
         coordY += veloY;
 
-        sprite.setX((float)coordX); //changes the position of the sprite
-        sprite.setY((float)coordY);
-        sprite.setRotation((float)angle); // rotates the sprite
+        sprite.setX((float) coordX); //changes the position of the sprite
+        sprite.setY((float) coordY);
+        sprite.setRotation((float) angle); // rotates the sprite
 
-        if (!withinBounds(this.xBound,this.yBound)){ //health decrease if not in battlefield
-            health -= 5;
-        }
 
     }
-
+    public void update(){
+        inputExecute(left,right,forward);
+        move();
+    }
 
     public Sprite getSprite() {
         return sprite;

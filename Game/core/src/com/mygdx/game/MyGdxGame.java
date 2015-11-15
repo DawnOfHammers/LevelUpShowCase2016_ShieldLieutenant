@@ -20,7 +20,8 @@ public class MyGdxGame extends ApplicationAdapter {
 	GameStage gStage;
 	Test test;
 	Player player;
-
+	int bound_x;
+	int bound_y;
 	@Override
 	public void create () { //initializes everything
 
@@ -47,11 +48,11 @@ public class MyGdxGame extends ApplicationAdapter {
 	public void updateCamera(Stage stage){ //locks the camera onto the player
 		int xOffest = (int)player.getSprite().getWidth()/2;
 		int yOffest = (int)player.getSprite().getHeight()/2;
-		stage.getViewport().getCamera().position.set((int)player.getCoordX()+xOffest,(int)player.getCoordY()+yOffest,0);
+		stage.getViewport().getCamera().position.set((int) player.getCoordX() + xOffest, (int) player.getCoordY() + yOffest, 0);
 	}
 
 	@Override
-	public void render () { //renders stuff
+	public void render() { //renders stuff
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -64,6 +65,12 @@ public class MyGdxGame extends ApplicationAdapter {
 	@Override
 	public void dispose() { // disposes stuff
 		gStage.dispose();
+
+	}
+
+	public boolean CehckBounds(int xBound, int yBound){ //checks if the spaceship is within the set arena
+
+		return true;
 
 	}
 }
