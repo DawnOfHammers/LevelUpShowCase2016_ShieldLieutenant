@@ -75,11 +75,11 @@ public abstract class Shield extends Actor {
      */
     public abstract boolean collideProjectile(Bullet b);
 
+    /**
+     * This gets the point of the ship. The point is mutable.
+     * @return point
+     */
     public Point getPoint() {
         return point;
-    }
-
-    public void setPoint(Point point) {
-        this.point = point;
     }
 }
