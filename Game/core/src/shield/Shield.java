@@ -53,7 +53,7 @@ public abstract class Shield extends Actor {
      */
     public void rotateClockwise(){
         this.initial_angle += PRESS_SPEED;
-        if (initial_angle > Math.PI*2){
+        while (initial_angle > Math.PI*2){
             initial_angle -= Math.PI*2;
         }
     }
@@ -63,7 +63,7 @@ public abstract class Shield extends Actor {
      */
     public void rotateCounterClockwise(){
         this.initial_angle -= PRESS_SPEED;
-        if (initial_angle < Math.PI*2){
+        while (initial_angle < 0){
             initial_angle += Math.PI*2;
         }
     }
