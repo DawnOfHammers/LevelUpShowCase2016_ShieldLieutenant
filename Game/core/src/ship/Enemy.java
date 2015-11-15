@@ -1,4 +1,6 @@
-package com.mygdx.game;
+package ship;
+
+import ship.Ship;
 
 /**A generic Enemy superclass. All Enemy(s) are Ship(s).
  *

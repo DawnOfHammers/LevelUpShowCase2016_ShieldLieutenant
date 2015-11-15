@@ -1,10 +1,10 @@
-package com.mygdx.game;
+package ship;
 
 
 /**Prototype of a basic enemy ship type.
  * Created by Feng on 11/14/2015.
  */
-public class Proto extends Enemy{
+public class Proto extends Enemy {
     /**Creates a new Proto at points x,y.
      *
      * @param x X - Cord
