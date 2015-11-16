@@ -1,6 +1,7 @@
 package ship;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -9,12 +10,20 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  */
 public abstract class Ship extends Actor
 {
-    public Ship(){
+    protected Sprite sprite;
+    protected double coordX;
+    protected double coordY;
+    protected int health;
+
+    public Ship(int x, int y){
+        this.coordX = x;
+        this.coordY = y;
 
     }
 
 
-    abstract void move();
+    protected abstract void move();
+    public abstract void update();
 
 
 

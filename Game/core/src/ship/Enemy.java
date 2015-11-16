@@ -17,7 +17,7 @@ public abstract class Enemy extends Ship {
      * @param y Y - Cord
      */
     protected Enemy(int x, int y){
-        super();
+        super(x, y);
     }
 
     /**The Logic/AI of the enemy ship.

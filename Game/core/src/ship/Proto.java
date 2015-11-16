@@ -30,4 +30,8 @@ public class Proto extends Enemy {
         //TODO implement
     }
 
+    @Override
+    void update() {
+
+    }
 }
