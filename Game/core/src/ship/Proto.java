@@ -31,7 +31,7 @@ public class Proto extends Enemy {
     }
 
     @Override
-    void update() {
+    public void update() {
 
     }
 }
