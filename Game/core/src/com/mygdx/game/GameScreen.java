@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import ship.Player;
+import ship.Proto;
 import ship.Ship;
 
 import java.sql.Time;
@@ -19,6 +20,7 @@ public class GameScreen implements Screen {
     GameStage gStage;
     Test test;
     Player player;
+    Proto proto;
     int bound_x;
     int bound_y;
     private Game game;
@@ -33,6 +35,7 @@ public class GameScreen implements Screen {
         Gdx.graphics.setDisplayMode(1366, 768, false);
         player = new Player(100,100);
         test = new Test();
+        proto = new Proto(50,50);
         ScreenViewport viewport = new ScreenViewport();
         gStage = new GameStage(viewport);
 

@@ -32,8 +32,9 @@ public abstract class Enemy extends Ship {
      */
     @Override
     public void update() {
-        behavior();
-        action();
+        aiPlan();
+        aiAct();
+
         move();
     }
 
@@ -43,7 +44,7 @@ public abstract class Enemy extends Ship {
      *      actions[2] = condition 2;
      *      ...
      */
-    protected abstract void behavior();
+    protected abstract void aiPlan();
 
     /**The implementation of individual enemy action.
      * Updates the enemy based on the boolean array actions.
@@ -52,5 +53,25 @@ public abstract class Enemy extends Ship {
      *      if(actions[2]){...}
      *      ...
      */
-    protected abstract void action();
+    protected abstract void aiAct();
+
+    /**Gets the health of the Enemy ship.
+     *
+     * @return  The current health of the ship.
+     */
+    @Override
+    public int getHealth() {
+        return this.health;
+    }
+
+    /**Decreases the health of the Enemy ship.
+     *
+     * If an enemy interacts with health and damage differently this method must be overridden.
+     *
+     * @param change    The change in health of the ship.
+     */
+    @Override
+    public void setHealth(int change) {
+        this.health -= change;
+    }
 }

@@ -42,7 +42,7 @@ public class Proto extends Enemy {
      *
      */
     @Override
-    protected void behavior(){
+    protected void aiPlan(){
         actions[0] = health > 2;
         actions[1] = health <=2;
     }
@@ -52,7 +52,7 @@ public class Proto extends Enemy {
      * Action 1: Stop moving.
      */
     @Override
-    protected void action(){
+    protected void aiAct(){
         if(actions[0]) {
             //TODO change implementation of coordsX and Y in ship.
             if ((int)goal_x == (int)this.getX() && (int)goal_y == (int)this.getY()) {
@@ -64,21 +64,5 @@ public class Proto extends Enemy {
             goal_x = super.getY();
             goal_y = super.getY();
         }
-        //TODO implement
-    }
-
-    @Override
-    public void update() {
-        //update shit here
-    }
-
-    @Override
-    public int getHealth() {
-        return this.health;
-    }
-
-    @Override
-    public void setHealth(int change) {
-        this.health -= change;
     }
 }

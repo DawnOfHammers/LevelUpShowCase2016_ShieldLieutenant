@@ -25,12 +25,12 @@ public class Droid extends Enemy {
     @Override
     protected void move() {
         int speed = 2;
-        double dx = (goal_coords.getX() - coordX), dy = (goal_coords.getY() - coordY);
+        double dx = (goal_x - this.getX()), dy = (goal_y - this.getY());
         double hyp = Math.hypot(dx, dy);
 
         {// Ship Movement
-            coordX += speed * dx / hyp;
-            coordY += speed * dy / hyp;
+            this.setX(this.getX() + (float)(speed * dx / hyp));
+            this.setY(this.getY() + (float)(speed * dy / hyp));
         }
     }
 
@@ -40,7 +40,7 @@ public class Droid extends Enemy {
      *
      */
     @Override
-    protected void behavior(){
+    protected void aiPlan(){
         //TODO
     }
 
@@ -49,7 +49,7 @@ public class Droid extends Enemy {
      * Action 1: TODO
      */
     @Override
-    protected void action(){
+    protected void aiAct(){
         if(actions[0]) {
             //TODO Action 2
         }
