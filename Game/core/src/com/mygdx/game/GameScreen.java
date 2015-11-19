@@ -29,12 +29,14 @@ public class GameScreen implements Screen {
     double current_time = 0;
 
 
-    public GameScreen(Game game){
+    public GameScreen(Game game, int bound_x,int bound_y){
         this.game = game;
         Gdx.graphics.setDisplayMode(1366, 768, false);
-        player = new Player(100,100);
-        test = new Test();
-        proto = new Proto(100,100);
+        this.player = new Player(100,100);
+        this.test = new Test();
+        this.proto = new Proto(100,100);
+        this.bound_x = bound_x;
+        this.bound_y = bound_y;
         ScreenViewport viewport = new ScreenViewport();
         gStage = new GameStage(viewport);
 
@@ -59,11 +61,10 @@ public class GameScreen implements Screen {
 
     public void updateGame(){
         updateCamera(gStage);
-        checkBounds(bound_x,bound_y);
         for (Actor i : gStage.getActors()){
             if(i instanceof Ship){
                 ((Ship) i).update();
-                if (checkBounds((int)i.getX(),(int)i.getY())){
+                if (!checkBounds((int)i.getX(),(int)i.getY())){
                     ((Ship) i).setHealth(-1);
                 }
             }
