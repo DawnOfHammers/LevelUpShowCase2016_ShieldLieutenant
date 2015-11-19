@@ -11,6 +11,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import shield.Shield;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class Player extends Ship {
     private double maxSpeed;
@@ -24,9 +28,10 @@ public class Player extends Ship {
     private boolean right;
     private boolean left;
     private boolean forward;
+    private ArrayList<Shield> shields = new ArrayList<Shield>();
 
     public Player(int x,int y){
-        super(x,y);
+        super(x, y);
         this.accelX = 0;
         this.accelY = 0;
         this.veloY = 0;
@@ -36,6 +41,7 @@ public class Player extends Ship {
         this.trueSpeed = 0;
         this.speed = 0;
         this.health = 100;
+
 
 
         sprite = new Sprite(new Texture(("S2.png"))); //initializing the sprite of the player
@@ -122,18 +128,17 @@ public class Player extends Ship {
         }
         veloX *= 0.97; //deceleration
         veloY *= 0.97;
-        coordX -= veloX; //changes the position based on current velocity
-        coordY += veloY;
-
-        sprite.setX((float) coordX); //changes the position of the sprite
-        sprite.setY((float) coordY);
-        sprite.setRotation((float) angle); // rotates the sprite
+        this.setX(this.getX()-(float)veloX);
+        this.setY(this.getY()+(float)veloY);
+        this.setRotation((float)angle);
 
 
     }
     public void update(){
         inputExecute(left,right,forward);
         move();
+        sprite.setRotation(this.getRotation());
+        sprite.setPosition(this.getX(),this.getY());
     }
 
     public Sprite getSprite() {
@@ -156,14 +161,14 @@ public class Player extends Ship {
         return accelY;
     }
 
-    public double getCoordX() {
+/**    public double getCoordX() {
         return coordX;
     }
 
     public double getCoordY() {
         return coordY;
     }
-
+**/
     public double getVeloX() {
         return veloX;
     }
@@ -174,6 +179,16 @@ public class Player extends Ship {
 
     public double getAngle() {
         return angle;
+    }
+
+    @Override
+    public int getHealth() {
+        return this.health;
+    }
+
+    @Override
+    public void setHealth(int change) {
+        this.health-=change;
     }
 
     public double getSpeed() {

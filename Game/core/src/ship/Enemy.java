@@ -8,7 +8,7 @@ import ship.Ship;
  */
 public abstract class Enemy extends Ship {
     protected boolean[] actions;
-    protected double goalX, goalY;
+    protected double goal_x, goal_y;
     /**Creates a new enemy.
      *
      * This constructor should never be called in isolation.
@@ -18,8 +18,8 @@ public abstract class Enemy extends Ship {
      */
     protected Enemy(int x, int y){
         super(x, y);
-        goalX = x;
-        goalY = y;
+        goal_x = x;
+        goal_y = y;
     }
 
     /**Enemies interact with the world in 3 ways.

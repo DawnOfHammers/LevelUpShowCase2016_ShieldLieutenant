@@ -27,12 +27,12 @@ public class Proto extends Enemy {
     @Override
     protected void move() {
         int speed = 2;
-        double dx = (goalX - this.getX()), dy = (goalY - this.getY());
+        double dx = (goal_x - this.getX()), dy = (goal_y - this.getY());
         double hyp = Math.hypot(dx, dy);
 
         {// Ship Movement
-            this.getX() += speed * dx / hyp;
-            this.getY() += speed * dy / hyp;
+            this.setX(this.getX() + (float)(speed * dx / hyp));
+            this.setY(this.getY() + (float)(speed * dy / hyp));
         }
     }
 
@@ -55,9 +55,9 @@ public class Proto extends Enemy {
     protected void action(){
         if(actions[0]) {
             //TODO change implementation of coordsX and Y in ship.
-            if ((int)goalX == (int)this.getX() && (int)goalY == (int)this.getY()) {
-                goalX = (int)(Math.random()*1000);
-                goalY = (int)(Math.random()*800);
+            if ((int)goal_x == (int)this.getX() && (int)goal_y == (int)this.getY()) {
+                goal_x = (int)(Math.random()*1000);
+                goal_y = (int)(Math.random()*800);
             }
         }
         if(actions[1]){
@@ -69,6 +69,16 @@ public class Proto extends Enemy {
 
     @Override
     public void update() {
+        //update shit here
+    }
 
+    @Override
+    public int getHealth() {
+        return this.health;
+    }
+
+    @Override
+    public void setHealth(int change) {
+        this.health -= change;
     }
 }

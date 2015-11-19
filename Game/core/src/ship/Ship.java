@@ -21,7 +21,8 @@ public abstract class Ship extends Actor
 
     protected abstract void move();
     public abstract void update();
-
+    public abstract int getHealth();
+    public abstract void setHealth(int change);
 
 
 
