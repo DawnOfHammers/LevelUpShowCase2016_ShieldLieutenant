@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.utils.viewport.Viewport;
-import javafx.stage.Stage;
 
 /**
  * Created by Hairuo on 2015-11-09.

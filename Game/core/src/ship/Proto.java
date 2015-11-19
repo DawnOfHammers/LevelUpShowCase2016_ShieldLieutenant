@@ -32,6 +32,16 @@ public class Proto extends Enemy {
 
     @Override
     public void update() {
+        //update shit here
+    }
 
+    @Override
+    public int getHealth() {
+        return this.health;
+    }
+
+    @Override
+    public void setHealth(int change) {
+        this.health -= change;
     }
 }
