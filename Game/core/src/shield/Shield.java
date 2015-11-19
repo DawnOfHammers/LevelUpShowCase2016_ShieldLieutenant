@@ -1,7 +1,6 @@
 package shield;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import java.awt.*;
 import projectiles.Bullet;
 
 /**
@@ -14,7 +13,7 @@ public abstract class Shield extends Actor {
     /**
      * The location of the ship. This is the point at which the shield is centred.
      */
-    protected Point point;
+    protected double [] point;
 
     /**
      * The integer distance from the ship to the centre of the shield.
@@ -42,7 +41,7 @@ public abstract class Shield extends Actor {
      * @param radius: int
      * @param arc_size: double
      */
-    public Shield(Point p, int radius, double arc_size){
+    public Shield(double [] p, int radius, double arc_size){
         this.point = p;
         this.radius = radius;
         this.arc_size = arc_size;
@@ -77,9 +76,17 @@ public abstract class Shield extends Actor {
 
     /**
      * This gets the point of the ship. The point is mutable.
-     * @return point
+     * @return double []: A double array representation of the point
      */
-    public Point getPoint() {
+    public double [] getPoint() {
         return point;
+    }
+
+    /**
+     * Returns the ending angle of the arc that represents the shield.
+     * @return double: The ending angle of the arc
+     */
+    public double getFinalAngle(){
+        return initial_angle + arc_size;
     }
 }
