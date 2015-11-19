@@ -6,11 +6,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import ship.Player;
+import ship.Proto;
 
 
 public class MyGdxGame extends ApplicationAdapter {
 	GameStage gStage;
 	Test test;
+	Proto proto;
 	Player player;
 	int bound_x;
 	int bound_y;
@@ -19,6 +21,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		Gdx.graphics.setDisplayMode(1366, 768, false);
 		player = new Player(1000,1000);
+		proto = new Proto(800, 800);
 		test = new Test();
 		ScreenViewport viewport = new ScreenViewport();
 		gStage = new GameStage(viewport);

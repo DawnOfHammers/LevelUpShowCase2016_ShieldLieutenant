@@ -2,14 +2,16 @@ package ship;
 
 import ship.Ship;
 
+import java.awt.geom.Point2D;
+
 /**A generic Enemy superclass. All Enemy(s) are Ship(s).
  *
  * Created by Feng on 11/14/2015.
  */
 public abstract class Enemy extends Ship {
-    boolean[] actions;
-
-    /**Initiates the location of an enemy and is the constructor of the Generic Enemy superclass.
+    protected boolean[] actions;
+    protected Point2D.Double goal_coords;
+    /**Creates a new enemy.
      *
      * This constructor should never be called in isolation.
      *
@@ -18,18 +20,38 @@ public abstract class Enemy extends Ship {
      */
     protected Enemy(int x, int y){
         super(x, y);
+        goal_coords = new Point2D.Double(x, y);
+    }
+
+    /**Enemies interact with the world in 3 ways.
+     *
+     *      - Thinking/Decision Making:
+     *          -> Behavior of an enemy is determined by the state of the world.
+     *             World -> Behavior
+     *      -
+     *
+     */
+    @Override
+    public void update() {
+        behavior();
+        action();
+        move();
     }
 
     /**The Logic/AI of the enemy ship.
-     * Mutates the boolean array actions.
+     *      actions[0] = condition 0;
+     *      actions[1] = condition 1;
+     *      actions[2] = condition 2;
+     *      ...
      */
     protected abstract void behavior();
 
     /**The implementation of individual enemy action.
      * Updates the enemy based on the boolean array actions.
-     *      if     (actions[0]){...}
-     *      else if(actions[1]){...}
-     *      else if(actions[2]){...}
+     *      if(actions[0]){...}
+     *      if(actions[1]){...}
+     *      if(actions[2]){...}
+     *      ...
      */
     protected abstract void action();
 }
