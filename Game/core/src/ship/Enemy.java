@@ -1,10 +1,8 @@
 package ship;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import ship.Ship;
 
 /**A generic Enemy superclass. All Enemy(s) are Ship(s).
  *
@@ -48,6 +46,32 @@ public abstract class Enemy extends Ship {
         aiAct();
 
         move();
+    }
+
+    /**Moves to a target location in a straight line.
+     *
+     * For ships with specialized movement this method will be overridden.
+     */
+    @Override
+    protected void move() {
+        int speed = 2;
+        double dx = (goal_x - this.getX()), dy = (goal_y - this.getY());
+        double hyp = Math.hypot(dx, dy);
+
+        {// Ship Movement
+            if(hyp > 2) {
+                this.setX(this.getX() + (float) (speed * dx / hyp));
+                this.setY(this.getY() + (float) (speed * dy / hyp));
+            }
+            else{
+                this.setX((float)goal_x);
+                this.setY((float)goal_y);
+            }
+        }
+        {// Sprite Movement
+            sprite.setRotation(this.getRotation());
+            sprite.setPosition(this.getX(), this.getY());
+        }
     }
 
     /**The Logic/AI of the enemy ship.

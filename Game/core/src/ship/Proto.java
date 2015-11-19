@@ -16,25 +16,6 @@ public class Proto extends Enemy {
         super.actions = new boolean[2];
     }
 
-    /**Moves to a target location in a straight line.
-     *
-     */
-    @Override
-    protected void move() {
-        int speed = 2;
-        double dx = (goal_x - this.getX()), dy = (goal_y - this.getY());
-        double hyp = Math.hypot(dx, dy);
-
-        {// Ship Movement
-            this.setX(this.getX() + (float)(speed * dx / hyp));
-            this.setY(this.getY() + (float)(speed * dy / hyp));
-        }
-        {// Sprite Movement
-            sprite.setRotation(this.getRotation());
-            sprite.setPosition(this.getX(), this.getY());
-        }
-    }
-
     /**Action 0: When hp is above 2.
      *
      * Action 1: When hp is under 2.
