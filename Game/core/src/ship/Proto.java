@@ -5,8 +5,6 @@ package ship;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-import java.awt.geom.Point2D;
-
 /**Prototype of a basic enemy ship type.
  * Created by Feng on 11/14/2015.
  */
@@ -29,12 +27,12 @@ public class Proto extends Enemy {
     @Override
     protected void move() {
         int speed = 2;
-        double dx = (goal_coords.getX() - coordX), dy = (goal_coords.getY() - coordY);
+        double dx = (goalX - this.getX()), dy = (goalY - this.getY());
         double hyp = Math.hypot(dx, dy);
 
         {// Ship Movement
-            coordX += speed * dx / hyp;
-            coordY += speed * dy / hyp;
+            this.getX() += speed * dx / hyp;
+            this.getY() += speed * dy / hyp;
         }
     }
 
@@ -57,13 +55,20 @@ public class Proto extends Enemy {
     protected void action(){
         if(actions[0]) {
             //TODO change implementation of coordsX and Y in ship.
-            Point2D.Double curr_coords = new Point2D.Double(coordX, coordY);
-            if (curr_coords.equals(goal_coords)) {
-                goal_coords = new Point2D.Double((int)(Math.random()*1000), (int)(Math.random()*800));
+            if ((int)goalX == (int)this.getX() && (int)goalY == (int)this.getY()) {
+                goalX = (int)(Math.random()*1000);
+                goalY = (int)(Math.random()*800);
             }
         }
         if(actions[1]){
-            goal_coords = new Point2D.Double(coordX, coordY);
+            goal_x = super.getY();
+            goal_y = super.getY();
         }
+        //TODO implement
+    }
+
+    @Override
+    public void update() {
+
     }
 }

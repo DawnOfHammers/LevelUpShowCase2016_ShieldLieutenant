@@ -2,15 +2,13 @@ package ship;
 
 import ship.Ship;
 
-import java.awt.geom.Point2D;
-
 /**A generic Enemy superclass. All Enemy(s) are Ship(s).
  *
  * Created by Feng on 11/14/2015.
  */
 public abstract class Enemy extends Ship {
     protected boolean[] actions;
-    protected Point2D.Double goal_coords;
+    protected double goalX, goalY;
     /**Creates a new enemy.
      *
      * This constructor should never be called in isolation.
@@ -20,7 +18,8 @@ public abstract class Enemy extends Ship {
      */
     protected Enemy(int x, int y){
         super(x, y);
-        goal_coords = new Point2D.Double(x, y);
+        goalX = x;
+        goalY = y;
     }
 
     /**Enemies interact with the world in 3 ways.
