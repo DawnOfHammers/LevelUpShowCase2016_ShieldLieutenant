@@ -109,10 +109,6 @@ public class Player extends Ship {
     }
 
     @Override
-    public void draw(Batch batch, float parentAlpha) { //draws and moves the actor
-
-        sprite.draw(batch);
-    }
 
 
     @Override
