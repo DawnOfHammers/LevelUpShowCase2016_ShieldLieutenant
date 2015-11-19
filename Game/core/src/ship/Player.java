@@ -108,10 +108,7 @@ public class Player extends Ship {
         super.act(delta);
     }
 
-    @Override
 
-
-    @Override
     protected void move(){//moves space ship
 
         accelX = Math.sin(Math.toRadians(angle)) * speed; //acceleration calcs

@@ -11,11 +11,10 @@ import ship.Player;
 import ship.Proto;
 import ship.Ship;
 
-import java.sql.Time;
-
 /**
  * Created by Hairuo on 2015-11-17.
  */
+
 public class GameScreen implements Screen {
     GameStage gStage;
     Test test;
@@ -84,14 +83,10 @@ public class GameScreen implements Screen {
         while (accumulator >= step_time){
 
             updateGame();
-            System.out.println(accumulator);
-            System.out.println(step_time);
-            System.out.println("a");
             accumulator -= step_time;
             time+=step_time;
         }
 
-        System.out.println("b");
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         gStage.act(0.166f);

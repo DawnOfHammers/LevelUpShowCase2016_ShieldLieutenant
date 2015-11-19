@@ -15,11 +15,6 @@ public class MyGdxGame extends Game {
 	public void create () { //initializes everything
 
 		setScreen(new GameScreen(this));
-
-
-
-
-
 	}
 
 
