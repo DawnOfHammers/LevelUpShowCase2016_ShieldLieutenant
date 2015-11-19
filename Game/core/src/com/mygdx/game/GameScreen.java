@@ -35,7 +35,7 @@ public class GameScreen implements Screen {
         Gdx.graphics.setDisplayMode(1366, 768, false);
         player = new Player(100,100);
         test = new Test();
-        proto = new Proto(50,50);
+        proto = new Proto(100,100);
         ScreenViewport viewport = new ScreenViewport();
         gStage = new GameStage(viewport);
 
@@ -43,6 +43,7 @@ public class GameScreen implements Screen {
 
         gStage.addActor(player);
         gStage.addActor(test);
+        gStage.addActor(proto);
         gStage.setKeyboardFocus(player);
     }
 

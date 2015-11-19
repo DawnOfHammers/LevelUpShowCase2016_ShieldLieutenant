@@ -1,10 +1,6 @@
 package ship;
 
 
-
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-
 /**Prototype of a basic enemy ship type.
  * Created by Feng on 11/14/2015.
  */
@@ -15,10 +11,9 @@ public class Proto extends Enemy {
      * @param y Y - Cord
      */
     public Proto(int x, int y){
-        super(x,y);
+        super(x,y, "Proto.png");
         super.health = 5;
         super.actions = new boolean[2];
-        super.sprite = new Sprite(new Texture(("Proto.png")));
     }
 
     /**Moves to a target location in a straight line.
@@ -33,6 +28,10 @@ public class Proto extends Enemy {
         {// Ship Movement
             this.setX(this.getX() + (float)(speed * dx / hyp));
             this.setY(this.getY() + (float)(speed * dy / hyp));
+        }
+        {// Sprite Movement
+            sprite.setRotation(this.getRotation());
+            sprite.setPosition(this.getX(), this.getY());
         }
     }
 

@@ -13,10 +13,9 @@ public class Droid extends Enemy {
      * @param y Y - Cord
      */
     public Droid(int x, int y){
-        super(x,y);
+        super(x,y,"Proto.png");
         super.health = 5;
         super.actions = new boolean[2];
-        super.sprite = new Sprite(new Texture(("Proto.png")));
     }
 
     /**Moves to a target location in a straight line.

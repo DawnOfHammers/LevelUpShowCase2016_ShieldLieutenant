@@ -1,5 +1,9 @@
 package ship;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import ship.Ship;
 
 /**A generic Enemy superclass. All Enemy(s) are Ship(s).
@@ -16,10 +20,17 @@ public abstract class Enemy extends Ship {
      * @param x X - Cord
      * @param y Y - Cord
      */
-    protected Enemy(int x, int y){
+    protected Enemy(int x, int y, String sprite_path){
         super(x, y);
         goal_x = x;
         goal_y = y;
+
+        {// Sprite Setup
+            super.sprite = new Sprite(new Texture((sprite_path)));
+            sprite.setOrigin(sprite.getWidth()/2,sprite.getHeight()/2);
+            setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(),sprite.getHeight()); //initilization stuff for the actor
+            setTouchable(Touchable.enabled);
+        }
     }
 
     /**Enemies interact with the world in 3 ways.
