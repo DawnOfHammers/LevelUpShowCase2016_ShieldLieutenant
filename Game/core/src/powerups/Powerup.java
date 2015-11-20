@@ -61,6 +61,4 @@ public abstract class Powerup extends Actor{
     }
 
     public boolean get_active(){ return this.active; }//Return whether the powerup is onscreen or not
-
-
 }
