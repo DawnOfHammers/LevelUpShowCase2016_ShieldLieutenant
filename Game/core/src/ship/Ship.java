@@ -28,10 +28,4 @@ public abstract class Ship extends Actor
     public void draw(Batch batch, float parentAlpha) { //draws and moves the actor
         sprite.draw(batch);
     }
-
-
-
-
-
-
 }
