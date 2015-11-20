@@ -22,7 +22,8 @@ public class Droid extends Enemy {
      */
     @Override
     protected void aiPlan(){
-        //TODO
+        //TODO All other enemies are.
+        // BAsIC LOGIC using co-ords
     }
 
     /**Action 0: TODO
