@@ -46,7 +46,7 @@ public abstract class Powerup extends Actor{
         }
     }
 
-    public abstract void activate()
+    public abstract void activate();
     //The actual function of the powerup. This needs to be implemented for each different powerup.
 
     public void update(){ // powerups only stay on screen for so long
