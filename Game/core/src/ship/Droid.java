@@ -1,5 +1,9 @@
 package ship;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
+
+import java.util.ArrayList;
+
 /**
  * Created by Feng on 11/18/2015.
  */
@@ -21,7 +25,7 @@ public class Droid extends Enemy {
      *
      */
     @Override
-    protected void aiPlan(){
+    protected void aiPlan(ArrayList<Actor> actors){
         //TODO All other enemies are.
         // BAsIC LOGIC using co-ords
     }
@@ -31,13 +35,18 @@ public class Droid extends Enemy {
      * Action 1: TODO
      */
     @Override
-    protected void aiAct(){
+    protected void aiAct(ArrayList<Actor> actors){
         if(actions[0]) {
             //TODO Action 2
         }
         if(actions[1]){
             //TODO Action 1
         }
+    }
+
+    @Override
+    public void update(ArrayList<Actor> actors) {
+        super.update(actors);
     }
 }
 
