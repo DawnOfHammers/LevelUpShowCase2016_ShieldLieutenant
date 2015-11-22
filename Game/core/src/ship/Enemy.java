@@ -2,7 +2,10 @@ package ship;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+
+import java.util.ArrayList;
 
 /**A generic Enemy superclass. All Enemy(s) are Ship(s).
  *
@@ -40,10 +43,17 @@ public abstract class Enemy extends Ship {
      *
      */
     @Override
+<<<<<<< HEAD
     public void update() {
 
         aiPlan();
         aiAct();
+=======
+    public void update(ArrayList<Actor> actors) {
+        System.out.print(health);
+        aiPlan(actors);
+        aiAct(actors);
+>>>>>>> origin/master
 
         move();
     }
@@ -59,7 +69,7 @@ public abstract class Enemy extends Ship {
         double hyp = Math.hypot(dx, dy);
 
         {// Ship Movement
-            if(hyp > 2) {
+            if(hyp > speed) {
                 this.setX(this.getX() + (float) (speed * dx / hyp));
                 this.setY(this.getY() + (float) (speed * dy / hyp));
             }
@@ -80,8 +90,7 @@ public abstract class Enemy extends Ship {
      *      actions[2] = condition 2;
      *      ...
      */
-    protected abstract void aiPlan();
-
+    protected abstract void aiPlan(ArrayList<Actor> actors);
     /**The implementation of individual enemy action.
      * Updates the enemy based on the boolean array actions.
      *      if(actions[0]){...}
@@ -89,7 +98,7 @@ public abstract class Enemy extends Ship {
      *      if(actions[2]){...}
      *      ...
      */
-    protected abstract void aiAct();
+    protected abstract void aiAct(ArrayList<Actor> actors);
 
     /**Gets the health of the Enemy ship.
      *
