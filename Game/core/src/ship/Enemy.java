@@ -41,7 +41,7 @@ public abstract class Enemy extends Ship {
      */
     @Override
     public void update() {
-        System.out.print(health);
+
         aiPlan();
         aiAct();
 

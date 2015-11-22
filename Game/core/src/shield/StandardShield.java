@@ -1,4 +1,10 @@
 package shield;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import projectiles.Bullet;
 import java.awt.Point;
 
@@ -9,8 +15,23 @@ import java.awt.Point;
  * @since 2015/11/14
  */
 public class StandardShield extends Shield{
+    private boolean shield_left = false;
+    private boolean shield_right = false;
+    ShapeRenderer shapeRenderer = new ShapeRenderer();
+
+
     public StandardShield(double [] point, int radius){
         super(point, radius, Math.PI/3);
+
+    }
+
+
+
+    @Override
+    public void update(double x, double y) {
+        point[0] = x;
+        point[1] = y;
+
     }
 
     /**
@@ -32,4 +53,21 @@ public class StandardShield extends Shield{
         return false;
     }
 
+    /**
+     * The overriden draw method in the actor class
+     */
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+
+        //The following is just test code to see the actual arc
+        batch.end();
+        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+        shapeRenderer.setColor(Color.BLACK);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+
+        shapeRenderer.arc((float) point[0], (float) point[1], radius, (float)Math.toDegrees(initial_angle)%360, (float) Math.toDegrees(this.getFinalAngle())%360);
+        shapeRenderer.end();  
+        batch.begin();
+
+    }
 }

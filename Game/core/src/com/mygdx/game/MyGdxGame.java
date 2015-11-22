@@ -10,11 +10,12 @@ import ship.Player;
 
 
 public class MyGdxGame extends Game {
+	GameScreen g_screen;
 
 	@Override
 	public void create () { //initializes everything
-
-		setScreen(new GameScreen(this,1000,1000));
+		g_screen = new GameScreen(this,1000,1000);
+		setScreen(g_screen);
 	}
 
 
@@ -29,7 +30,7 @@ public class MyGdxGame extends Game {
 
 	@Override
 	public void dispose() { // disposes stuff
-
+		g_screen.dispose();
 
 	}
 

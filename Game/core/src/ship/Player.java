@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import shield.Shield;
+import shield.StandardShield;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -28,6 +29,10 @@ public class Player extends Ship {
     private boolean right;
     private boolean left;
     private boolean forward;
+    private boolean shield_one_left;
+    private boolean shield_one_right;
+    private boolean shield_two_left;
+    private boolean shield_two_right;
     private ArrayList<Shield> shields = new ArrayList<Shield>();
 
     public Player(int x,int y){
@@ -41,7 +46,8 @@ public class Player extends Ship {
         this.trueSpeed = 0;
         this.speed = 0;
         this.health = 100;
-
+        this.shields.add(new StandardShield(new double[]{this.getX(),this.getY()}, 75));
+        this.shields.add(new StandardShield(new double[]{this.getX(),this.getY()}, 100));
 
 
         sprite = new Sprite(new Texture(("S2.png"))); //initializing the sprite of the player
@@ -62,6 +68,18 @@ public class Player extends Ship {
                 if(keycode == Input.Keys.UP){
                     forward = true;
                 }
+                if (keycode == Input.Keys.W) {
+                    shield_one_right = true;
+                }
+                if (keycode == Input.Keys.Q) {
+                    shield_one_left = true;
+                }
+                if (keycode == Input.Keys.E) {
+                    shield_two_right = true;
+                }
+                if (keycode == Input.Keys.R) {
+                    shield_two_left = true;
+                }
                 return true;
             }
 
@@ -76,13 +94,25 @@ public class Player extends Ship {
                 if(keycode == Input.Keys.UP){
                     forward = false;
                 }
+                if (keycode == Input.Keys.W) {
+                    shield_one_right = false;
+                }
+                if (keycode == Input.Keys.Q) {
+                    shield_one_left = false;
+                }
+                if (keycode == Input.Keys.E) {
+                    shield_two_right = false;
+                }
+                if (keycode == Input.Keys.R) {
+                    shield_two_left = false;
+                }
                 return true;
             }
         });
 
     }
 
-    public void inputExecute(boolean left,boolean right,boolean forward){ //executes all input commands
+    public void inputExecute(){ //executes all input commands
 
         if (left){
             angle += 1;
@@ -90,6 +120,20 @@ public class Player extends Ship {
         if (right){
             angle -= 1;
 
+        }
+        if(shield_one_left){
+            shields.get(0).rotateCounterClockwise();
+
+        }
+        if(shield_one_right){
+            shields.get(0).rotateClockwise();
+        }
+        if(shield_two_left){
+            shields.get(1).rotateCounterClockwise();
+
+        }
+        if(shield_two_right){
+            shields.get(1).rotateClockwise();
         }
         if (forward) {
             speed += 0.005;
@@ -100,8 +144,13 @@ public class Player extends Ship {
     }
 
 
-
-
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        for (Shield shield : shields){
+            shield.draw(batch,parentAlpha);
+        }
+    }
 
     @Override
     public void act(float delta) { //performs any actions directed towards the actor
@@ -128,8 +177,12 @@ public class Player extends Ship {
 
     }
     public void update(){
-        inputExecute(left,right,forward);
+        inputExecute();
         move();
+        for(Shield shield : shields){
+            shield.update(this.getX()+sprite.getWidth()/2,this.getY()+sprite.getHeight()/2);
+
+        }
         sprite.setRotation(this.getRotation());
         sprite.setPosition(this.getX(),this.getY());
     }
