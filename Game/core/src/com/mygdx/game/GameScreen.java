@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import projectiles.Bullet;
+import projectiles.Weapon;
 import ship.Player;
 import ship.Proto;
 import ship.Ship;
@@ -26,7 +28,7 @@ public class GameScreen implements Screen {
     double accumulator = 0;
     double step_time = (double)1/60;
     double time = 0;
-    double current_time = 0;
+    double shoot_timer= 0; //just for testing
 
 
     public GameScreen(Game game, int bound_x,int bound_y){
@@ -55,28 +57,43 @@ public class GameScreen implements Screen {
     }
 
     public boolean checkBounds(int x,int y){ //checks if the spaceship is within the set arena
-        
-        return !(x > bound_x || y > bound_y || x  < -bound_x || y < -bound_y);
+
+        return (x > bound_x || y > bound_y || x  < -bound_x || y < -bound_y);
 
     }
 
     public void updateGame(){
+        shoot_timer++;
         updateCamera(gStage);
         for (Actor i : gStage.getActors()){
             if(i instanceof Ship){
-                ((Ship) i).update(gStage.getEnemies());
-                if (!checkBounds((int)i.getX(),(int)i.getY())){
+                ((Ship) i).update(gStage.getWeapons());
+                if (checkBounds((int)i.getX(),(int)i.getY())){
                     ((Ship) i).setHealth(-1);
                 }
             }
+            if(i instanceof Bullet){
+                ((Bullet) i).update();
+            }
+            if(i instanceof Weapon){
+                if(checkBounds((int)i.getX(),(int)i.getY())){
+                    i.remove();
+                }
+            }
         }
-
+        if(shoot_timer%120 == 0){
+            shoot();
+        }
     }
 
 
     @Override
     public void show() {
 
+    }
+
+    public void shoot(){
+        gStage.addActor(new Bullet(100,100,90));
     }
 
     @Override
