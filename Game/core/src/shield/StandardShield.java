@@ -15,6 +15,8 @@ import java.awt.Point;
  * @since 2015/11/14
  */
 public class StandardShield extends Shield{
+    private boolean shield_left = false;
+    private boolean shield_right = false;
     ShapeRenderer shapeRenderer = new ShapeRenderer();
 
 
@@ -24,10 +26,7 @@ public class StandardShield extends Shield{
     }
 
 
-    /**
-     * @param x: The x coordinate of the
-     * @param y
-     */
+
     @Override
     public void update(double x, double y) {
         point[0] = x;
@@ -40,20 +39,15 @@ public class StandardShield extends Shield{
      * @param bullet: the bullet that you need to check collision with.
      */
     public boolean collideProjectile(Bullet bullet) {
-        if(!bullet.isBounced()) {
-            double delta_x = point[0] - bullet.getX();
-            double delta_y = point[1] - bullet.getY();
-            double distance_from_player = Math.hypot(delta_x, delta_y);
-            if (distance_from_player < radius) {
-                double ref_trajectory = Math.atan2(delta_y / distance_from_player, delta_x / distance_from_player);
-                if (arc_size - ref_trajectory + initial_angle > 0) {
-                    System.out.println(bullet.getTrajectory() + "a");
-                    bullet.setTrajectory(Math.toDegrees(ref_trajectory) + bullet.getTrajectory());
-                    System.out.println(bullet.getTrajectory() + "b");
-                    //bullet.setX((float)Math.cos(Math.toDegrees(ref_trajectory)) * radius);
-                    //bullet.setY((float)Math.sin(Math.toDegrees(ref_trajectory)) * radius);
-                    return true;
-                }
+        double delta_x = point[0] - bullet.getX();
+        double delta_y = point[1] - bullet.getY();
+        double distance_from_player = Math.hypot(delta_x, delta_y);
+        if (distance_from_player < radius){
+            double ref_trajectory = Math.atan2(delta_y/distance_from_player, delta_x/distance_from_player);
+            if (arc_size - ref_trajectory + initial_angle > 0){
+                bullet.setTrajectory(ref_trajectory + bullet.getTrajectory());
+                bullet.getLocation().setLocation(Math.cos(ref_trajectory)*radius, Math.sin(ref_trajectory)*radius);
+                return true;
             }
         }
         return false;

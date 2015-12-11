@@ -52,7 +52,6 @@ public abstract class Enemy extends Ship {
         move();
     }
 
-
     /**Moves to a target location in a straight line.
      *
      * For ships with specialized movement this method will be overridden.
@@ -114,6 +113,4 @@ public abstract class Enemy extends Ship {
     public void setHealth(int change) {
         this.health -= change;
     }
-
-
 }

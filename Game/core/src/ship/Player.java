@@ -12,8 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import projectiles.Bullet;
-import projectiles.Weapon;
 import shield.Shield;
 import shield.StandardShield;
 
@@ -173,37 +171,21 @@ public class Player extends Ship {
         }
         veloX *= 0.97; //deceleration
         veloY *= 0.97;
-        this.setX(this.getX() - (float) veloX);
-        this.setY(this.getY() + (float) veloY);
-        this.setRotation((float) angle);
+        this.setX(this.getX()-(float)veloX);
+        this.setY(this.getY()+(float)veloY);
+        this.setRotation((float)angle);
 
 
     }
-    public void update(ArrayList<Actor> weapons){
+    public void update(ArrayList<Actor> enemies){
         inputExecute();
         move();
         for(Shield shield : shields){
             shield.update(this.getX()+sprite.getWidth()/2,this.getY()+sprite.getHeight()/2);
-        }
-        checkCollions(weapons);
-        sprite.setRotation(this.getRotation());
-        sprite.setPosition(this.getX(), this.getY());
-    }
 
-    /**
-     * This method will check for collisions with the shields or the player and update all entities involved
-     * @param weapons: the list of weapons that will be iterated through to check for collision with either the player or the shield
-     */
-    public void checkCollions(ArrayList<Actor> weapons){
-        for( Actor weapon : weapons){
-            for (Shield  shield : shields){
-                if(weapon instanceof Bullet) {
-                    if(shield.collideProjectile((Bullet)weapon)){
-                        ((Bullet) weapon).setBounced(true);
-                    }
-                }
-            }
         }
+        sprite.setRotation(this.getRotation());
+        sprite.setPosition(this.getX(),this.getY());
     }
 
     public Sprite getSprite() {
