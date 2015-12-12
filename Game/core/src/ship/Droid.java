@@ -1,6 +1,7 @@
 package ship;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import projectiles.Bullet;
 
 import java.util.ArrayList;
 
@@ -35,7 +36,7 @@ public class Droid extends Enemy {
         //TODO All other enemies are.
         actions[0] = firelag > 0;
         actions[1] = range > Math.pow(actors.get(0).getX() - this.getX(), 2)
-                         + Math.pow(actors.get(0).getY() - this.getY(), 2);
+                           + Math.pow(actors.get(0).getY() - this.getY(), 2);
         actions[2] = !actions[1];
     }
 
@@ -52,9 +53,13 @@ public class Droid extends Enemy {
             firelag--;
             return;
         }
-        if(actions[1]){
+        if(actions[1]) {
             firelag = 10;
-            //TODO fire laser/weapons.
+            {
+                double p_x = actors.get(0).getX();
+                double p_y = actors.get(0).getY();
+                actors.add(new Bullet((int)this.getX(), (int)this.getY(), Math.atan2(p_y - this.getY(), p_x - this.getX())));
+            }
         }
         if(actions[2]){
             if ((int)goal_x == (int)this.getX() && (int)goal_y == (int)this.getY()) {
