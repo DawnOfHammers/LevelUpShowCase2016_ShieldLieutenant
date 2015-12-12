@@ -43,7 +43,6 @@ public abstract class Enemy extends Ship {
      *
      */
     @Override
-
     public void update(ArrayList<Actor> actors) {
         //System.out.print(health);
         aiPlan(actors);
@@ -51,7 +50,6 @@ public abstract class Enemy extends Ship {
 
         move();
     }
-
 
     /**Moves to a target location in a straight line.
      *
@@ -114,6 +112,4 @@ public abstract class Enemy extends Ship {
     public void setHealth(int change) {
         this.health -= change;
     }
-
-
 }
