@@ -177,12 +177,11 @@ public class Player extends Ship {
 
 
     }
-    public void update(ArrayList<Actor> actors){
+    public void update(ArrayList<Actor> enemies){
         inputExecute();
         move();
         for(Shield shield : shields){
             shield.update(this.getX()+sprite.getWidth()/2,this.getY()+sprite.getHeight()/2);
-
         }
         sprite.setRotation(this.getRotation());
         sprite.setPosition(this.getX(),this.getY());

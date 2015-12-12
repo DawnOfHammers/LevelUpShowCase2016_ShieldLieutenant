@@ -63,5 +63,10 @@ public class Droid extends Enemy {
             }
         }
     }
+
+    @Override
+    public void update(ArrayList<Actor> actors) {
+        super.update(actors);
+    }
 }
 

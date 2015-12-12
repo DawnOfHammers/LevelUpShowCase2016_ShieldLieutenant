@@ -44,7 +44,7 @@ public abstract class Enemy extends Ship {
      */
     @Override
     public void update(ArrayList<Actor> actors) {
-        System.out.print(health);
+        //System.out.print(health);
         aiPlan(actors);
         aiAct(actors);
 
@@ -56,7 +56,7 @@ public abstract class Enemy extends Ship {
      * For ships with specialized movement this method will be overridden.
      */
     @Override
-    protected void move() {
+    protected void move(){
         int speed = 2;
         double dx = (goal_x - this.getX()), dy = (goal_y - this.getY());
         double hyp = Math.hypot(dx, dy);

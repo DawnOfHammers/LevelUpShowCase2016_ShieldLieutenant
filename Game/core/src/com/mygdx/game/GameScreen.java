@@ -55,6 +55,7 @@ public class GameScreen implements Screen {
     }
 
     public boolean checkBounds(int x,int y){ //checks if the spaceship is within the set arena
+        
         return !(x > bound_x || y > bound_y || x  < -bound_x || y < -bound_y);
 
     }
@@ -63,7 +64,7 @@ public class GameScreen implements Screen {
         updateCamera(gStage);
         for (Actor i : gStage.getActors()){
             if(i instanceof Ship){
-                ((Ship) i).update();
+                ((Ship) i).update(gStage.getEnemies());
                 if (!checkBounds((int)i.getX(),(int)i.getY())){
                     ((Ship) i).setHealth(-1);
                 }
