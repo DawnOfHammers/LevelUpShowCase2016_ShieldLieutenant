@@ -1,6 +1,10 @@
 package ship;
 
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
+
+import java.util.ArrayList;
+
 /**Prototype of a basic enemy ship type.
  * Created by Feng on 11/14/2015.
  */
@@ -22,7 +26,7 @@ public class Proto extends Enemy {
      *
      */
     @Override
-    protected void aiPlan(){
+    protected void aiPlan(ArrayList<Actor> actors){
         actions[0] = health > 2;
         actions[1] = health <=2;
     }
@@ -32,7 +36,7 @@ public class Proto extends Enemy {
      * Action 1: Stop moving.
      */
     @Override
-    protected void aiAct(){
+    protected void aiAct(ArrayList<Actor> actors){
         if(actions[0]) {
             //TODO change implementation of coordsX and Y in ship.
             if ((int)goal_x == (int)this.getX() && (int)goal_y == (int)this.getY()) {

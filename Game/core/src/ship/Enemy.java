@@ -43,17 +43,10 @@ public abstract class Enemy extends Ship {
      *
      */
     @Override
-<<<<<<< HEAD
-    public void update() {
-
-        aiPlan();
-        aiAct();
-=======
     public void update(ArrayList<Actor> actors) {
         System.out.print(health);
         aiPlan(actors);
         aiAct(actors);
->>>>>>> origin/master
 
         move();
     }
