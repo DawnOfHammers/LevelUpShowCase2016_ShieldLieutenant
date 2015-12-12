@@ -43,7 +43,7 @@ public class Laser extends Weapon{
 
     public void calc(){
         while(onScreen()){
-
+            if
             float x_increment = sprite.getWidth()+(float)x_velo;
             float y_increment = sprite.getHeight()+(float)y_velo;
             this.setBounds(this.getX(), this.getY(), x_increment,  y_increment);
