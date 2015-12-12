@@ -93,6 +93,7 @@ public class GameScreen implements Screen {
     }
 
     public void shoot(){
+        gStage.addActor(new Bullet(100,100,270));
         gStage.addActor(new Bullet(100,100,90));
     }
 
