@@ -15,7 +15,6 @@ public class Laser extends Weapon{
     Sprite[] length;
     Sprite turn;
     ArrayList<float[]> chain;
-    ArrayList<Integer[]> vertices;
     Player player;
 
     public Laser(int x, int y, double trajectory, Player player){
@@ -26,7 +25,6 @@ public class Laser extends Weapon{
         this.player = player;
         this.x_velo =  Math.sin(Math.toRadians(trajectory)) * speed;
         this.y_velo =  Math.cos(Math.toRadians(trajectory)) * speed;
-        this.vertices = new ArrayList<Integer[]>();
         setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
         chain = new ArrayList<float[]>();
     }
@@ -43,7 +41,7 @@ public class Laser extends Weapon{
 
     public void calc(){
         while(onScreen()){
-
+            if
             float x_increment = sprite.getWidth()+(float)x_velo;
             float y_increment = sprite.getHeight()+(float)y_velo;
             this.setBounds(this.getX(), this.getY(), x_increment,  y_increment);
@@ -53,16 +51,6 @@ public class Laser extends Weapon{
 
     }
 
-    public void updateVertices(){
-        /*for(Integer[] i: vertices){
-            i[0] = this.getX() +(this.getX()-sprite.getWidth())*Math.cos(this.trajectory)+(this.getY()-sprite.getHeight())*Math.sin(this.trajectory);
-            i[1] = y0-(this.getX()-sprite.getWidth())*Math.sin(this.trajectory)+(this.getY()- sprite.getHeight()) * Math.cos(this.trajectory);
-        }*/
-    }
-
-    /**
-    Checks wether or not the laser is still on the screen
-     */
     public boolean onScreen(){
         return true;
     }
