@@ -15,8 +15,11 @@ public abstract class Weapon extends Actor {
     protected int speed;
 
     public Weapon(int x, int y, double trajectory){
+        //System.out.println(x+","+y);
+        //System.out.println(y);
         this.setX(x);
         this.setY(y);
+
     }
 
     abstract void update();

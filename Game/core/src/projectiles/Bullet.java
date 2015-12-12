@@ -63,7 +63,8 @@ public class Bullet extends Weapon {
 
 
     public Bullet(int x, int y, double trajectory){
-        super(x,y, trajectory);
+        super(x, y, trajectory);
+        System.out.println(this.getX() + "," + this.getY());
         this.trajectory = trajectory;
         this.speed = 3;
         this.bounced = false;
@@ -88,10 +89,11 @@ public class Bullet extends Weapon {
 
     @Override
     public void update() {
-        this.x_velo =  Math.sin(Math.toRadians(trajectory)) * speed;
-        this.y_velo =  Math.cos(Math.toRadians(trajectory)) * speed;
-        this.setX((float) (this.getX() + x_velo));
-        this.setY((float) (this.getY() + y_velo));
+        //System.out.println(this.getX()+ "      " + this.getY());
+        //this.x_velo =  Math.sin(Math.toRadians(trajectory)) * speed;
+        //this.y_velo =  Math.cos(Math.toRadians(trajectory)) * speed;
+        this.setX((float) (this.getX() ));
+        this.setY((float) (this.getY() ));
         sprite.setPosition(this.getX(),this.getY());
         sprite.setRotation((float)this.getTrajectory());
     }

@@ -1,8 +1,11 @@
 package ship;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.GameStage;
 import projectiles.Bullet;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -20,7 +23,7 @@ public class Droid extends Enemy {
         super(x,y,"Proto.png");
         super.health = 5;
         super.actions = new boolean[3];
-        this.range = 300;
+        this.range = 10;
         this.firelag = 0;
     }
 
@@ -32,8 +35,10 @@ public class Droid extends Enemy {
      * Action 2: When "player" is not within range.
      */
     @Override
-    protected void aiPlan(ArrayList<Actor> actors){
+    protected void aiPlan(GameStage gameStage){
         //TODO All other enemies are.
+        ArrayList<Actor> actors = gameStage.getActorList();
+
         actions[0] = firelag > 0;
         actions[1] = range > Math.pow(actors.get(0).getX() - this.getX(), 2)
                            + Math.pow(actors.get(0).getY() - this.getY(), 2);
@@ -48,17 +53,21 @@ public class Droid extends Enemy {
      *           NOTE: Variation of goal_x, and goal_y should not be above 1.4 or root(2).
      */
     @Override
-    protected void aiAct(ArrayList<Actor> actors){
+    protected void aiAct(GameStage game_stage){
+        ArrayList<Actor> actors = game_stage.getActorList();
+
         if(actions[0]){
             firelag--;
             return;
         }
         if(actions[1]) {
-            firelag = 10;
+            firelag = 180;
             {
                 double p_x = actors.get(0).getX();
                 double p_y = actors.get(0).getY();
-                actors.add(new Bullet((int)this.getX(), (int)this.getY(), Math.atan2(p_y - this.getY(), p_x - this.getX())));
+                //System.out.println(this.getX()+"        "+this.getY());
+                game_stage.addActor(new Bullet((int) this.getX(), (int) this.getY(), Math.atan2(p_y - this.getY(), p_x - this.getX())));
+                //System.out.println(this.getX() + "        " + this.getY());
             }
         }
         if(actions[2]){
@@ -70,8 +79,8 @@ public class Droid extends Enemy {
     }
 
     @Override
-    public void update(ArrayList<Actor> actors) {
-        super.update(actors);
+    public void update(GameStage game_screen) {
+        super.update(game_screen);
     }
 }
 

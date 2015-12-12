@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.mygdx.game.GameStage;
 import projectiles.Bullet;
 import projectiles.Weapon;
 import shield.Shield;
@@ -179,7 +180,8 @@ public class Player extends Ship {
 
 
     }
-    public void update(ArrayList<Actor> weapons){
+    public void update(GameStage game_stage){
+        ArrayList<Actor> weapons = game_stage.getWeapons();
         inputExecute();
         move();
         for(Shield shield : shields){

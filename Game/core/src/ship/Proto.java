@@ -1,7 +1,9 @@
 package ship;
 
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.game.GameStage;
 
 import java.util.ArrayList;
 
@@ -26,7 +28,7 @@ public class Proto extends Enemy {
      *
      */
     @Override
-    protected void aiPlan(ArrayList<Actor> actors){
+    protected void aiPlan(GameStage game_screen){
         actions[0] = health > 2;
         actions[1] = health <=2;
     }
@@ -36,7 +38,7 @@ public class Proto extends Enemy {
      * Action 1: Stop moving.
      */
     @Override
-    protected void aiAct(ArrayList<Actor> actors){
+    protected void aiAct(GameStage game_screen){
         if(actions[0]) {
             //TODO change implementation of coordsX and Y in ship.
             if ((int)goal_x == (int)this.getX() && (int)goal_y == (int)this.getY()) {
@@ -51,7 +53,7 @@ public class Proto extends Enemy {
     }
 
     @Override
-    public void update(ArrayList<Actor> actors) {
-        super.update(actors);
+    public void update(GameStage game_screen) {
+        super.update(game_screen);
     }
 }

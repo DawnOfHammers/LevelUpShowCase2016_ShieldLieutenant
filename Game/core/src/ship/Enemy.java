@@ -3,7 +3,10 @@ package ship;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.mygdx.game.GameStage;
+
 
 import java.util.ArrayList;
 
@@ -43,10 +46,10 @@ public abstract class Enemy extends Ship {
      *
      */
     @Override
-    public void update(ArrayList<Actor> actors) {
+    public void update(GameStage game_stage){
         //System.out.print(health);
-        aiPlan(actors);
-        aiAct(actors);
+        aiPlan(game_stage);
+        aiAct(game_stage);
 
         move();
     }
@@ -84,7 +87,7 @@ public abstract class Enemy extends Ship {
      *      actions[2] = condition 2;
      *      ...
      */
-    protected abstract void aiPlan(ArrayList<Actor> actors);
+    protected abstract void aiPlan(GameStage game_stage);
     /**The implementation of individual enemy action.
      * Updates the enemy based on the boolean array actions.
      *      if(actions[0]){...}
@@ -92,7 +95,7 @@ public abstract class Enemy extends Ship {
      *      if(actions[2]){...}
      *      ...
      */
-    protected abstract void aiAct(ArrayList<Actor> actors);
+    protected abstract void aiAct(GameStage game_stage);
 
     /**Gets the health of the Enemy ship.
      *

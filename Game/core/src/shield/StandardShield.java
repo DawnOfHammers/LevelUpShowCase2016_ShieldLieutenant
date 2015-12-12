@@ -47,11 +47,11 @@ public class StandardShield extends Shield{
             if (distance_from_player < radius) {
                 double ref_trajectory = Math.atan2(delta_y / distance_from_player, delta_x / distance_from_player);
                 if (arc_size - ref_trajectory + initial_angle > 0) {
-                    System.out.println(bullet.getTrajectory() + "a             " + Math.toDegrees(ref_trajectory));
+                    //System.out.println(bullet.getTrajectory() + "a             " + Math.toDegrees(ref_trajectory));
                     double end_trajectory = (2*Math.toDegrees(ref_trajectory) - bullet.getTrajectory());
 
                     bullet.setTrajectory(-180 - end_trajectory);
-                    System.out.println(bullet.getTrajectory() + "b");
+                    //System.out.println(bullet.getTrajectory() + "b");
                     //bullet.setX((float)Math.cos(Math.toDegrees(ref_trajectory)) * radius);
                     //bullet.setY((float)Math.sin(Math.toDegrees(ref_trajectory)) * radius);
                     return true;

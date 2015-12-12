@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import projectiles.Bullet;
 import projectiles.Weapon;
+import ship.Droid;
 import ship.Player;
 import ship.Proto;
 import ship.Ship;
@@ -21,7 +22,7 @@ public class GameScreen implements Screen {
     GameStage gStage;
     Test test;
     Player player;
-    Proto proto;
+    Droid proto;
     int bound_x;
     int bound_y;
     private Game game;
@@ -36,7 +37,7 @@ public class GameScreen implements Screen {
         Gdx.graphics.setDisplayMode(1366, 768, false);
         this.player = new Player(100,100);
         this.test = new Test();
-        this.proto = new Proto(100,100);
+        this.proto = new Droid(100,100);
         this.bound_x = bound_x;
         this.bound_y = bound_y;
         ScreenViewport viewport = new ScreenViewport();
@@ -66,10 +67,10 @@ public class GameScreen implements Screen {
         shoot_timer++;
         updateCamera(gStage);
         for (Actor i : gStage.getActors()){
-            if(i instanceof Ship){
-                ((Ship) i).update(gStage.getWeapons());
+            if(i instanceof Player){
+                ((Player) i).update(gStage);
                 if (checkBounds((int)i.getX(),(int)i.getY())){
-                    ((Ship) i).setHealth(-1);
+                    ((Player) i).setHealth(-1);
                 }
             }
             if(i instanceof Bullet){
@@ -79,6 +80,11 @@ public class GameScreen implements Screen {
                 if(checkBounds((int)i.getX(),(int)i.getY())){
                     i.remove();
                 }
+            }
+            if(i instanceof Droid){
+                //System.out.println("ASDASDASD");
+                //System.out.println(gStage.getActorList().size()+"a");
+                ((Droid) i).update(gStage);
             }
         }
         if(shoot_timer%120 == 0){
@@ -93,8 +99,8 @@ public class GameScreen implements Screen {
     }
 
     public void shoot(){
-        gStage.addActor(new Bullet(100,100,270));
-        gStage.addActor(new Bullet(100,100,90));
+        gStage.addActor(new Bullet(100,1000,270));
+        gStage.addActor(new Bullet(100,1000,90));
     }
 
     @Override
