@@ -19,7 +19,7 @@ public class StandardShield extends Shield{
 
 
     public StandardShield(double [] point, int radius){
-        super(point, radius, Math.PI/3);
+        super(point, radius, Math.PI*2-0.1);
 
     }
 
@@ -37,6 +37,7 @@ public class StandardShield extends Shield{
 
     /**
      * The overriden collide method in the shield class
+     * This returns a boolean because if it collided, then it should be TRUE!
      * @param bullet: the bullet that you need to check collision with.
      */
     public boolean collideProjectile(Bullet bullet) {
@@ -45,21 +46,27 @@ public class StandardShield extends Shield{
             double delta_y = point[1] - bullet.getY();
             double distance_from_player = Math.hypot(delta_x, delta_y);
             if (distance_from_player < radius) {
-                double ref_trajectory = Math.atan2(delta_y / distance_from_player, delta_x / distance_from_player);
-                if (arc_size - ref_trajectory + initial_angle > 0) {
-                    //System.out.println(bullet.getTrajectory() + "a             " + Math.toDegrees(ref_trajectory));
-                    double end_trajectory = (2*Math.toDegrees(ref_trajectory) - bullet.getTrajectory());
-
-                    bullet.setTrajectory(-180 - end_trajectory);
-                    //System.out.println(bullet.getTrajectory() + "b");
-                    //bullet.setX((float)Math.cos(Math.toDegrees(ref_trajectory)) * radius);
-                    //bullet.setY((float)Math.sin(Math.toDegrees(ref_trajectory)) * radius);
+                if (check_in_arc(bullet)) {
+                    double slope_of_tangent = -(delta_x / delta_y);
+                    double slope_of_bullet = Math.tan(Math.toRadians(-bullet.getTrajectory()) + Math.PI/2);
+                    bullet.setTrajectory(Math.toDegrees(-((2*Math.atan(slope_of_tangent) - Math.atan(slope_of_bullet)) -Math.PI/2)));
                     return true;
                 }
             }
         }
         return false;
     }
+
+
+    //TODO Implement this function
+    private boolean check_in_arc(Bullet b){
+        return !(b.getX() == 600000);
+
+    }
+
+
+
+
 
     /**
      * The overriden draw method in the actor class
@@ -78,4 +85,6 @@ public class StandardShield extends Shield{
         batch.begin();
 
     }
+
+
 }

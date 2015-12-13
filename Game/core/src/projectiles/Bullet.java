@@ -90,10 +90,10 @@ public class Bullet extends Weapon {
     @Override
     public void update() {
         //System.out.println(this.getX()+ "      " + this.getY());
-        //this.x_velo =  Math.sin(Math.toRadians(trajectory)) * speed;
-        //this.y_velo =  Math.cos(Math.toRadians(trajectory)) * speed;
-        this.setX((float) (this.getX() ));
-        this.setY((float) (this.getY() ));
+        this.x_velo =  Math.sin(Math.toRadians(trajectory)) * speed;
+        this.y_velo =  Math.cos(Math.toRadians(trajectory)) * speed;
+        this.setX((float) (this.getX() + x_velo));
+        this.setY((float) (this.getY() + y_velo));
         sprite.setPosition(this.getX(),this.getY());
         sprite.setRotation((float)this.getTrajectory());
     }

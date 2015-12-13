@@ -35,9 +35,9 @@ public class GameScreen implements Screen {
     public GameScreen(Game game, int bound_x,int bound_y){
         this.game = game;
         Gdx.graphics.setDisplayMode(1366, 768, false);
-        this.player = new Player(100,100);
+        this.player = new Player(100,300);
         this.test = new Test();
-        this.proto = new Droid(100,100);
+        //this.proto = new Droid(100,100);
         this.bound_x = bound_x;
         this.bound_y = bound_y;
         ScreenViewport viewport = new ScreenViewport();
@@ -46,8 +46,8 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(gStage);
 
         gStage.addActor(player);
-        gStage.addActor(test);
-        gStage.addActor(proto);
+        //gStage.addActor(test);
+        //gStage.addActor(proto);
         gStage.setKeyboardFocus(player);
     }
 
@@ -99,8 +99,8 @@ public class GameScreen implements Screen {
     }
 
     public void shoot(){
-        gStage.addActor(new Bullet(100,1000,270));
-        gStage.addActor(new Bullet(100,1000,90));
+        gStage.addActor(new Bullet(100,100,0));
+        gStage.addActor(new Bullet(100,100,180));
     }
 
     @Override
