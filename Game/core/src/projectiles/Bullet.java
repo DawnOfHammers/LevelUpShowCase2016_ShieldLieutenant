@@ -70,9 +70,9 @@ public class Bullet extends Weapon {
         this.bounced = false;
 
 
-        this.sprite = new Sprite(new Texture(("S2.png")));
+        this.sprite = new Sprite(new Texture(("bullet.jpg")));
         sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
-        setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight()); //initilization stuff for the actor
+        setBounds(this.getX(), this.getY(), sprite.getWidth(), sprite.getHeight()); //initilization stuff for the actor
         setTouchable(Touchable.enabled);
 
     }
