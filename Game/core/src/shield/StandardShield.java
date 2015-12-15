@@ -48,8 +48,7 @@ public class StandardShield extends Shield{
             if (distance_from_player < radius) {
                 if (check_in_arc(bullet)) {
                     double slope_of_tangent = -(delta_x / delta_y);
-                    double slope_of_bullet = Math.tan(Math.toRadians(-bullet.getTrajectory()) + Math.PI/2);
-                    bullet.setTrajectory(Math.toDegrees(-((2*Math.atan(slope_of_tangent) - Math.atan(slope_of_bullet)) -Math.PI/2)));
+                    bullet.setTrajectory(Math.toDegrees(-((2*Math.atan(slope_of_tangent) - (Math.toRadians(-bullet.getTrajectory()) + Math.PI/2)) -Math.PI/2)));
                     return true;
                 }
             }
