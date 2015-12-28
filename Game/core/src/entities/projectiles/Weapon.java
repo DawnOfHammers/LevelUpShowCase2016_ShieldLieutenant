@@ -2,6 +2,7 @@ package entities.projectiles;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.game.GameStage;
 
 
 /**
@@ -23,8 +24,12 @@ public abstract class Weapon extends Actor {
 
     }
 
+<<<<<<< HEAD:Game/core/src/entities/projectiles/Weapon.java
     protected abstract void update();
 
+=======
+    abstract void update(GameStage game_stage);
+>>>>>>> origin/master:Game/core/src/projectiles/Weapon.java
 
 
 

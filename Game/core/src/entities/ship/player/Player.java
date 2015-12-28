@@ -13,8 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import entities.projectiles.Bullet;
-import entities.shield.Shield;
-import entities.shield.StandardShield;
+
+import entities.shield.*;
 import entities.ship.Ship;
 import game.MainGame;
 import gamestates.playState.GameStage;
@@ -152,6 +152,10 @@ public class Player extends Ship {
                 }
             }
         }
+    }
+
+    public ArrayList<Shield> getShields() {
+        return shields;
     }
 
     public Sprite getSprite() {

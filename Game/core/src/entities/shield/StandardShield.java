@@ -1,21 +1,26 @@
+
 package entities.shield;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import entities.projectiles.Bullet;
 
+
+
+
 /**
  * This class is the StandardShield used by the character. It has an overridden collide method
+ *
  * @author Hongyu Wang
  * @version 1.0
  * @since 2015/11/14
  */
-public class StandardShield extends Shield{
+public class StandardShield extends Shield {
     ShapeRenderer shapeRenderer = new ShapeRenderer();
 
 
-    public StandardShield(double [] point, int radius){
-        super(point, radius, Math.PI*2-0.1);
+    public StandardShield(double[] point, int radius) {
+        super(point, radius, Math.PI * 2 - 0.1);
 
     }
 
@@ -34,17 +39,18 @@ public class StandardShield extends Shield{
     /**
      * The overriden collide method in the entities.shield class
      * This returns a boolean because if it collided, then it should be TRUE!
+     *
      * @param bullet: the bullet that you need to check collision with.
      */
     public boolean collideProjectile(Bullet bullet) {
-        if(!bullet.isBounced()) {
+        if (!bullet.isBounced()) {
             double delta_x = point[0] - bullet.getX();
             double delta_y = point[1] - bullet.getY();
             double distance_from_player = Math.hypot(delta_x, delta_y);
             if (distance_from_player < radius) {
                 if (check_in_arc(bullet)) {
                     double slope_of_tangent = -(delta_x / delta_y);
-                    bullet.setTrajectory(Math.toDegrees(-((2*Math.atan(slope_of_tangent) - (Math.toRadians(-bullet.getTrajectory()) + Math.PI/2)) -Math.PI/2)));
+                    bullet.setTrajectory(Math.toDegrees(-((2 * Math.atan(slope_of_tangent) - (Math.toRadians(-bullet.getTrajectory()) + Math.PI / 2)) - Math.PI / 2)));
                     return true;
                 }
             }
@@ -52,15 +58,28 @@ public class StandardShield extends Shield{
         return false;
     }
 
-
-    //TODO Implement this function
-    private boolean check_in_arc(Bullet b){
-        return !(b.getX() == 600000);
-
+    public double collideLaser(double x, double y, double trajectory) {
+        double delta_x = point[0] - x;
+        double delta_y = point[1] - y;
+        double distance_from_player = Math.hypot(delta_x, delta_y);
+        if (distance_from_player < radius) {
+            if (true) {
+                double slope_of_tangent = -(delta_x / delta_y);
+                return (Math.toDegrees(-((2 * Math.atan(slope_of_tangent) - (Math.toRadians(-trajectory) + Math.PI / 2)) - Math.PI / 2)));
+            }
+        }
+        return 10000;
     }
 
 
 
+
+
+    //TODO Implement this function
+    private boolean check_in_arc(Bullet b) {
+        return !(b.getX() == 600000);
+
+    }
 
 
     /**
@@ -75,8 +94,8 @@ public class StandardShield extends Shield{
         shapeRenderer.setColor(Color.BLACK);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 
-        shapeRenderer.arc((float) point[0], (float) point[1], radius, (float)Math.toDegrees(initial_angle)%360, (float) Math.toDegrees(this.getFinalAngle())%360);
-        shapeRenderer.end();  
+        shapeRenderer.arc((float) point[0], (float) point[1], radius, (float) Math.toDegrees(initial_angle) % 360, (float) Math.toDegrees(this.getFinalAngle()) % 360);
+        shapeRenderer.end();
         batch.begin();
 
     }

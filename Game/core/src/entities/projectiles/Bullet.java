@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.mygdx.game.GameStage;
 
 /**
  * This class will be the superclass of the bullet class.
@@ -47,7 +48,7 @@ public class Bullet extends Weapon {
         super(x, y, trajectory);
         System.out.println(this.getX() + "," + this.getY());
         this.trajectory = trajectory;
-        this.speed = 3;
+        this.speed = 10;
         this.bounced = false;
 
 
@@ -70,7 +71,11 @@ public class Bullet extends Weapon {
     }
 
     @Override
+<<<<<<< HEAD:Game/core/src/entities/projectiles/Bullet.java
     protected void update() {
+=======
+    public void update(GameStage game_stage) {
+>>>>>>> origin/master:Game/core/src/projectiles/Bullet.java
         //System.out.println(this.getX()+ "      " + this.getY());
         this.x_velo =  Math.sin(Math.toRadians(trajectory)) * speed;
         this.y_velo =  Math.cos(Math.toRadians(trajectory)) * speed;
