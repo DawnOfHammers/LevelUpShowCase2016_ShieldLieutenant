@@ -65,7 +65,7 @@ public class GameScreen implements Screen {
 
     public void updateGame(){
         shoot_timer++;
-        updateCamera(gStage);
+
         for (Actor i : gStage.getActors()){
             if(i instanceof Player){
                 ((Player) i).update(gStage);
@@ -90,6 +90,7 @@ public class GameScreen implements Screen {
         if(shoot_timer%120 == 0){
             shoot();
         }
+        updateCamera(gStage);
     }
 
 
@@ -100,7 +101,7 @@ public class GameScreen implements Screen {
 
     public void shoot(){
         gStage.addActor(new Bullet(100,100,90));
-        gStage.addActor(new Bullet(100,100,270));
+        gStage.addActor(new Bullet(100,100,351));
     }
 
     @Override

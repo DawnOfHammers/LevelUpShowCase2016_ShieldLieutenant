@@ -76,6 +76,17 @@ public abstract class Shield extends Actor {
      */
     public abstract boolean collideProjectile(Bullet b);
 
+
+    /**
+     * This is the collision method between any given laser and a shield
+     *
+     * @param x: x coordinate to be checked
+     * @param y: y coordinate to be checked
+     * @param trajectory: current angle of the laser
+     * @return: The trajectory after collision and a really large number if there is no collision
+     */
+    public abstract double collideLaser(double x, double y, double trajectory);
+
     /**
      * This gets the point of the ship. The point is mutable.
      *

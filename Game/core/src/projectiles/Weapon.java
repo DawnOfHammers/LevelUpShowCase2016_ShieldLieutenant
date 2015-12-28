@@ -20,6 +20,7 @@ public abstract class Weapon extends Actor {
         //System.out.println(y);
         this.setX(x);
         this.setY(y);
+        this.trajectory = trajectory;
 
     }
 
