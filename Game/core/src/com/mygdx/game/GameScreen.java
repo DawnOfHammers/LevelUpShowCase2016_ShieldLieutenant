@@ -74,7 +74,7 @@ public class GameScreen implements Screen {
                 }
             }
             if(i instanceof Bullet){
-                ((Bullet) i).update();
+                ((Bullet) i).update(gStage);
             }
             if(i instanceof Weapon){
                 if(checkBounds((int)i.getX(),(int)i.getY())){
@@ -117,6 +117,10 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         gStage.act(0.166f);
         gStage.draw();
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     @Override

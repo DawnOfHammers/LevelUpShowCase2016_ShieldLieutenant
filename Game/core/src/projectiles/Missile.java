@@ -1,6 +1,7 @@
 package projectiles;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.mygdx.game.GameStage;
 
 /**
  * Created by Hairuo on 2015-11-23.
@@ -21,7 +22,7 @@ public class Missile extends Weapon {
     }
 
     @Override
-    void update() {
+    void update(GameStage game_stage) {
 
     }
 }

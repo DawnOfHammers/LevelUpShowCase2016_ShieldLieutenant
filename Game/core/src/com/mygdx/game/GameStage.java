@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import projectiles.Weapon;
 import ship.Enemy;
+import ship.Player;
 
 import java.lang.reflect.Array;
 import java.nio.file.Watchable;
@@ -16,9 +17,11 @@ public class GameStage extends com.badlogic.gdx.scenes.scene2d.Stage {
     private ArrayList<Actor> enemies = new ArrayList<Actor>();
     private ArrayList<Actor> weapons = new ArrayList<Actor>();
     private ArrayList<Actor> actors = new ArrayList<Actor>();
+    private Player player;
     public GameStage(Viewport view){
         super(view);
     }
+
 
     @Override
     public void draw() {
@@ -28,7 +31,7 @@ public class GameStage extends com.badlogic.gdx.scenes.scene2d.Stage {
 
 
     @Override
-    public void addActor(Actor actor) {
+    public void addActor(Actor actor){
         //System.out.println(actors.size());
         super.addActor(actor);
 
@@ -38,7 +41,12 @@ public class GameStage extends com.badlogic.gdx.scenes.scene2d.Stage {
         }else if (actor instanceof Weapon){
 
             weapons.add(actor);
+        }else if (actor instanceof Player){
+            player = (Player)actor;
         }
+    }
+    public Player getPlayer() {
+        return player;
     }
 
     public ArrayList<Actor> getEnemies() {

@@ -208,6 +208,10 @@ public class Player extends Ship {
         }
     }
 
+    public ArrayList<Shield> getShields() {
+        return shields;
+    }
+
     public Sprite getSprite() {
         return sprite;
     }

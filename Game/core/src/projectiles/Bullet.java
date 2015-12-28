@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.mygdx.game.GameStage;
 
 import java.awt.*;
 
@@ -66,7 +67,7 @@ public class Bullet extends Weapon {
         super(x, y, trajectory);
         System.out.println(this.getX() + "," + this.getY());
         this.trajectory = trajectory;
-        this.speed = 3;
+        this.speed = 10;
         this.bounced = false;
 
 
@@ -88,7 +89,7 @@ public class Bullet extends Weapon {
     }
 
     @Override
-    public void update() {
+    public void update(GameStage game_stage) {
         //System.out.println(this.getX()+ "      " + this.getY());
         this.x_velo =  Math.sin(Math.toRadians(trajectory)) * speed;
         this.y_velo =  Math.cos(Math.toRadians(trajectory)) * speed;
