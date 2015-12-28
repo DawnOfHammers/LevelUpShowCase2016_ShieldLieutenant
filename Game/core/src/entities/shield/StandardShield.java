@@ -1,12 +1,8 @@
-package shield;
-import com.badlogic.gdx.Input;
+package entities.shield;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import projectiles.Bullet;
-import java.awt.Point;
+import entities.projectiles.Bullet;
 
 /**
  * This class is the StandardShield used by the character. It has an overridden collide method
@@ -36,7 +32,7 @@ public class StandardShield extends Shield{
     }
 
     /**
-     * The overriden collide method in the shield class
+     * The overriden collide method in the entities.shield class
      * This returns a boolean because if it collided, then it should be TRUE!
      * @param bullet: the bullet that you need to check collision with.
      */

@@ -1,14 +1,10 @@
-package ship;
+package entities.ship.Enemies;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.mygdx.game.GameStage;
-
-
-import java.util.ArrayList;
+import entities.ship.Ship;
+import gamestates.playState.GameStage;
 
 /**A generic Enemy superclass. All Enemy(s) are Ship(s).
  *
@@ -24,8 +20,8 @@ public abstract class Enemy extends Ship {
      * @param x X - Cord
      * @param y Y - Cord
      */
-    protected Enemy(int x, int y, String sprite_path){
-        super(x, y);
+    protected Enemy(int x, int y, String sprite_path, GameStage gs){
+        super(x, y, gs);
         goal_x = x;
         goal_y = y;
 
@@ -45,12 +41,10 @@ public abstract class Enemy extends Ship {
      *      -
      *
      */
-    @Override
-    public void update(GameStage game_stage){
-        //System.out.print(health);
-        aiPlan(game_stage);
-        aiAct(game_stage);
-
+    public void act(float dt){
+        aiPlan();
+        aiAct();
+        update();
         move();
     }
 
@@ -81,13 +75,14 @@ public abstract class Enemy extends Ship {
         }
     }
 
-    /**The Logic/AI of the enemy ship.
+    /**The Logic/AI of the enemy entities.ship.
      *      actions[0] = condition 0;
      *      actions[1] = condition 1;
      *      actions[2] = condition 2;
      *      ...
      */
-    protected abstract void aiPlan(GameStage game_stage);
+    protected abstract void aiPlan();
+
     /**The implementation of individual enemy action.
      * Updates the enemy based on the boolean array actions.
      *      if(actions[0]){...}
@@ -95,27 +90,30 @@ public abstract class Enemy extends Ship {
      *      if(actions[2]){...}
      *      ...
      */
-    protected abstract void aiAct(GameStage game_stage);
+    protected abstract void aiAct();
 
-    /**Gets the health of the Enemy ship.
+    /**Gets the health of the Enemy entities.ship.
      *
-     * @return  The current health of the ship.
+     * @return  The current health of the entities.ship.
      */
+
     @Override
     public int getHealth() {
         return this.health;
     }
 
-    /**Decreases the health of the Enemy ship.
+    /**Decreases the health of the Enemy entities.ship.
      *
      * If an enemy interacts with health and damage differently this method must be overridden.
      *
-     * @param change    The change in health of the ship.
+     * @param change    The change in health of the entities.ship.
      */
+
     @Override
     public void setHealth(int change) {
         this.health -= change;
     }
 
+    protected abstract void update();
 
 }

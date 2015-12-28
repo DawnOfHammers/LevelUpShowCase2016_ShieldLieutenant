@@ -1,4 +1,4 @@
-package projectiles;
+package entities.projectiles;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 
@@ -21,7 +21,7 @@ public class Missile extends Weapon {
     }
 
     @Override
-    void update() {
+    protected void update() {
 
     }
 }

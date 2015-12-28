@@ -1,13 +1,10 @@
-package ship;
+package entities.ship.Enemies;
 
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.mygdx.game.GameStage;
+import entities.ship.Enemies.Enemy;
+import gamestates.playState.GameStage;
 
-import java.util.ArrayList;
-
-/**Prototype of a basic enemy ship type.
+/**Prototype of a basic enemy entities.ship type.
  * Created by Feng on 11/14/2015.
  */
 public class Proto extends Enemy {
@@ -16,8 +13,8 @@ public class Proto extends Enemy {
      * @param x X - Cord
      * @param y Y - Cord
      */
-    public Proto(int x, int y){
-        super(x,y, "Proto.png");
+    public Proto(int x, int y, GameStage gs){
+        super(x,y, "Proto.png", gs);
         super.health = 5;
         super.actions = new boolean[2];
     }
@@ -28,7 +25,7 @@ public class Proto extends Enemy {
      *
      */
     @Override
-    protected void aiPlan(GameStage game_screen){
+    protected void aiPlan(){
         actions[0] = health > 2;
         actions[1] = health <=2;
     }
@@ -38,9 +35,9 @@ public class Proto extends Enemy {
      * Action 1: Stop moving.
      */
     @Override
-    protected void aiAct(GameStage game_screen){
+    protected void aiAct(){
         if(actions[0]) {
-            //TODO change implementation of coordsX and Y in ship.
+            //TODO change implementation of coordsX and Y in entities.ship.
             if ((int)goal_x == (int)this.getX() && (int)goal_y == (int)this.getY()) {
                 goal_x = (int)(Math.random()*1000);
                 goal_y = (int)(Math.random()*800);
@@ -53,7 +50,7 @@ public class Proto extends Enemy {
     }
 
     @Override
-    public void update(GameStage game_screen) {
-        super.update(game_screen);
+    public void update() {
+        //TODO This.
     }
 }

@@ -1,7 +1,8 @@
-package projectiles;
+package entities.projectiles;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+
 
 /**
  * Created by Hairuo on 2015-11-18.
@@ -22,7 +23,8 @@ public abstract class Weapon extends Actor {
 
     }
 
-    abstract void update();
+    protected abstract void update();
+
 
 
 

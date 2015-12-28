@@ -1,12 +1,10 @@
-package com.mygdx.game;
+package gamestates.playState;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import projectiles.Weapon;
-import ship.Enemy;
+import entities.projectiles.*;
+import entities.ship.Enemies.Enemy;
 
-import java.lang.reflect.Array;
-import java.nio.file.Watchable;
 import java.util.ArrayList;
 
 /**
@@ -41,9 +39,12 @@ public class GameStage extends com.badlogic.gdx.scenes.scene2d.Stage {
         }
     }
 
+
+
     public ArrayList<Actor> getEnemies() {
         return enemies;
     }
+
     public ArrayList<Actor> getWeapons() {
         return weapons;
     }

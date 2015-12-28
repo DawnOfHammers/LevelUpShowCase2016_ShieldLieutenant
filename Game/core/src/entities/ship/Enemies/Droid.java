@@ -1,11 +1,9 @@
-package ship;
+package entities.ship.Enemies;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.mygdx.game.GameStage;
-import projectiles.Bullet;
+import entities.projectiles.Bullet;
+import gamestates.playState.GameStage;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -19,8 +17,8 @@ public class Droid extends Enemy {
      */
     private int range;
     private int firelag;    //After the firing of its weapons a droid will not move for <firelag> seconds.
-    public Droid(int x, int y){
-        super(x,y,"Proto.png");
+    public Droid(int x, int y, GameStage gs){
+        super(x,y,"Proto.png", gs);
         super.health = 5;
         super.actions = new boolean[3];
         this.range = 10;
@@ -35,9 +33,9 @@ public class Droid extends Enemy {
      * Action 2: When "player" is not within range.
      */
     @Override
-    protected void aiPlan(GameStage gameStage){
+    protected void aiPlan(){
         //TODO All other enemies are.
-        ArrayList<Actor> actors = gameStage.getActorList();
+        ArrayList<Actor> actors = gamestage.getActorList();
 
         actions[0] = firelag > 0;
         actions[1] = range > Math.pow(actors.get(0).getX() - this.getX(), 2)
@@ -53,8 +51,8 @@ public class Droid extends Enemy {
      *           NOTE: Variation of goal_x, and goal_y should not be above 1.4 or root(2).
      */
     @Override
-    protected void aiAct(GameStage game_stage){
-        ArrayList<Actor> actors = game_stage.getActorList();
+    protected void aiAct(){
+        ArrayList<Actor> actors = gamestage.getActorList();
 
         if(actions[0]){
             firelag--;
@@ -66,7 +64,7 @@ public class Droid extends Enemy {
                 double p_x = actors.get(0).getX();
                 double p_y = actors.get(0).getY();
                 //System.out.println(this.getX()+"        "+this.getY());
-                game_stage.addActor(new Bullet((int) this.getX(), (int) this.getY(), Math.atan2(p_y - this.getY(), p_x - this.getX())));
+                gamestage.addActor(new Bullet((int) this.getX(), (int) this.getY(), Math.atan2(p_y - this.getY(), p_x - this.getX())));
                 //System.out.println(this.getX() + "        " + this.getY());
             }
         }
@@ -79,8 +77,8 @@ public class Droid extends Enemy {
     }
 
     @Override
-    public void update(GameStage game_screen) {
-        super.update(game_screen);
+    protected void update() {
+
     }
 }
 

@@ -1,4 +1,4 @@
-package ship;
+package entities.ship.player;
 
 /**
  * Created by Hairuo on 2015-11-05.
@@ -12,14 +12,16 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.mygdx.game.GameStage;
-import projectiles.Bullet;
-import projectiles.Weapon;
-import shield.Shield;
-import shield.StandardShield;
+import entities.projectiles.Bullet;
+import entities.shield.Shield;
+import entities.shield.StandardShield;
+import entities.ship.Ship;
+import game.MainGame;
+import gamestates.playState.GameStage;
+import gamestates.playState.Play;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class Player extends Ship {
     private double maxSpeed;
@@ -30,17 +32,10 @@ public class Player extends Ship {
     private double veloY;
     private double angle;
     private double speed;
-    private boolean right;
-    private boolean left;
-    private boolean forward;
-    private boolean shield_one_left;
-    private boolean shield_one_right;
-    private boolean shield_two_left;
-    private boolean shield_two_right;
     private ArrayList<Shield> shields = new ArrayList<Shield>();
 
-    public Player(int x,int y){
-        super(x, y);
+    public Player(int x,int y, GameStage gs){
+        super(x, y, gs);
         this.accelX = 0;
         this.accelY = 0;
         this.veloY = 0;
@@ -55,91 +50,41 @@ public class Player extends Ship {
 
 
         sprite = new Sprite(new Texture(("S2.png"))); //initializing the sprite of the player
-        sprite.setOrigin(sprite.getWidth()/2,sprite.getHeight()/2);
+        sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 
-        setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(),sprite.getHeight()); //initilization stuff for the actor
-        setTouchable(Touchable.enabled);
+        setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight()); //initilization stuff for the actor
 
-        addListener(new InputListener(){ //handles input
-            @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-                if(keycode == Input.Keys.RIGHT){
-                    right = true;
-                }
-                if(keycode == Input.Keys.LEFT){
-                    left = true;
-                }
-                if(keycode == Input.Keys.UP){
-                    forward = true;
-                }
-                if (keycode == Input.Keys.W) {
-                    shield_one_right = true;
-                }
-                if (keycode == Input.Keys.Q) {
-                    shield_one_left = true;
-                }
-                if (keycode == Input.Keys.E) {
-                    shield_two_right = true;
-                }
-                if (keycode == Input.Keys.R) {
-                    shield_two_left = true;
-                }
-                return true;
-            }
 
-            @Override
-            public boolean keyUp(InputEvent event, int keycode) {
-                if(keycode == Input.Keys.RIGHT){
-                    right = false;
-                }
-                if(keycode == Input.Keys.LEFT){
-                    left = false;
-                }
-                if(keycode == Input.Keys.UP){
-                    forward = false;
-                }
-                if (keycode == Input.Keys.W) {
-                    shield_one_right = false;
-                }
-                if (keycode == Input.Keys.Q) {
-                    shield_one_left = false;
-                }
-                if (keycode == Input.Keys.E) {
-                    shield_two_right = false;
-                }
-                if (keycode == Input.Keys.R) {
-                    shield_two_left = false;
-                }
-                return true;
-            }
-        });
+
 
     }
 
     public void inputExecute(){ //executes all input commands
 
-        if (left){
+        if (Play.key_events.get(Input.Keys.LEFT)){
             angle += 1;
         }
-        if (right){
+        if (Play.key_events.get(Input.Keys.RIGHT)){
             angle -= 1;
 
         }
-        if(shield_one_left){
+        if(Play.key_events.get(Input.Keys.Q)){
             shields.get(0).rotateCounterClockwise();
-
         }
-        if(shield_one_right){
+
+        if(Play.key_events.get(Input.Keys.W)){
             shields.get(0).rotateClockwise();
         }
-        if(shield_two_left){
-            shields.get(1).rotateCounterClockwise();
 
+        if(Play.key_events.get(Input.Keys.E)){
+            shields.get(1).rotateCounterClockwise();
         }
-        if(shield_two_right){
+
+        if(Play.key_events.get(Input.Keys.R)){
             shields.get(1).rotateClockwise();
         }
-        if (forward) {
+
+        if (Play.key_events.get(Input.Keys.UP)) {
             speed += 0.005;
         }else{
             speed = 0;
@@ -159,16 +104,17 @@ public class Player extends Ship {
     @Override
     public void act(float delta) { //performs any actions directed towards the actor
         super.act(delta);
+        update();
     }
 
     @Override
-    protected void move(){//moves space ship
+    protected void move(){//moves space entities.ship
 
         accelX = Math.sin(Math.toRadians(angle)) * speed; //acceleration calcs
         accelY = Math.cos(Math.toRadians(angle)) * speed;
        // System.out.println(speed);
         trueSpeed = Math.sqrt(Math.pow(veloX, 2) + Math.pow(veloY, 2)); //finds the actual speed of the player
-        if(trueSpeed < maxSpeed) { //changes the velocity if the ship had not reached maximum speed
+        if(trueSpeed < maxSpeed) { //changes the velocity if the entities.ship had not reached maximum speed
             veloX += accelX ;
             veloY += accelY ;
         }
@@ -180,8 +126,8 @@ public class Player extends Ship {
 
 
     }
-    public void update(GameStage game_stage){
-        ArrayList<Actor> weapons = game_stage.getWeapons();
+    public void update(){
+        ArrayList<Actor> weapons = gamestage.getWeapons();
         inputExecute();
         move();
         for(Shield shield : shields){
@@ -194,7 +140,7 @@ public class Player extends Ship {
 
     /**
      * This method will check for collisions with the shields or the player and update all entities involved
-     * @param weapons: the list of weapons that will be iterated through to check for collision with either the player or the shield
+     * @param weapons: the list of weapons that will be iterated through to check for collision with either the player or the entities.shield
      */
     public void checkCollions(ArrayList<Actor> weapons){
         for( Actor weapon : weapons){
@@ -263,14 +209,14 @@ public class Player extends Ship {
     }
 
     public boolean isRight() {
-        return right;
+        return Play.key_events.get(Input.Keys.RIGHT);
     }
 
     public boolean isLeft() {
-        return left;
+        return Play.key_events.get(Input.Keys.LEFT);
     }
 
     public boolean isForward() {
-        return forward;
+        return Play.key_events.get(Input.Keys.RIGHT);
     }
 }

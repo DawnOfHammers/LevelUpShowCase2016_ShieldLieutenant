@@ -1,9 +1,9 @@
-package projectiles;
+package entities.projectiles;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import ship.Player;
+import entities.ship.player.Player;
 
 import java.util.ArrayList;
 
@@ -66,7 +66,7 @@ public class Laser extends Weapon{
         return true;
     }
     @Override
-    void update(){
+    protected void update(){
 
     }
 }

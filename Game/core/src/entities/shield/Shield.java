@@ -1,42 +1,42 @@
-package shield;
+package entities.shield;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import projectiles.Bullet;
+import entities.projectiles.Bullet;
 
 /**
- * This class will be the superclass of the primary shield of the character.
+ * This class will be the superclass of the primary entities.shield of the character.
  * @author Hongyu Wang
  * @version 1.0
  * @since 2015/11/14
  */
 public abstract class Shield extends Actor {
     /**
-     * The location of the ship. This is the point at which the shield is centred.
+     * The location of the entities.ship. This is the point at which the entities.shield is centred.
      */
     protected double[] point;
 
     /**
-     * The integer distance from the ship to the centre of the shield.
+     * The integer distance from the entities.ship to the centre of the entities.shield.
      */
     protected int radius;
 
     /**
-     * The angle in RADIANS of the arc size of the shield.
+     * The angle in RADIANS of the arc size of the entities.shield.
      */
     protected double arc_size;
 
     /**
-     * The initial angle of the shield. This will automatically be initiated to be 0.
+     * The initial angle of the entities.shield. This will automatically be initiated to be 0.
      */
     protected double initial_angle = 0;
 
     /**
-     * This is the angular velocity of the shield.
+     * This is the angular velocity of the entities.shield.
      */
     private final double PRESS_SPEED = Math.PI / 36;
 
     /**
-     * The primary constructor of shield.
+     * The primary constructor of entities.shield.
      *
      * @param p:        Point
      * @param radius:   int
@@ -49,7 +49,7 @@ public abstract class Shield extends Actor {
     }
 
     /**
-     * This method will rotate the shield clockwise
+     * This method will rotate the entities.shield clockwise
      */
     public void rotateClockwise() {
         this.initial_angle += PRESS_SPEED;
@@ -59,7 +59,7 @@ public abstract class Shield extends Actor {
     }
 
     /**
-     * This method will rotate the shield counterclockwise
+     * This method will rotate the entities.shield counterclockwise
      */
     public void rotateCounterClockwise() {
         this.initial_angle -= PRESS_SPEED;
@@ -69,24 +69,15 @@ public abstract class Shield extends Actor {
     }
 
     /**
-     * This is the collision method between any given bullet and a shield
+     * This is the collision method between any given bullet and a entities.shield
      *
      * @param b: This is the bullet at which collides
-     * @return: This returns whether or not the bullet did collide with the shield.
+     * @return boolean: This returns whether or not the bullet did collide with the entities.shield.
      */
     public abstract boolean collideProjectile(Bullet b);
 
     /**
-     * This gets the point of the ship. The point is mutable.
-     *
-     * @return double []: A double array representation of the point
-     */
-    public double[] getPoint() {
-        return point;
-    }
-
-    /**
-     * Returns the ending angle of the arc that represents the shield.
+     * Returns the ending angle of the arc that represents the entities.shield.
      *
      * @return double: The ending angle of the arc
      */
