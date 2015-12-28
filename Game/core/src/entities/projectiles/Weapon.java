@@ -2,7 +2,7 @@ package entities.projectiles;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.mygdx.game.GameStage;
+import gamestates.playState.GameStage;
 
 
 /**
@@ -15,21 +15,21 @@ public abstract class Weapon extends Actor {
     protected double x_velo;
     protected double y_velo;
     protected int speed;
+    protected GameStage gamestage;
 
-    public Weapon(int x, int y, double trajectory){
+    public Weapon(int x, int y, double trajectory, GameStage gs){
         //System.out.println(x+","+y);
         //System.out.println(y);
         this.setX(x);
         this.setY(y);
-
+        this.trajectory = trajectory;
+        this.gamestage = gs;
     }
 
-<<<<<<< HEAD:Game/core/src/entities/projectiles/Weapon.java
     protected abstract void update();
 
-=======
-    abstract void update(GameStage game_stage);
->>>>>>> origin/master:Game/core/src/projectiles/Weapon.java
+
+
 
 
 

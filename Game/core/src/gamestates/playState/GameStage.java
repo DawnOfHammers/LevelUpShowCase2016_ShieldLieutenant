@@ -2,14 +2,10 @@ package gamestates.playState;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.viewport.Viewport;
-<<<<<<< HEAD:Game/core/src/gamestates/playState/GameStage.java
 import entities.projectiles.*;
 import entities.ship.Enemies.Enemy;
-=======
-import projectiles.Weapon;
-import ship.Enemy;
-import ship.Player;
->>>>>>> origin/master:Game/core/src/com/mygdx/game/GameStage.java
+import entities.ship.player.Player;
+
 
 import java.util.ArrayList;
 

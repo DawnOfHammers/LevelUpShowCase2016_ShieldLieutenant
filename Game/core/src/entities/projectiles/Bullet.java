@@ -83,7 +83,7 @@ public class Bullet extends Weapon {
         this.setY((float) (this.getY() + y_velo));
         System.out.println("x: "+this.getX() + " y: "+ this.getY());
         sprite.setPosition(this.getX(),this.getY());
-        sprite.setRotation((float)this.getTrajectory());
+        sprite.setRotation((float)trajectory);
     }
 
     public boolean isBounced() {
