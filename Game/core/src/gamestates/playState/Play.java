@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import entities.projectiles.Laser;
+import entities.projectiles.Missile;
 import entities.ship.player.Player;
 import game.MainGame;
 import gamestates.GameState;
@@ -21,6 +23,7 @@ import java.util.Hashtable;
 public class Play extends GameState{
     private GameStage gStage;
     private Player main_player;
+    private Laser laser;
     public static Hashtable<Integer, Boolean> key_events;
 
     public Play(GameStateManager gsm) {
@@ -28,15 +31,16 @@ public class Play extends GameState{
     }
 
     @Override
-    public void init() {
+    public void init(){
         ScreenViewport viewport = new ScreenViewport();
         gStage = new GameStage(viewport);
-
+        laser = new Laser(100,100, 90, gStage);
         key_events = new Hashtable<Integer, Boolean>();
         for (int input : MainGame.relevant_inputs){
             key_events.put(input, false);
         }
 
+        gStage.addActor(laser);
         gStage.addActor(main_player = new Player(100,300, gStage));
     }
 

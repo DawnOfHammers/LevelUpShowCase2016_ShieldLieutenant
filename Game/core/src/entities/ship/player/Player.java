@@ -114,12 +114,16 @@ public class Player extends Ship {
         accelY = Math.cos(Math.toRadians(angle)) * speed;
        // System.out.println(speed);
         trueSpeed = Math.sqrt(Math.pow(veloX, 2) + Math.pow(veloY, 2)); //finds the actual speed of the player
+        //System.out.println(trueSpeed);
+
         if(trueSpeed < maxSpeed) { //changes the velocity if the entities.ship had not reached maximum speed
-            veloX += accelX ;
-            veloY += accelY ;
+            veloX += accelX;
+            veloY += accelY;
         }
+
         veloX *= 0.97; //deceleration
         veloY *= 0.97;
+
         this.setX(this.getX() - (float) veloX);
         this.setY(this.getY() + (float) veloY);
         this.setRotation((float) angle);
