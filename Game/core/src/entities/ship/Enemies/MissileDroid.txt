@@ -1,7 +1,7 @@
 package entities.ship.Enemies;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import entities.projectiles.Missle;
+import entities.projectiles.Missile;
 import gamestates.playState.GameStage;
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Created by Feng on 12/29/2015.
  */
-public class MissleDroid extends Enemy {
+public class MissileDroid extends Enemy {
     /**Creates a new Droid at points x,y.
      *
      * @param x X - Cord
@@ -17,7 +17,7 @@ public class MissleDroid extends Enemy {
      */
     private int range;
     private int firelag;    //After the firing of its weapons a droid will not move for <firelag> seconds.
-    public MissleDroid(int x, int y, GameStage gs){
+    public MissileDroid(int x, int y, GameStage gs){
         super(x,y,"Proto.png", gs);
         super.health = 5;
         super.range = 250;
@@ -87,7 +87,7 @@ public class MissleDroid extends Enemy {
             double p_x = actors.get(0).getX();
             double p_y = actors.get(0).getY();
             //System.out.println(this.getX()+"        "+this.getY());
-            gamestage.addActor(new Missle((int) this.getX(), (int) this.getY(), Math.atan2(p_y - this.getY(), p_x - this.getX()), gamestage));
+            gamestage.addActor(new Missile((int) this.getX(), (int) this.getY(), Math.atan2(p_y - this.getY(), p_x - this.getX()), gamestage));
             //System.out.println(this.getX() + "        " + this.getY());
         }
         if(firelag == 180)
