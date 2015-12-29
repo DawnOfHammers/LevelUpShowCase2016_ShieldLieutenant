@@ -114,6 +114,6 @@ public abstract class Enemy extends Ship {
         this.health -= change;
     }
 
-    protected abstract void update();
+    public abstract void update();
 
 }
