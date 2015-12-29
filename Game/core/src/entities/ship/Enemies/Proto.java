@@ -19,10 +19,7 @@ public class Proto extends Enemy {
         super.actions = new boolean[2];
     }
 
-    @Override
-    protected void move() {
 
-    }
 
     /**Action 0: When hp is above 2.
      *

@@ -27,10 +27,6 @@ public class Droid extends Enemy {
         this.firelag = 0;
     }
 
-    @Override
-    protected void move() {
-
-    }
 
     /**
      * Action 0: When droid is suffering from weapon's lag.

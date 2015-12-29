@@ -59,6 +59,16 @@ public class Player extends Ship {
 
     }
 
+    @Override
+    protected void moveAngle() {
+
+    }
+
+    @Override
+    protected void movePoint() {
+
+    }
+
     public void inputExecute(){ //executes all input commands
 
         if (Play.key_events.get(Input.Keys.LEFT)){
@@ -114,7 +124,6 @@ public class Player extends Ship {
         Play.cam.update();
     }
 
-    @Override
     protected void move(){//moves space entities.ship
 
         accelX = Math.sin(Math.toRadians(angle)) * speed; //acceleration calcs
