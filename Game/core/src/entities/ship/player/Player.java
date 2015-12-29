@@ -108,7 +108,7 @@ public class Player extends Ship {
     }
 
     @Override
-    protected void move(){//moves space entities.ship
+    protected void moveAngle(){//moves space entities.ship
 
         accelX = Math.sin(Math.toRadians(angle)) * speed; //acceleration calcs
         accelY = Math.cos(Math.toRadians(angle)) * speed;
@@ -123,13 +123,17 @@ public class Player extends Ship {
         this.setX(this.getX() - (float) veloX);
         this.setY(this.getY() + (float) veloY);
         this.setRotation((float) angle);
-
-
     }
+    
+    @Override
+    protected void movePoint(){
+        
+    }
+
     public void update(){
         ArrayList<Actor> weapons = gamestage.getWeapons();
         inputExecute();
-        move();
+        moveAngle();
         for(Shield shield : shields){
             shield.update(this.getX()+sprite.getWidth()/2,this.getY()+sprite.getHeight()/2);
         }

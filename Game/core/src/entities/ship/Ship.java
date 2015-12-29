@@ -20,7 +20,8 @@ public abstract class Ship extends Actor
     }
 
 
-    protected abstract void move();
+    protected abstract void moveAngle();
+    protected abstract void movePoint();
     public abstract int getHealth();
     public abstract void setHealth(int change);
     public void draw(Batch batch, float parentAlpha) { //draws and moves the actor
