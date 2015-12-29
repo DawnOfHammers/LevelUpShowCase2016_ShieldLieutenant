@@ -27,17 +27,19 @@ public class Fighter extends Enemy {
     }
 
     /**
-     * Action 0: 
+     * Action 0: [Fire].
+     *           - In range.
+     *           - Shots Lined Up.
+     *           - Weapon reloaded.
      *
-     * Action 1: 
+     * Action 1: [Turn right].
      *
-     * Action 2: 
+     * Action 2: [Turn left].
      *
-     * Action 3: 
+     * Action 3: [Moving].
      */
     @Override
     protected void aiPlan(){
-        //TODO All other enemies are.
         ArrayList<Actor> actors = gamestage.getActorList();
 
         actions[0] = null;

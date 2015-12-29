@@ -14,8 +14,8 @@ public abstract class Enemy extends Ship {
     protected boolean[] actions;
     protected double goal_x, goal_y;
     protected double angle;
-    protected int speed;
-    protected int health;
+    protected int speed;        //Subclass specific.
+    protected int health;       //Subclass specific.
     /**Creates a new enemy.
      *
      * This constructor should never be called in isolation.

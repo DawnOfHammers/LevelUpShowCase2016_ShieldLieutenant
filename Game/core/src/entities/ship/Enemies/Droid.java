@@ -3,7 +3,6 @@ package entities.ship.Enemies;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import entities.projectiles.Bullet;
 import gamestates.playState.GameStage;
-
 import java.util.ArrayList;
 
 /**
@@ -87,11 +86,11 @@ public class Droid extends Enemy {
             double p_x = actors.get(0).getX();
             double p_y = actors.get(0).getY();
             //System.out.println(this.getX()+"        "+this.getY());
-            gamestage.addActor(new Bullet((int) this.getX(), (int) this.getY(), Math.atan2(p_y - this.getY(), p_x - this.getX())));
+            gamestage.addActor(new Bullet((int) this.getX(), (int) this.getY(), Math.atan2(p_y - this.getY(), p_x - this.getX()), gamestage));
             //System.out.println(this.getX() + "        " + this.getY());
         }
         if(firelag == 180)
-        firelag = 0;
+            firelag = 0;
     }
 
     private void firelag(){
