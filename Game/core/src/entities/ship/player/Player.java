@@ -85,7 +85,8 @@ public class Player extends Ship {
         }
 
         if (Play.key_events.get(Input.Keys.UP)) {
-            speed += 0.005;
+            if (speed < 4)
+                speed += 0.005;
         }else{
             speed = 0;
         }
@@ -107,23 +108,33 @@ public class Player extends Ship {
         update();
     }
 
+    public void updateCamera(){ //locks the camera onto the player
+        Play.cam.position.x = getX() + getOriginX();
+        Play.cam.position.y = getY() + getOriginY();
+        Play.cam.update();
+    }
+
     @Override
     protected void move(){//moves space entities.ship
 
         accelX = Math.sin(Math.toRadians(angle)) * speed; //acceleration calcs
         accelY = Math.cos(Math.toRadians(angle)) * speed;
-       // System.out.println(speed);
         trueSpeed = Math.sqrt(Math.pow(veloX, 2) + Math.pow(veloY, 2)); //finds the actual speed of the player
+        //System.out.println(trueSpeed);
         if(trueSpeed < maxSpeed) { //changes the velocity if the entities.ship had not reached maximum speed
             veloX += accelX ;
             veloY += accelY ;
+        } else{
+            veloX /= trueSpeed/maxSpeed;
+            veloY /= trueSpeed/maxSpeed;
         }
         veloX *= 0.97; //deceleration
         veloY *= 0.97;
         this.setX(this.getX() - (float) veloX);
         this.setY(this.getY() + (float) veloY);
-        this.setRotation((float) angle);
 
+        this.setRotation((float) angle);
+        updateCamera();
 
     }
     public void update(){

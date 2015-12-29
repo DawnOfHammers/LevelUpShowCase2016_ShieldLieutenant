@@ -28,7 +28,7 @@ public abstract class Enemy extends Ship {
 
         goal_x = x;
         goal_y = y;
-	this.angle = Math.random()*Math.PI;
+	    this.angle = Math.random()*Math.PI;
 
         {// Sprite Setup
             super.sprite = new Sprite(new Texture((sprite_path)));
@@ -57,13 +57,13 @@ public abstract class Enemy extends Ship {
     /**Moves to a target point in a straight line.
      *
      */
-    @Override
+    //@Override
     protected void movePoint(){
         double dx = (goal_x - this.getX()), dy = (goal_y - this.getY());
         double hyp = Math.hypot(dx, dy);
         
         {//Angle set.
-            this.angle = ;//TODO set angle based on dx and dy.
+            this.angle = 0;//TODO set angle based on dx and dy.
         }
         {// Ship Movement
             if(hyp > speed) {
@@ -84,7 +84,7 @@ public abstract class Enemy extends Ship {
     /**This move behavior is based on the angle of the ship, and not a point.
      *
      */
-    @Override
+    //@Override
     protected void moveAngle(){
         double dx = Math.sin(angle);
 	double dy = Math.cos(angle);
