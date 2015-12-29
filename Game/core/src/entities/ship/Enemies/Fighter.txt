@@ -77,13 +77,14 @@ public class Fighter extends Enemy {
             cooldown = 300;
         }
         if(actions[1]){
-            turn*=-1;
+            turn *= -1;
         }
         if(actions[2]){
+            turn *= 3;
             cooldown --;
         }
 	if(actions[3]){
-            angle += turn;
+            angle += turn * turnrate;
             super.moveAngle();
 	}
     }
