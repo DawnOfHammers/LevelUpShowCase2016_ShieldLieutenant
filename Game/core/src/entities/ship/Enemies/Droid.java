@@ -20,8 +20,11 @@ public class Droid extends Enemy {
     public Droid(int x, int y, GameStage gs){
         super(x,y,"Proto.png", gs);
         super.health = 5;
+        super.range = 250;
+        super.speed = 2;
+
         super.actions = new boolean[4];
-        this.range = 10;
+
         this.firelag = 0;
     }
 
@@ -63,37 +66,49 @@ public class Droid extends Enemy {
         ArrayList<Actor> actors = gamestage.getActorList();
 
         if(actions[0]){
-            firelag++;
-	    if(firelag == 60){	
-		//Creates a new bullet.
-                double p_x = actors.get(0).getX();
-                double p_y = actors.get(0).getY();
-                //System.out.println(this.getX()+"        "+this.getY());
-                gamestage.addActor(new Bullet((int) this.getX(), (int) this.getY(), Math.atan2(p_y - this.getY(), p_x - this.getX())));
-                //System.out.println(this.getX() + "        " + this.getY());
-            }
-	    if(firelag == 180)
-		firelag = 0;
+            fire(actors);
             return;
         }
         if(actions[1]) {
-            firelag = 1;
+            firelag();
         }
         if(actions[2]){
-            if ((int)goal_x == (int)this.getX() && (int)goal_y == (int)this.getY()) {
-                goal_x = actors.get(0).getX() - range/2 + Math.random()*range;
-                goal_y = actors.get(0).getY() - range/2 + Math.random()*range;
-            }
+            target(actors);
         }
 	if(actions[3]){
-	    super.move();
+	    super.movePoint();
 	}
+    }
+
+    private void fire(ArrayList<Actor> actors){
+        firelag++;
+        if(firelag == 60){	
+            //Creates a new bullet.
+            double p_x = actors.get(0).getX();
+            double p_y = actors.get(0).getY();
+            //System.out.println(this.getX()+"        "+this.getY());
+            gamestage.addActor(new Bullet((int) this.getX(), (int) this.getY(), Math.atan2(p_y - this.getY(), p_x - this.getX())));
+            //System.out.println(this.getX() + "        " + this.getY());
+        }
+        if(firelag == 180)
+        firelag = 0;
+    }
+
+    private void firelag(){
+	firelag = 1;
+    }
+
+    private void target(ArrayList<Actor> actors){
+        if ((int)goal_x == (int)this.getX() && (int)goal_y == (int)this.getY()) {
+            goal_x = actors.get(0).getX() - range/2 + Math.random()*range;
+            goal_y = actors.get(0).getY() - range/2 + Math.random()*range;
+        }
     }
 
     @Override
     protected void update() {
-	this.aiPlan();
-	this.aiAct();
+        this.aiPlan();
+        this.aiAct();
     }
 }
 
