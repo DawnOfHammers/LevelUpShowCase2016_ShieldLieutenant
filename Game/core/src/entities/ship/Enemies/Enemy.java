@@ -16,6 +16,7 @@ public abstract class Enemy extends Ship {
     protected double angle;
     protected int speed;        //Subclass specific.
     protected int health;       //Subclass specific.
+    protected int range;        //Subclass specific.
     /**Creates a new enemy.
      *
      * This constructor should never be called in isolation.
@@ -50,7 +51,8 @@ public abstract class Enemy extends Ship {
         aiPlan();
         aiAct();
         update();
-        move();
+        movePoint();
+        moveAngle();
     }
 
 
@@ -63,7 +65,10 @@ public abstract class Enemy extends Ship {
         double hyp = Math.hypot(dx, dy);
         
         {//Angle set.
-            this.angle = 0;//TODO set angle based on dx and dy.
+
+
+            this.angle = Math.toDegrees(Math.atan2(dy, dx)) + 90;//TODO set angle based on dx and dy.
+
         }
         {// Ship Movement
             if(hyp > speed) {
