@@ -64,7 +64,7 @@ public abstract class Enemy extends Ship {
         double hyp = Math.hypot(dx, dy);
         
         {//Angle set.
-            this.angle = Math.toDegrees(Math.atan2(dy, dx)) + 90;//TODO set angle based on dx and dy.
+            this.angle = -Math.toDegrees(Math.atan2(dy, dx)) + 90;//TODO set angle based on dx and dy.
         }
         {// Ship Movement
             if(hyp > speed) {
@@ -87,8 +87,8 @@ public abstract class Enemy extends Ship {
      */
     @Override
     protected void moveAngle(){
-        double dx = Math.sin(angle);
-	double dy = Math.cos(angle);
+        double dx = Math.sin(Math.toRadians(angle - 90));
+	double dy = Math.cos(Math.toRadians(angle - 90));
 
         {// Ship Movement
             this.setX(this.getX() + (float) (speed * dx));
