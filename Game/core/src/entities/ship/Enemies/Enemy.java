@@ -47,11 +47,9 @@ public abstract class Enemy extends Ship {
      *      -
      *
      */
+    @Override
     public void act(float dt){
-        aiPlan();
-        aiAct();
         update();
-        move();
     }
 
 

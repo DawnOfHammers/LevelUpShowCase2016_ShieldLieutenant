@@ -40,7 +40,7 @@ public class MainGame extends ApplicationAdapter{
 
 
     public void render() {
-        sleep();
+        //sleep();
         batch.begin();
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.draw();

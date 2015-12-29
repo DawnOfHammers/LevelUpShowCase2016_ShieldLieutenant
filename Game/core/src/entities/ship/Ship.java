@@ -24,6 +24,8 @@ public abstract class Ship extends Actor
     protected abstract void movePoint();
     public abstract int getHealth();
     public abstract void setHealth(int change);
+
+    @Override
     public void draw(Batch batch, float parentAlpha) { //draws and moves the actor
         sprite.draw(batch);
     }

@@ -18,13 +18,14 @@ public class Droid extends Enemy {
     public Droid(int x, int y, GameStage gs){
         super(x,y,"Proto.png", gs);
         super.health = 5;
-        super.range = 250;
+        //super.range = 250;
         super.speed = 2;
 
         super.actions = new boolean[4];
 
         this.firelag = 0;
     }
+
 
     /**
      * Action 0: When droid is suffering from weapon's lag.
