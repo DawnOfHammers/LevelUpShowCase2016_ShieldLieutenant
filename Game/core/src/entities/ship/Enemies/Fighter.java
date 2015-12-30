@@ -2,6 +2,7 @@ package entities.ship.Enemies;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import entities.projectiles.Bullet;
+import entities.projectiles.Laser;
 import gamestates.playState.GameStage;
 
 import java.util.ArrayList;
@@ -47,13 +48,13 @@ public class Fighter extends Enemy {
     protected void aiPlan(){
         ArrayList<Actor> actors = gamestage.getActorList();
 
-        boolean inrange = range * range > Math.pow(actors.get(0).getX() - this.getX(), 2)
+        boolean in_range = range * range > Math.pow(actors.get(0).getX() - this.getX(), 2)
                                         + Math.pow(actors.get(0).getY() - this.getY(), 2);
 	
-        actions[0] = inrange && angle == tg_angle && cooldown == 0;
+        actions[0] = in_range && angle == tg_angle && cooldown == 0;
         actions[1] = cooldown == 0;		   
         actions[2] = cooldown != 0;
-	actions[3] = health > 2;
+	    actions[3] = health > 2;
     }
 
     /**Action 0: 
@@ -97,8 +98,8 @@ public class Fighter extends Enemy {
     private int shortSide(){
         boolean inside;
         angle = (angle + 360) % 360;
-        tg_angle = (tg_angle + 360) % 360
-        inside = Math.abs(angle - tg_angle) < Math.min(angle, tg_angle) - Math.max(angle, tg_angle) + 360
+        tg_angle = (tg_angle + 360) % 360;
+        inside = Math.abs(angle - tg_angle) < Math.min(angle, tg_angle) - Math.max(angle, tg_angle) + 360;
         if(inside == (tg_angle > angle))
             return 1;
         return -1;
