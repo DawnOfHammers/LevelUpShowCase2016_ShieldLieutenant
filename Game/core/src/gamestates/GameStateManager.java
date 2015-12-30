@@ -2,6 +2,7 @@ package gamestates;
 
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import gamestates.menuState.Menu;
 import gamestates.playState.Play;
 
 /**
@@ -18,8 +19,9 @@ public class GameStateManager {
     public static final int PLAY = 1;
 
     public GameStateManager(SpriteBatch sb){
-        setState(PLAY);
         sprite_batch = sb;
+        setState(MENU);
+
     }
 
     /**
@@ -29,25 +31,36 @@ public class GameStateManager {
      */
     public void setState(int state){
         if (gameState != null){
-            gameState.dispose();
+            dispose();
         }
         if (state == MENU){
-
+            gameState = new Menu(this);
         }
         if (state == PLAY){
             gameState = new Play(this);
         }
     }
 
-
+    /**
+     * Calls the update method of the specific game_state.
+     * @param dt -  the default <float></float> value of
+     *              the render loop.
+     */
     public void update(float dt){
         gameState.update(dt);
     }
 
+    /**
+     * Calls the draw method of the specific game_state.
+     */
     public void draw() {
         gameState.draw();
     }
 
+    /**
+     * Calls the dispose method of the specific game_state. This is called also when
+     * switching states.
+     */
     public void dispose(){
         gameState.dispose();
     }
@@ -55,4 +68,5 @@ public class GameStateManager {
     public SpriteBatch getSpriteBatch(){
         return sprite_batch;
     }
+
 }

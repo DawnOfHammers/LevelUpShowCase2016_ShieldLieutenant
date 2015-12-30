@@ -16,20 +16,13 @@ public class MainGame extends ApplicationAdapter{
     public static int WIDTH;
     public static int HEIGHT;
     private SpriteBatch batch;
-    private long difference, start = System.currentTimeMillis();
-    public static int [] relevant_inputs = {
-            Input.Keys.Q,
-            Input.Keys.W,
-            Input.Keys.E,
-            Input.Keys.R,
-            Input.Keys.UP,
-            Input.Keys.LEFT,
-            Input.Keys.RIGHT
-    };
+    private long start = System.currentTimeMillis();
+
 
     public static OrthographicCamera cam;
 
     private GameStateManager gsm;
+
 
     public void create() {
         WIDTH = Gdx.graphics.getWidth();
@@ -40,15 +33,10 @@ public class MainGame extends ApplicationAdapter{
 
 
     public void render() {
-        //sleep();
-        batch.begin();
+        sleep();
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.draw();
-        batch.end();
     }
-
-
-
 
     public void resize(int width, int height){
 
@@ -64,11 +52,10 @@ public class MainGame extends ApplicationAdapter{
 
     public void dispose(){
         gsm.dispose();
-        batch.dispose();
     }
 
-    public void sleep() {
-        difference = System.currentTimeMillis() - start;
+    private void sleep() {
+        long difference = System.currentTimeMillis() - start;
         long targetDelay = 1000/FPS;
         if (difference < targetDelay) {
             try{

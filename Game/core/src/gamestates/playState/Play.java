@@ -1,10 +1,9 @@
 package gamestates.playState;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import entities.ship.player.Player;
@@ -12,7 +11,6 @@ import game.MainGame;
 import gamestates.GameState;
 import gamestates.GameStateManager;
 import gamestates.TestActor;
-
 import java.util.Hashtable;
 
 /**
@@ -22,10 +20,18 @@ import java.util.Hashtable;
  */
 public class Play extends GameState{
     private GameStage gStage;
-    private Player main_player;
+
     public static Hashtable<Integer, Boolean> key_events;
     public static OrthographicCamera cam;
-
+    public static int [] relevant_inputs = {
+            Input.Keys.Q,
+            Input.Keys.W,
+            Input.Keys.E,
+            Input.Keys.R,
+            Input.Keys.UP,
+            Input.Keys.LEFT,
+            Input.Keys.RIGHT
+    };
     public Play(GameStateManager gsm) {
         super(gsm);
     }
@@ -37,15 +43,15 @@ public class Play extends GameState{
         gStage = new GameStage(viewport);
 
         key_events = new Hashtable<Integer, Boolean>();
-        for (int input : MainGame.relevant_inputs){
+        for (int input : relevant_inputs){
             key_events.put(input, false);
         }
         Actor test = new TestActor();
         test.setX(0);
         test.setY(0);
         gStage.addActor(test);
-        gStage.addActor(main_player = new Player(100,300, gStage));
-
+        gStage.addActor(new Player(100,300, gStage));
+        gStage.getPlayer().updateCamera();
     }
 
     @Override
@@ -69,11 +75,28 @@ public class Play extends GameState{
         for (int i : Play.key_events.keySet()){
             Play.key_events.replace(i, Gdx.input.isKeyPressed(i));
         }
+
+
+
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            gsm.setState(GameStateManager.MENU);
+        }
     }
 
     @Override
     public void dispose() {
         gStage.dispose();
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
     }
 
 }
