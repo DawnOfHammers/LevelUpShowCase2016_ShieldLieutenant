@@ -41,14 +41,14 @@ public class MissileDroid extends Enemy {
         //TODO All other enemies are.
         ArrayList<Actor> actors = gamestage.getActorList();
 
-	boolean stop = (int)goal_x == (int)this.getX() && (int)goal_y == (int)this.getY();
-	boolean inrange = range * range > Math.pow(actors.get(0).getX() - this.getX(), 2)
+	    boolean stop = (int)goal_x == (int)this.getX() && (int)goal_y == (int)this.getY();
+	    boolean inrange = range * range > Math.pow(actors.get(0).getX() - this.getX(), 2)
                                         + Math.pow(actors.get(0).getY() - this.getY(), 2);
 
         actions[0] = firelag > 0;
         actions[1] = inrange && stop;
         actions[2] = !inrange && stop;
-	actions[3] = health > 2;
+        actions[3] = health > 2;
     }
 
     /**Action 0: Prevents the droid from doing any actions for <firelag> number of frames.
@@ -86,7 +86,11 @@ public class MissileDroid extends Enemy {
             double p_x = actors.get(0).getX();
             double p_y = actors.get(0).getY();
             //System.out.println(this.getX()+"        "+this.getY());
-            gamestage.addActor(new Missile((int) this.getX(), (int) this.getY(), - Math.toDegrees(Math.atan2(p_y - this.getY(), p_x - this.getX())) + 90, gamestage));
+            gamestage.addActor(new Missile((int) this.getX(),
+                                           (int) this.getY(),
+                                           - Math.toDegrees(Math.atan2(p_y - this.getY(),
+                                                                       p_x - this.getX())) + 90,
+                                           gamestage));
             //System.out.println(this.getX() + "        " + this.getY());
         }
         if(firelag == 180)
@@ -94,7 +98,7 @@ public class MissileDroid extends Enemy {
     }
 
     private void firelag(){
-	firelag = 1;
+        firelag = 1;
     }
 
     private void target(ArrayList<Actor> actors){
@@ -102,12 +106,6 @@ public class MissileDroid extends Enemy {
             goal_x = actors.get(0).getX() - range/2 + Math.random()*range;
             goal_y = actors.get(0).getY() - range/2 + Math.random()*range;
         }
-    }
-
-    @Override
-    protected void update() {
-        this.aiPlan();
-        this.aiAct();
     }
 }
 

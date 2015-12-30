@@ -49,7 +49,8 @@ public abstract class Enemy extends Ship {
      */
     @Override
     public void act(float dt){
-        update();
+        this.aiPlan();
+        this.aiPlan();
     }
 
 
@@ -92,6 +93,10 @@ public abstract class Enemy extends Ship {
             this.setX(this.getX() + (float) (speed * dx));
             this.setY(this.getY() + (float) (speed * dy));
         }
+        {// Sprite Movement
+            sprite.setRotation(this.getRotation());
+            sprite.setPosition(this.getX(), this.getY());
+        }
     }
 
     /**The Logic/AI of the enemy entities.ship.
@@ -132,7 +137,4 @@ public abstract class Enemy extends Ship {
     public void setHealth(int change) {
         this.health -= change;
     }
-
-    protected abstract void update();
-
 }

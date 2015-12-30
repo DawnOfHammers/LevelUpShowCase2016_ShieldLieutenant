@@ -86,7 +86,10 @@ public class Droid extends Enemy {
             double p_x = actors.get(0).getX();
             double p_y = actors.get(0).getY();
             //System.out.println(this.getX()+"        "+this.getY());
-            gamestage.addActor(new Bullet((int) this.getX(), (int) this.getY(), - Math.atan2(p_y - this.getY(), p_x - this.getX() + 90), gamestage));
+            gamestage.addActor(new Bullet((int) this.getX(),
+                                          (int) this.getY(),
+                                          - Math.atan2(p_y - this.getY(), p_x - this.getX()) + 90,
+                                          gamestage));
             //System.out.println(this.getX() + "        " + this.getY());
         }
         if(firelag == 180)
@@ -102,12 +105,6 @@ public class Droid extends Enemy {
             goal_x = actors.get(0).getX() - range/2 + Math.random()*range;
             goal_y = actors.get(0).getY() - range/2 + Math.random()*range;
         }
-    }
-
-    @Override
-    protected void update() {
-        this.aiPlan();
-        this.aiAct();
     }
 }
 
