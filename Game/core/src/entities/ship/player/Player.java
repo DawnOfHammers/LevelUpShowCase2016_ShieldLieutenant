@@ -18,6 +18,8 @@ import entities.ship.Ship;
 import gamestates.playState.GameStage;
 import gamestates.playState.Play;
 
+import entities.powerups.*;
+
 import java.util.ArrayList;
 
 
@@ -29,16 +31,23 @@ public class Player extends Ship {
     private double veloX;
     private double veloY;
     private double angle;
-    private double speed;
+    public double speed;
+    private ArrayList<Powerup> powerups = new ArrayList<Powerup>();
+    private int activePowerup;
+
     private ArrayList<Shield> shields = new ArrayList<Shield>();
 
     public Player(int x,int y, GameStage gs){
         super(x, y, gs);
         init();
-        this.shields.add(new StandardShield(new double[]{this.getX(),this.getY()}, 75));
-        this.shields.add(new StandardShield(new double[]{this.getX(),this.getY()}, 100));
+        this.shields.add(new StandardShield(new double[]{this.getX(), this.getY()}, 75));
+        this.shields.add(new StandardShield(new double[]{this.getX(), this.getY()}, 100));
         sprite = new Sprite(new Texture(("S2.png"))); //initializing the sprite of the player
         sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
+
+        this.powerups.add(new Afterburner(0, 0));
+        this.powerups.add(new Omni(0,0));
+        this.activePowerup = 0;
 
         setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight()); //initilization stuff for the actor
 
@@ -92,9 +101,18 @@ public class Player extends Ship {
             shields.get(1).rotateClockwise();
         }
 
+        if (Play.key_events.get(Input.Keys.T)) {
+            if(powerups.size()>0)
+                powerups.get(activePowerup).activate(this);
+        }else{
+            if(powerups.size()>0)
+                powerups.get(activePowerup).deactivate(this);
+        }
+
         if (Play.key_events.get(Input.Keys.UP)) {
             if (speed < 4)
                 speed += 0.005;
+
         }else{
             speed = 0;
             if (trueSpeed < 0.3) {
@@ -102,7 +120,6 @@ public class Player extends Ship {
                 veloY = 0;
             }
         }
-
     }
 
 
@@ -246,4 +263,20 @@ public class Player extends Ship {
     public boolean isForward() {
         return Play.key_events.get(Input.Keys.RIGHT);
     }
+
+    public void removeActivePowerup(){
+        powerups.remove(activePowerup);
+        activePowerup-=1;
+        if (activePowerup<0)
+            activePowerup=0;
+    }
+
+    public void addShield(Shield shield){
+        shields.add(shield);
+    }
+
+    public void removeShield(int index){
+        shields.remove(index);
+    }
+
 }

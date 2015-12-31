@@ -30,7 +30,8 @@ public class Play extends GameState{
             Input.Keys.R,
             Input.Keys.UP,
             Input.Keys.LEFT,
-            Input.Keys.RIGHT
+            Input.Keys.RIGHT,
+            Input.Keys.T
     };
     public Play(GameStateManager gsm) {
         super(gsm);

@@ -4,28 +4,25 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import entities.ship.player.Player;
 
 /**
- * Created by KMFK on 2015-11-19.
+ * Created by Kevin on 2015-11-19.
  */
 public abstract class Powerup extends Actor {
-    // I just needed to make a file to look like I did something
-    // The jig is up you fucker.
     /*
     */
     private int on_screen_timer;
     // The amount of time that the powerup will spend on the screen.
 
-    private int active_timer;
-    // The amount of time that the powerup will be active on the player
-    // Optionally, this could be set to a static amount within the player entities.ship, but it's good for different
-    // Entities.powerups to have different timers.
-
     private boolean active;
-    //Is the powerup active on the screen?
+    //Is the powerup acting on the player?
 
-    private Sprite sprite;
+    public Sprite sprite;
     //The image of the powerup.
+
+    //public String name;
+    //A string representation of the powerup.
 
     private int x;
     // X co-ordinate of the powerup.
@@ -33,12 +30,15 @@ public abstract class Powerup extends Actor {
     private int y;
     // Y co-ordinate of the powerup.
 
-    public Powerup(int ost,int at,int x, int y, String sprite_path){
+    public int timer;
+    //The time that the powerup will be active on the player.
+
+    public Powerup(int ost, int x, int y, String sprite_path, int timer){
         this.on_screen_timer = ost;
-        this.active_timer = at;
-        this.active = true;
+        this.active = false;
         this.x = x;
         this.y = y;
+        this.timer = timer;
 
         {
             sprite = new Sprite(new Texture((sprite_path)));
@@ -47,14 +47,14 @@ public abstract class Powerup extends Actor {
         }
     }
 
-    public abstract void activate();
+    public abstract void activate(Player player);
     //The actual function of the powerup. This needs to be implemented for each different powerup.
+
+    public abstract void deactivate(Player player);
+    //Deactivates the powerup on the player.
 
     public void update(){ // Entities.powerups only stay on screen for so long
         this.on_screen_timer -= 1;
-        if (this.on_screen_timer == 0){
-            this.active = false;
-        }
     }
 
     public void draw(Batch batch, float parentAlpha) { //draws and moves the actor
