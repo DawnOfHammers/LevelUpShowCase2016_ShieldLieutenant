@@ -65,6 +65,7 @@ public class StandardShield extends Shield {
             if (distance_from_player < radius) {
                 reflected.add(bullet);
                 if (check_in_arc(bullet)) {
+
                     double slope_of_tangent = -(delta_x / delta_y);
                     float reflected_angle = (float) Math.toDegrees(-((2 * Math.atan(slope_of_tangent) - (Math.toRadians(-bullet.getTrajectory()) + Math.PI / 2)) - Math.PI / 2));
                     bullet.setTrajectory(reflected_angle);
@@ -134,7 +135,6 @@ public class StandardShield extends Shield {
 
 
         double end_angle = (arc_size + initial_angle) % (Math.PI * 2);
-        //System.out.println(d_angle + "," + end_angle + "," + initial_angle);
         if (initial_angle < d_angle && d_angle < end_angle) {
             return true;
         } else if (initial_angle > end_angle) {

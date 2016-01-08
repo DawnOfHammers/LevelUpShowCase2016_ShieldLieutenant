@@ -12,29 +12,17 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 import entities.projectiles.Bullet;
 
 import entities.projectiles.Laser;
 import entities.shield.*;
 import entities.ship.Ship;
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 import gamestates.playState.GameStage;
 import gamestates.playState.Play;
 
 import entities.powerups.*;
 
 import java.util.ArrayList;
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 
 public class Player extends Ship {
     private final double maxSpeed = 4;
@@ -44,30 +32,21 @@ public class Player extends Ship {
     private double veloX;
     private double veloY;
     private double angle;
-<<<<<<< HEAD
     private ParticleEffect effect;
-    private double speed;
-=======
     public double speed;
     private ArrayList<Powerup> powerups = new ArrayList<Powerup>();
     private int activePowerup;
 
->>>>>>> origin/master
     private ArrayList<Shield> shields = new ArrayList<Shield>();
 
     public Player(int x,int y, GameStage gs){
         super(x, y, gs);
         init();
-        this.shields.add(new StandardShield(new double[]{this.getX(), this.getY()}, 75));
-        this.shields.add(new StandardShield(new double[]{this.getX(), this.getY()}, 100));
-        sprite = new Sprite(new Texture(("S2.png"))); //initializing the sprite of the player
-        sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 
-        this.powerups.add(new Afterburner(0, 0));
-        this.powerups.add(new Omni(0,0));
+        //this.powerups.add(new Afterburner(0, 0));
+        //this.powerups.add(new Omni(0,0));
         this.activePowerup = 0;
 
-        setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight()); //initilization stuff for the actor
 
 
     }
@@ -81,7 +60,6 @@ public class Player extends Ship {
         this.trueSpeed = 0;
         this.speed = 0;
         this.health = 100;
-<<<<<<< HEAD
         this.shields.add(new StandardShield(new double[]{this.getX(),this.getY()}, 75));
         this.shields.add(new StandardShield(new double[]{this.getX(),this.getY()}, 100));
 
@@ -100,8 +78,6 @@ public class Player extends Ship {
 
 
 
-=======
->>>>>>> origin/master
     }
 
 
@@ -224,11 +200,7 @@ public class Player extends Ship {
         inputExecute();
         move();
         for(Shield shield : shields){
-<<<<<<< HEAD
             shield.update(this.getX()+sprite.getWidth()/2,this.getY()+sprite.getHeight()/2, delta);
-=======
-            shield.update(this.getX()+sprite.getWidth()/2,this.getY()+sprite.getHeight() / 2);
->>>>>>> origin/master
         }
         checkCollisions(weapons);
         sprite.setRotation(this.getRotation());

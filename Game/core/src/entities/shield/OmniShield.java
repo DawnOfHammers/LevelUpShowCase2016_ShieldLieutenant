@@ -24,7 +24,7 @@ public class OmniShield extends Shield{
         return 10.0;
     }
 
-    public void update(double x, double y){
+    public void update(double x, double y, float delta){
         point[0] = x;
         point[1] = y;
     }
