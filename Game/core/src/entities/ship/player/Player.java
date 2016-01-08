@@ -12,39 +12,76 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 import entities.projectiles.Bullet;
 
 import entities.projectiles.Laser;
 import entities.shield.*;
 import entities.ship.Ship;
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 import gamestates.playState.GameStage;
 import gamestates.playState.Play;
 
+import entities.powerups.*;
+
 import java.util.ArrayList;
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 
 public class Player extends Ship {
-    private double maxSpeed;
+    private final double maxSpeed = 4;
     private double trueSpeed;
     private double accelX;
     private double accelY;
     private double veloX;
     private double veloY;
     private double angle;
+<<<<<<< HEAD
     private ParticleEffect effect;
     private double speed;
+=======
+    public double speed;
+    private ArrayList<Powerup> powerups = new ArrayList<Powerup>();
+    private int activePowerup;
+
+>>>>>>> origin/master
     private ArrayList<Shield> shields = new ArrayList<Shield>();
 
     public Player(int x,int y, GameStage gs){
         super(x, y, gs);
+        init();
+        this.shields.add(new StandardShield(new double[]{this.getX(), this.getY()}, 75));
+        this.shields.add(new StandardShield(new double[]{this.getX(), this.getY()}, 100));
+        sprite = new Sprite(new Texture(("S2.png"))); //initializing the sprite of the player
+        sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
+
+        this.powerups.add(new Afterburner(0, 0));
+        this.powerups.add(new Omni(0,0));
+        this.activePowerup = 0;
+
+        setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight()); //initilization stuff for the actor
+
+
+    }
+
+    private void init(){
         this.accelX = 0;
         this.accelY = 0;
         this.veloY = 0;
         this.veloX = 0;
-        this.maxSpeed = 4;
         this.angle = 0;
         this.trueSpeed = 0;
         this.speed = 0;
         this.health = 100;
+<<<<<<< HEAD
         this.shields.add(new StandardShield(new double[]{this.getX(),this.getY()}, 75));
         this.shields.add(new StandardShield(new double[]{this.getX(),this.getY()}, 100));
 
@@ -63,7 +100,10 @@ public class Player extends Ship {
 
 
 
+=======
+>>>>>>> origin/master
     }
+
 
     @Override
     protected void moveAngle() {
@@ -100,13 +140,25 @@ public class Player extends Ship {
             shields.get(1).rotateClockwise();
         }
 
+        if (Play.key_events.get(Input.Keys.T)) {
+            if(powerups.size()>0)
+                powerups.get(activePowerup).activate(this);
+        }else{
+            if(powerups.size()>0)
+                powerups.get(activePowerup).deactivate(this);
+        }
+
         if (Play.key_events.get(Input.Keys.UP)) {
             if (speed < 4)
                 speed += 0.005;
+
         }else{
             speed = 0;
+            if (trueSpeed < 0.3) {
+                veloX = 0;
+                veloY = 0;
+            }
         }
-
     }
 
 
@@ -172,9 +224,13 @@ public class Player extends Ship {
         inputExecute();
         move();
         for(Shield shield : shields){
+<<<<<<< HEAD
             shield.update(this.getX()+sprite.getWidth()/2,this.getY()+sprite.getHeight()/2, delta);
+=======
+            shield.update(this.getX()+sprite.getWidth()/2,this.getY()+sprite.getHeight() / 2);
+>>>>>>> origin/master
         }
-        checkCollions(weapons);
+        checkCollisions(weapons);
         sprite.setRotation(this.getRotation());
         sprite.setPosition(this.getX(), this.getY());
     }
@@ -183,7 +239,7 @@ public class Player extends Ship {
      * This method will check for collisions with the shields or the player and update all entities involved
      * @param weapons: the list of weapons that will be iterated through to check for collision with either the player or the entities.shield
      */
-    public void checkCollions(ArrayList<Actor> weapons){
+    public void checkCollisions(ArrayList<Actor> weapons){
         for( Actor weapon : weapons){
             for (Shield  shield : shields){
                 if(weapon instanceof Bullet) {
@@ -264,4 +320,20 @@ public class Player extends Ship {
     public boolean isForward() {
         return Play.key_events.get(Input.Keys.RIGHT);
     }
+
+    public void removeActivePowerup(){
+        powerups.remove(activePowerup);
+        activePowerup-=1;
+        if (activePowerup<0)
+            activePowerup=0;
+    }
+
+    public void addShield(Shield shield){
+        shields.add(shield);
+    }
+
+    public void removeShield(int index){
+        shields.remove(index);
+    }
+
 }

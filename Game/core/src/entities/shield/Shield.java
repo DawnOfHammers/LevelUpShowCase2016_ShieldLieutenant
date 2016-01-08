@@ -82,8 +82,8 @@ public abstract class Shield extends Actor {
      *
      * @param x: x coordinate to be checked
      * @param y: y coordinate to be checked
-     * @param trajectory: current angle of the laser
-     * @return: The trajectory after collision and a really large number if there is no collision
+     * @param trajectory: current angle of the bullet.
+     * @return: Whether the bullet has collided or not.
      */
     public abstract double collideLaser(double x, double y, double trajectory);
 

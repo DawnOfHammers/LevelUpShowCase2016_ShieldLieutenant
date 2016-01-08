@@ -48,4 +48,16 @@ public abstract class GameState {
      * This is called when the GameState is disposed. This should be called whenever the GameState is switched.
      */
     public abstract void dispose();
+
+    /**
+     * This is called when you want to pause the specific GameState. Necessary due to mobile use (i.e. recieivng
+     * a call in the middle of a game).
+     */
+    public abstract void pause();
+
+    /**
+     *  This is called when you want to resume a specific GameState.
+     */
+    public abstract void resume();
 }
+

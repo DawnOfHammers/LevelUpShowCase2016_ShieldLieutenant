@@ -1,12 +1,16 @@
 package gamestates.playState;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+<<<<<<< HEAD
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+=======
+>>>>>>> origin/master
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import entities.projectiles.Bullet;
@@ -17,7 +21,6 @@ import game.MainGame;
 import gamestates.GameState;
 import gamestates.GameStateManager;
 import gamestates.TestActor;
-
 import java.util.Hashtable;
 
 /**
@@ -27,6 +30,7 @@ import java.util.Hashtable;
  */
 public class Play extends GameState{
     private GameStage gStage;
+<<<<<<< HEAD
     private Player main_player;
     private Laser laser;
     private Bullet bullet;
@@ -35,6 +39,21 @@ public class Play extends GameState{
     public static OrthographicCamera cam;
     private int timer;
 
+=======
+
+    public static Hashtable<Integer, Boolean> key_events;
+    public static OrthographicCamera cam;
+    public static int [] relevant_inputs = {
+            Input.Keys.Q,
+            Input.Keys.W,
+            Input.Keys.E,
+            Input.Keys.R,
+            Input.Keys.UP,
+            Input.Keys.LEFT,
+            Input.Keys.RIGHT,
+            Input.Keys.T
+    };
+>>>>>>> origin/master
     public Play(GameStateManager gsm) {
         super(gsm);
     }
@@ -50,7 +69,7 @@ public class Play extends GameState{
         missile = new Missile(100,100,0, gStage);
 
         key_events = new Hashtable<Integer, Boolean>();
-        for (int input : MainGame.relevant_inputs){
+        for (int input : relevant_inputs){
             key_events.put(input, false);
         }
 
@@ -59,6 +78,7 @@ public class Play extends GameState{
         Actor test = new TestActor();
         test.setX(0);
         test.setY(0);
+<<<<<<< HEAD
         //gStage.addActor(test);
         //gStage.addActor(bullet);
         gStage.addActor(missile);
@@ -66,6 +86,11 @@ public class Play extends GameState{
 
 
 
+=======
+        gStage.addActor(test);
+        gStage.addActor(new Player(100,300, gStage));
+        gStage.getPlayer().updateCamera();
+>>>>>>> origin/master
     }
 
     @Override
@@ -96,6 +121,13 @@ public class Play extends GameState{
         for (int i : Play.key_events.keySet()){
             Play.key_events.replace(i, Gdx.input.isKeyPressed(i));
         }
+
+
+
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            gsm.setState(GameStateManager.MENU);
+        }
     }
 
     @Override
@@ -103,6 +135,7 @@ public class Play extends GameState{
         gStage.dispose();
     }
 
+<<<<<<< HEAD
     public void spawnBullet(){
         if(timer%60 == 0){
             Bullet bullet_1 = new Bullet(100,100,0,gStage);
@@ -110,6 +143,15 @@ public class Play extends GameState{
             gStage.addActor(bullet_1);
             gStage.addActor(bullet_2);
         }
+=======
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+>>>>>>> origin/master
 
     }
 

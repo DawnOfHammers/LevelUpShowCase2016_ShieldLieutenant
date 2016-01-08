@@ -29,7 +29,7 @@ public abstract class Enemy extends Ship {
 
         goal_x = x;
         goal_y = y;
-	    this.angle = Math.random()*Math.PI;
+	this.angle = Math.random()*Math.PI;
 
         {// Sprite Setup
             super.sprite = new Sprite(new Texture((sprite_path)));
@@ -47,28 +47,23 @@ public abstract class Enemy extends Ship {
      *      -
      *
      */
+    @Override
     public void act(float dt){
-        aiPlan();
-        aiAct();
-        update();
-        movePoint();
-        moveAngle();
+        this.aiPlan();
+        this.aiPlan();
     }
 
 
     /**Moves to a target point in a straight line.
      *
      */
-    //@Override
+    @Override
     protected void movePoint(){
         double dx = (goal_x - this.getX()), dy = (goal_y - this.getY());
         double hyp = Math.hypot(dx, dy);
         
         {//Angle set.
-
-
-            this.angle = Math.toDegrees(Math.atan2(dy, dx)) + 90;//TODO set angle based on dx and dy.
-
+            this.angle = -Math.toDegrees(Math.atan2(dy, dx)) + 90;//TODO set angle based on dx and dy.
         }
         {// Ship Movement
             if(hyp > speed) {
@@ -89,14 +84,18 @@ public abstract class Enemy extends Ship {
     /**This move behavior is based on the angle of the ship, and not a point.
      *
      */
-    //@Override
+    @Override
     protected void moveAngle(){
-        double dx = Math.sin(angle);
-	double dy = Math.cos(angle);
+        double dx = Math.sin(Math.toRadians(angle - 90));
+	double dy = Math.cos(Math.toRadians(angle - 90));
 
         {// Ship Movement
             this.setX(this.getX() + (float) (speed * dx));
             this.setY(this.getY() + (float) (speed * dy));
+        }
+        {// Sprite Movement
+            sprite.setRotation(this.getRotation());
+            sprite.setPosition(this.getX(), this.getY());
         }
     }
 
@@ -138,7 +137,4 @@ public abstract class Enemy extends Ship {
     public void setHealth(int change) {
         this.health -= change;
     }
-
-    protected abstract void update();
-
 }
