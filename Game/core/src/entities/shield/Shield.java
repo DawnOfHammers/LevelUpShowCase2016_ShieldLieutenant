@@ -28,7 +28,7 @@ public abstract class Shield extends Actor {
     /**
      * The initial angle of the entities.shield. This will automatically be initiated to be 0.
      */
-    protected double initial_angle = 0;
+    protected double initial_angle = 1.3;
 
     /**
      * This is the angular velocity of the entities.shield.
@@ -99,5 +99,5 @@ public abstract class Shield extends Actor {
     /**
      * Updates all logic of the Shield
      */
-    public abstract void update(double x, double y);
+    public abstract void update(double x, double y, float delta);
 }

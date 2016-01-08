@@ -19,6 +19,8 @@ public class Proto extends Enemy {
         super.actions = new boolean[2];
     }
 
+
+
     /**Action 0: When hp is above 2.
      *
      * Action 1: When hp is under 2.

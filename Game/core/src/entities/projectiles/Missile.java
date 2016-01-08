@@ -1,8 +1,8 @@
 package entities.projectiles;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.*;
 import entities.ship.player.Player;
 import gamestates.playState.GameStage;
 
@@ -12,12 +12,20 @@ import gamestates.playState.GameStage;
  */
 public class Missile extends Weapon {
     private double turn_speed;
+    private ParticleEffect effect;
+
 
     public Missile(int x, int y, double trajectory, GameStage gs){
         super(x, y, trajectory, gs);
         this.speed = 3;
         this.sprite = new Sprite(new Texture(("bullet.jpg")));
         this.turn_speed = 0.75;
+
+        effect = new ParticleEffect();
+        effect.load(Gdx.files.internal("Trail_1.p"), Gdx.files.internal(""));
+        effect.setPosition(this.getX() + sprite.getWidth()/2, this.getY());
+        effect.start();
+
     }
 
     @Override
@@ -25,6 +33,7 @@ public class Missile extends Weapon {
         super.act(delta);
         track(this.gamestage.getPlayer());
         update();
+        effect.update(delta);
     }
 
     /**
@@ -43,7 +52,7 @@ public class Missile extends Weapon {
 
 
 
-        System.out.println(target_trajectory + "," + trajectory);
+        //System.out.println(target_trajectory + "," + trajectory);
         if(Math.abs(trajectory - target_trajectory) < turn_speed){
             trajectory = target_trajectory;
         }else{
@@ -67,7 +76,9 @@ public class Missile extends Weapon {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+
         sprite.draw(batch, parentAlpha);
+        effect.draw(batch);
     }
 
     protected void update() {
@@ -79,6 +90,19 @@ public class Missile extends Weapon {
         this.setY((float) (this.getY() - y_velo));
         sprite.setPosition(this.getX(),this.getY());
         sprite.setRotation((float)trajectory);
+
+        double[] t_coords = Laser.transform(this.getX() + sprite.getWidth()/2, this.getY() + sprite.getHeight(), 360 - this.trajectory , this.getX() + this.sprite.getWidth()/2, this.getY() + this.sprite.getHeight()/2);
+        effect.setPosition((float)t_coords[0] , (float)t_coords[1]);
+        com.badlogic.gdx.utils.Array<ParticleEmitter> emitters = effect.getEmitters();
+
+        for( ParticleEmitter i : emitters){
+            ParticleEmitter.ScaledNumericValue angle = i.getAngle();
+            angle.setLow((float)this.trajectory+90);
+
+        }
+
     }
+
+
 
 }

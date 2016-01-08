@@ -1,0 +1,81 @@
+package entities.ship.Enemies;
+
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import entities.projectiles.Bullet;
+import gamestates.playState.GameStage;
+
+import java.util.ArrayList;
+
+/**
+ * Created by Feng on 12/29/2015.
+ */
+public class Fighter extends Enemy {
+    /**Creates a new Fighter at points x,y.
+     *
+     * @param x X - Cord
+     * @param y Y - Cord
+     */
+    private int range;
+    public Fighter(int x, int y, GameStage gs){
+        super(x,y,"Proto.png", gs);
+        super.health = 5;
+        super.speed = 3;
+
+        super.actions = new boolean[4];
+
+        this.range = 250;
+    }
+
+    /**
+     * Action 0: [Fire].
+     *           - In range.
+     *           - Shots Lined Up.
+     *           - Weapon reloaded.
+     *
+     * Action 1: [Turn right].
+     *
+     * Action 2: [Turn left].
+     *
+     * Action 3: [Moving].
+     */
+    @Override
+    protected void aiPlan(){
+        ArrayList<Actor> actors = gamestage.getActorList();
+
+        actions[0] = null;
+        actions[1] = null;
+			   
+        actions[2] = null;
+	actions[3] = null;
+    }
+
+    /**Action 0: 
+     *
+     * Action 1: 
+     *
+     * Action 2: 
+     * 
+     * Action 3: 
+     */
+    @Override
+    protected void aiAct(){
+        ArrayList<Actor> actors = gamestage.getActorList();
+
+        if(actions[0]){
+        }
+        if(actions[1]) {
+        }
+        if(actions[2]){
+        }
+	if(actions[3]){
+	}
+    }
+
+
+    @Override
+    protected void update() {
+        this.aiPlan();
+        this.aiAct();
+    }
+}
+

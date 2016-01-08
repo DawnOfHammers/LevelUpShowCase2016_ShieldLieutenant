@@ -13,6 +13,10 @@ import gamestates.playState.GameStage;
 public abstract class Enemy extends Ship {
     protected boolean[] actions;
     protected double goal_x, goal_y;
+    protected double angle;
+    protected int speed;        //Subclass specific.
+    protected int health;       //Subclass specific.
+    protected int range;        //Subclass specific.
     /**Creates a new enemy.
      *
      * This constructor should never be called in isolation.
@@ -22,8 +26,10 @@ public abstract class Enemy extends Ship {
      */
     protected Enemy(int x, int y, String sprite_path, GameStage gs){
         super(x, y, gs);
+
         goal_x = x;
         goal_y = y;
+	    this.angle = Math.random()*Math.PI;
 
         {// Sprite Setup
             super.sprite = new Sprite(new Texture((sprite_path)));
@@ -45,20 +51,25 @@ public abstract class Enemy extends Ship {
         aiPlan();
         aiAct();
         update();
-        move();
+        movePoint();
+        moveAngle();
     }
 
 
-    /**Moves to a target location in a straight line.
+    /**Moves to a target point in a straight line.
      *
-     * For ships with specialized movement this method will be overridden.
      */
-    @Override
-    protected void move(){
-        int speed = 2;
+    //@Override
+    protected void movePoint(){
         double dx = (goal_x - this.getX()), dy = (goal_y - this.getY());
         double hyp = Math.hypot(dx, dy);
+        
+        {//Angle set.
 
+
+            this.angle = Math.toDegrees(Math.atan2(dy, dx)) + 90;//TODO set angle based on dx and dy.
+
+        }
         {// Ship Movement
             if(hyp > speed) {
                 this.setX(this.getX() + (float) (speed * dx / hyp));
@@ -72,6 +83,20 @@ public abstract class Enemy extends Ship {
         {// Sprite Movement
             sprite.setRotation(this.getRotation());
             sprite.setPosition(this.getX(), this.getY());
+        }
+    }
+
+    /**This move behavior is based on the angle of the ship, and not a point.
+     *
+     */
+    //@Override
+    protected void moveAngle(){
+        double dx = Math.sin(angle);
+	double dy = Math.cos(angle);
+
+        {// Ship Movement
+            this.setX(this.getX() + (float) (speed * dx));
+            this.setY(this.getY() + (float) (speed * dy));
         }
     }
 

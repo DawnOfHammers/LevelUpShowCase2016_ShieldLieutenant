@@ -4,24 +4,23 @@ package entities.ship.player;
  * Created by Hairuo on 2015-11-05.
  */
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import entities.projectiles.Bullet;
 
+import entities.projectiles.Laser;
 import entities.shield.*;
 import entities.ship.Ship;
-import game.MainGame;
 import gamestates.playState.GameStage;
 import gamestates.playState.Play;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 public class Player extends Ship {
     private double maxSpeed;
@@ -31,6 +30,7 @@ public class Player extends Ship {
     private double veloX;
     private double veloY;
     private double angle;
+    private ParticleEffect effect;
     private double speed;
     private ArrayList<Shield> shields = new ArrayList<Shield>();
 
@@ -52,10 +52,26 @@ public class Player extends Ship {
         sprite = new Sprite(new Texture(("S2.png"))); //initializing the sprite of the player
         sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 
-        setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight()); //initilization stuff for the actor
+        //setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight()); //initilization stuff for the actor
+
+
+        effect = new ParticleEffect();
+        effect.load(Gdx.files.internal("Trail_1.p"), Gdx.files.internal(""));
+        effect.setPosition(this.getX() + sprite.getWidth()/2, this.getY());
+        effect.start();
 
 
 
+
+    }
+
+    @Override
+    protected void moveAngle() {
+
+    }
+
+    @Override
+    protected void movePoint() {
 
     }
 
@@ -85,7 +101,8 @@ public class Player extends Ship {
         }
 
         if (Play.key_events.get(Input.Keys.UP)) {
-            speed += 0.005;
+            if (speed < 4)
+                speed += 0.005;
         }else{
             speed = 0;
         }
@@ -99,26 +116,34 @@ public class Player extends Ship {
         for (Shield shield : shields){
             shield.draw(batch,parentAlpha);
         }
+        effect.draw(batch);
     }
 
     @Override
     public void act(float delta) { //performs any actions directed towards the actor
         super.act(delta);
-        update();
+        update(delta);
+        effect.update(delta);
     }
 
-    @Override
+    public void updateCamera(){ //locks the camera onto the player
+        Play.cam.position.x = getX() + getOriginX();
+        Play.cam.position.y = getY() + getOriginY();
+        Play.cam.update();
+    }
+
     protected void move(){//moves space entities.ship
 
         accelX = Math.sin(Math.toRadians(angle)) * speed; //acceleration calcs
         accelY = Math.cos(Math.toRadians(angle)) * speed;
-       // System.out.println(speed);
         trueSpeed = Math.sqrt(Math.pow(veloX, 2) + Math.pow(veloY, 2)); //finds the actual speed of the player
         //System.out.println(trueSpeed);
-
         if(trueSpeed < maxSpeed) { //changes the velocity if the entities.ship had not reached maximum speed
-            veloX += accelX;
-            veloY += accelY;
+            veloX += accelX ;
+            veloY += accelY ;
+        } else{
+            veloX /= trueSpeed/maxSpeed;
+            veloY /= trueSpeed/maxSpeed;
         }
 
         veloX *= 0.97; //deceleration
@@ -126,16 +151,28 @@ public class Player extends Ship {
 
         this.setX(this.getX() - (float) veloX);
         this.setY(this.getY() + (float) veloY);
-        this.setRotation((float) angle);
 
+        this.setRotation((float) angle);
+        updateCamera();
 
     }
-    public void update(){
+    public void update(float delta){
+
+        double[] t_coords = Laser.transform(this.getX() + this.sprite.getWidth()/2 , this.getY(), 360 - this.angle , this.getX() + this.sprite.getWidth()/2, this.getY() + this.sprite.getHeight()/2);
+        effect.setPosition((float)t_coords[0] , (float)t_coords[1]);
+        com.badlogic.gdx.utils.Array<ParticleEmitter> emitters = effect.getEmitters();
+
+        for( ParticleEmitter i : emitters){
+            ParticleEmitter.ScaledNumericValue angle = i.getAngle();
+            angle.setLow((float)this.angle-90);
+
+        }
+
         ArrayList<Actor> weapons = gamestage.getWeapons();
         inputExecute();
         move();
         for(Shield shield : shields){
-            shield.update(this.getX()+sprite.getWidth()/2,this.getY()+sprite.getHeight()/2);
+            shield.update(this.getX()+sprite.getWidth()/2,this.getY()+sprite.getHeight()/2, delta);
         }
         checkCollions(weapons);
         sprite.setRotation(this.getRotation());
