@@ -46,7 +46,6 @@ public class Bullet extends Weapon {
 
     public Bullet(int x, int y, double trajectory,GameStage gs){
         super(x, y, trajectory, gs);
-        System.out.println(this.getX() + "," + this.getY());
         this.trajectory = trajectory;
         this.speed = 10;
         this.bounced = false;
@@ -77,9 +76,9 @@ public class Bullet extends Weapon {
         this.y_velo =  Math.cos(Math.toRadians(trajectory)) * speed;
         this.setX((float) (this.getX() + x_velo));
         this.setY((float) (this.getY() + y_velo));
-        System.out.println("x: "+this.getX() + " y: "+ this.getY());
+        //System.out.println("x: "+this.getX() + " y: "+ this.getY());
         sprite.setPosition(this.getX(),this.getY());
-        sprite.setRotation((float)trajectory);
+        sprite.setRotation( 360 - (float)trajectory);
     }
 
     public boolean isBounced() {

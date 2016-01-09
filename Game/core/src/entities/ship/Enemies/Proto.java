@@ -50,9 +50,4 @@ public class Proto extends Enemy {
             goal_y = super.getY();
         }
     }
-
-    @Override
-    public void update() {
-        //TODO This.
-    }
 }

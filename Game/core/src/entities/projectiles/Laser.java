@@ -21,11 +21,13 @@ public class Laser extends Weapon {
     ArrayList<float[]> chain;
     ArrayList<double[]> vertices;
     Player player;
+    boolean test = true;
+    boolean collide = false;
     int length;
 
     public Laser(int x, int y, double trajectory, GameStage gs) {
         super(x, y, trajectory, gs);
-        this.sprite = new Sprite(new Texture(("S2.png")));
+        this.sprite = new Sprite(new Texture(("bullet.jpg")));
         this.middle = new Sprite(new Texture(("S2.png")));
         this.end = new Sprite(new Texture(("S2.png")));
 
@@ -35,14 +37,13 @@ public class Laser extends Weapon {
         this.y_velo = Math.cos(Math.toRadians(trajectory)) * speed;
         this.vertices = new ArrayList<double[]>();
         this.vertices.add(new double[]{this.getX(), this.getY()});
-        setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
         chain = new ArrayList<float[]>();
 
     }
 
     /**
-     * draw method for laser
-     * iterates through all pieces and draws them
+     * Draw method for laser.
+     * Iterates through all pieces and draws them.
      *
      * @param batch
      * @param parentAlpha
@@ -52,9 +53,11 @@ public class Laser extends Weapon {
         super.draw(batch, parentAlpha);
         for (float[] i : chain) {
             Sprite draw_sprite = sprite;
+            draw_sprite.setRotation(-i[2]);
             draw_sprite.setPosition(i[0], i[1]);
+
             sprite.setOrigin(0, 0);
-            draw_sprite.setRotation(i[2]);
+
             draw_sprite.draw(batch, parentAlpha);
 
 
@@ -64,6 +67,7 @@ public class Laser extends Weapon {
     @Override
     public void act(float delta) {
         super.act(delta);
+        update();
     }
 
     /**
@@ -74,27 +78,36 @@ public class Laser extends Weapon {
     public void calc(GameStage game_stage) {
         double cur_x = this.getX();
         double cur_y = this.getY();
+        System.out.println(cur_x + "," + cur_y);
         while (onScreen(cur_x, cur_y, game_stage)) {
-
             for (double[] i : vertices) {
 
-                double[] f_vert = transform(i[0] + sprite.getWidth(), i[1], trajectory, this.getX(), this.getY());
-                double[] s_vert = transform(i[0] + sprite.getWidth(), i[1] + sprite.getHeight(), trajectory, this.getX(), this.getY());
-
+                //double[] f_vert = transform(i[0] + sprite.getWidth(), i[1], trajectory, this.getX(), this.getY());
+                double[] s_vert = transform(i[0] , i[1] + sprite.getHeight(), trajectory, cur_x, cur_y);
+                //System.out.println(s_vert[0] + "," + s_vert[1]);
+                //System.out.println(f_vert[0] + "," + f_vert[1]);
+                //System.out.println("b");
                 for (Shield shield : game_stage.getPlayer().getShields()) {
-                    double f_trajectory = shield.collideLaser(f_vert[0], f_vert[1], trajectory);
-                    double s_trajectory = shield.collideLaser(s_vert[0], s_vert[1], trajectory);
+                    //double f_trajectory = shield.collideLaser(f_vert[0], f_vert[1], trajectory);
 
-                    if (f_trajectory < 1000) {
+                    double s_trajectory = trajectory;
+                    if(!collide) {
+                        s_trajectory = shield.collideLaser(s_vert[0], s_vert[1], trajectory);
+
+                    }
+                    /*if (f_trajectory < 1000) {
                         trajectory = f_trajectory;
-                    } else if (s_trajectory < 1000) {
+                    } */
+                    if (s_trajectory < 1000) {
                         trajectory = s_trajectory;
+                        s_vert = transform(i[0] , i[1]+sprite.getHeight(), trajectory, cur_x, cur_y);
+                        collide = true;
                     }
                 }
 
                 chain.add(new float[]{(float) i[0], (float) i[1], (float) trajectory});
 
-                i = s_vert;
+                vertices.set(vertices.indexOf(i),s_vert);
                 cur_x = s_vert[0];
                 cur_y = s_vert[1];
 
@@ -125,31 +138,45 @@ public class Laser extends Weapon {
      * @param t_y   the y origin
      * @return
      */
-    public double[] transform(double x, double y, double angle, double t_x, double t_y) {
-        double sin_value = Math.sin(angle);
-        double cos_value = Math.cos(angle);
+    public static double[] transform(double x, double y, double angle, double t_x, double t_y) {
+        //angle+=90;
+        double sin_value = Math.sin(Math.toRadians(angle));
+        double cos_value = Math.cos(Math.toRadians(angle));
+
+        //System.out.println(x + "," + y + "lololol");
 
         x -= t_x;
         y -= t_y;
 
-        x = x * cos_value - y * sin_value;
-        y = x * sin_value + y * cos_value;
+        //System.out.println(-x * sin_value + y * cos_value + "a");
 
-        x += t_x;
-        y += t_y;
-        return new double[]{x, y};
+        double new_x = x * cos_value + y * sin_value;
+        double new_y = -x * sin_value + y * cos_value;
+
+
+        new_x += t_x;
+        new_y += t_y;
+
+        //System.out.println(new_x + "," + new_y + "b");
+
+
+
+
+        return new double[]{new_x, new_y};
     }
 
     /**
      * Checks whether or not the laser is still on the screen
      */
     public boolean onScreen(double x, double y, GameStage game_stage) {
-        return (x > 1000 || y > 1000 || x < -1000 || y < -1000);
+        return !(x > 1000 || y > 1000 || x < -1000 || y < -1000);
     }
 
     @Override
     protected void update() {
         calc(gamestage);
+        collide = false;
+
 
     }
 

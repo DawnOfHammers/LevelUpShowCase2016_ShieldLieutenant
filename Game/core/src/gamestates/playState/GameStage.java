@@ -1,5 +1,9 @@
 package gamestates.playState;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
+import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import entities.projectiles.*;
@@ -17,8 +21,13 @@ public class GameStage extends com.badlogic.gdx.scenes.scene2d.Stage {
     private ArrayList<Actor> weapons = new ArrayList<Actor>();
     private ArrayList<Actor> actors = new ArrayList<Actor>();
     private Player player;
+    private ArrayList<ParticleEffect> effects;
+    private ParticleEffectPool pool;
+
     public GameStage(Viewport view){
         super(view);
+
+
     }
 
 
@@ -26,8 +35,15 @@ public class GameStage extends com.badlogic.gdx.scenes.scene2d.Stage {
     public void draw() {
         super.draw();
 
+
+
     }
 
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+
+    }
 
     @Override
     public void addActor(Actor actor){
@@ -61,5 +77,13 @@ public class GameStage extends com.badlogic.gdx.scenes.scene2d.Stage {
 
     public ArrayList<Actor> getActorList() {
         return actors;
+    }
+
+    public void addEffect(ParticleEffect effect) {
+        effects.add(effect);
+    }
+
+    public ParticleEffectPool getPool() {
+        return pool;
     }
 }

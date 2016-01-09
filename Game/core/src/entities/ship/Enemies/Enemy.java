@@ -34,7 +34,7 @@ public abstract class Enemy extends Ship {
         {// Sprite Setup
             super.sprite = new Sprite(new Texture((sprite_path)));
             sprite.setOrigin(sprite.getWidth()/2,sprite.getHeight()/2);
-            setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(),sprite.getHeight()); //initilization stuff for the actor
+//            setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(),sprite.getHeight()); //initilization stuff for the actor
             setTouchable(Touchable.enabled);
         }
     }
@@ -49,7 +49,8 @@ public abstract class Enemy extends Ship {
      */
     @Override
     public void act(float dt){
-        update();
+        this.aiPlan();
+        this.aiAct();
     }
 
 
@@ -62,7 +63,7 @@ public abstract class Enemy extends Ship {
         double hyp = Math.hypot(dx, dy);
         
         {//Angle set.
-            this.angle = -Math.toDegrees(Math.atan2(dy, dx)) + 90;//TODO set angle based on dx and dy.
+            this.angle = Math.toDegrees(Math.atan2(dy, dx)) + 90;//TODO set angle based on dx and dy.
         }
         {// Ship Movement
             if(hyp > speed) {
@@ -91,6 +92,10 @@ public abstract class Enemy extends Ship {
         {// Ship Movement
             this.setX(this.getX() + (float) (speed * dx));
             this.setY(this.getY() + (float) (speed * dy));
+        }
+        {// Sprite Movement
+            sprite.setRotation(this.getRotation());
+            sprite.setPosition(this.getX(), this.getY());
         }
     }
 
@@ -132,7 +137,4 @@ public abstract class Enemy extends Ship {
     public void setHealth(int change) {
         this.health -= change;
     }
-
-    protected abstract void update();
-
 }

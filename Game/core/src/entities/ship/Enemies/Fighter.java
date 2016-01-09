@@ -1,8 +1,13 @@
 package entities.ship.Enemies;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+<<<<<<< HEAD:Game/core/src/entities/ship/Enemies/Fighter.java
 import entities.projectiles.Bullet;
 import entities.projectiles.Laser;
+=======
+import entities.projectiles.Laser;
+import entities.ship.player.Player;
+>>>>>>> origin/master:Game/core/src/entities/ship/Enemies/Fighter.java
 import gamestates.playState.GameStage;
 
 import java.util.ArrayList;
@@ -17,8 +22,8 @@ public class Fighter extends Enemy {
      * @param y Y - Cord
      */
     private double tg_angle;
-    private int turnrate;
-    private int cooldown;
+    private int turn_rate;
+    private int cool_down;
     public Fighter(int x, int y, GameStage gs){
         super(x,y,"Proto.png", gs);
         super.health = 5;
@@ -27,9 +32,9 @@ public class Fighter extends Enemy {
 
         super.actions = new boolean[4];
 
-	this.tg_angle = super.angle;
-        this.turnrate = 3;
-        this.cooldown = 0;
+	    this.tg_angle = super.angle;
+        this.turn_rate = 3;
+        this.cool_down = 0;
     }
 
     /**
@@ -51,9 +56,11 @@ public class Fighter extends Enemy {
         boolean in_range = range * range > Math.pow(actors.get(0).getX() - this.getX(), 2)
                                         + Math.pow(actors.get(0).getY() - this.getY(), 2);
 	
-        actions[0] = in_range && angle == tg_angle && cooldown == 0;
-        actions[1] = cooldown == 0;		   
-        actions[2] = cooldown != 0;
+
+        actions[0] = in_range && (int)angle == (int)tg_angle && cool_down == 0;
+        actions[1] = cool_down == 0;
+        actions[2] = cool_down != 0;
+
 	    actions[3] = health > 2;
     }
 
@@ -67,31 +74,40 @@ public class Fighter extends Enemy {
      */
     @Override
     protected void aiAct(){
-        ArrayList<Actor> actors = gamestage.getActorList();
+        Player player = gamestage.getPlayer();
 
-        tg_angle = direction(actors);
+        tg_angle = direction(player);
         
         int turn = shortSide();
 
         if(actions[0]){
-            gamestage.addActor(new Laser((int) this.getX(), (int) this.getY(), - Math.atan2(p_y - this.getY(), p_x - this.getX() + 90), gamestage));
-            cooldown = 300;
+            fire(player.getX(), player.getY());
         }
         if(actions[1]){
-            turn *= -1;
+            turn *= 3;
         }
         if(actions[2]){
-            turn *= 3;
-            cooldown --;
+            turn *= -1;
+            cool_down --;
         }
-	if(actions[3]){
-            angle += turn * turnrate;
+	    if(actions[3]){
+            angle += turn * turn_rate;
             super.moveAngle();
-	}
+	    }
     }
 
-    private double direction(ArrayList<Actor> actors){
-        double dx = (actors.get(0).getX() - this.getX()), dy = (actors.get(0).getY() - this.getY());
+    private void fire(double p_x, double p_y){
+        gamestage.addActor(new Laser((int) this.getX(),
+                (int) this.getY(),
+                - Math.atan2(p_y - this.getY(),
+                        p_x - this.getX()) + 90,
+                gamestage));
+        cool_down = 300;
+    }
+
+
+    private double direction(Player player){
+        double dx = (player.getX() - this.getX()), dy = (player.getY() - this.getY());
         return -Math.toDegrees(Math.atan2(dy, dx)) + 90;
     }
 
@@ -103,13 +119,6 @@ public class Fighter extends Enemy {
         if(inside == (tg_angle > angle))
             return 1;
         return -1;
-    }
-
-
-    @Override
-    protected void update() {
-        this.aiPlan();
-        this.aiAct();
     }
 }
 
