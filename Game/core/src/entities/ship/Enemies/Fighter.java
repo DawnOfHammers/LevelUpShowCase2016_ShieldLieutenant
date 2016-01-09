@@ -1,13 +1,10 @@
 package entities.ship.Enemies;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-<<<<<<< HEAD:Game/core/src/entities/ship/Enemies/Fighter.java
-import entities.projectiles.Bullet;
-import entities.projectiles.Laser;
-=======
+
 import entities.projectiles.Laser;
 import entities.ship.player.Player;
->>>>>>> origin/master:Game/core/src/entities/ship/Enemies/Fighter.java
+
 import gamestates.playState.GameStage;
 
 import java.util.ArrayList;
