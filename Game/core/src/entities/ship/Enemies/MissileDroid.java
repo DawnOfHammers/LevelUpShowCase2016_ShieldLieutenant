@@ -87,9 +87,9 @@ public class MissileDroid extends Enemy {
             double p_x = player.getX();
             double p_y = player.getY();
             gamestage.addActor(new Missile((int) this.getX(),
-                                          (int) this.getY(),
-                                          - Math.toDegrees(Math.atan2(p_y - this.getY(), p_x - this.getX())) + 90,
-                                          gamestage));
+                                           (int) this.getY(),
+                                           Math.toDegrees(Math.atan2(p_y - this.getY(), p_x - this.getX())) + 90,
+                                           gamestage));
 
             System.out.println("MissileDroid.fire(): " + Math.toDegrees(Math.atan2(p_y - this.getY(), p_x - this.getX())));
         }
