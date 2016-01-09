@@ -2,6 +2,7 @@ package entities.ship.Enemies;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import entities.projectiles.Bullet;
+import entities.ship.player.Player;
 import gamestates.playState.GameStage;
 import java.util.ArrayList;
 
@@ -18,7 +19,7 @@ public class Droid extends Enemy {
     public Droid(int x, int y, GameStage gs){
         super(x,y,"Proto.png", gs);
         super.health = 5;
-        //super.range = 250;
+        super.range = 500;
         super.speed = 2;
 
         super.actions = new boolean[4];
@@ -39,16 +40,16 @@ public class Droid extends Enemy {
     @Override
     protected void aiPlan(){
         //TODO All other enemies are.
-        ArrayList<Actor> actors = gamestage.getActorList();
+        Player player = gamestage.getPlayer();
 
-	boolean stop = (int)goal_x == (int)this.getX() && (int)goal_y == (int)this.getY();
-	boolean inrange = range * range > Math.pow(actors.get(0).getX() - this.getX(), 2)
-                                        + Math.pow(actors.get(0).getY() - this.getY(), 2);
+	    boolean stop = (int)goal_x == (int)this.getX() && (int)goal_y == (int)this.getY();
+	    boolean inrange = range * range > Math.pow(player.getX() - this.getX(), 2)
+                                        + Math.pow(player.getY() - this.getY(), 2);
 
         actions[0] = firelag > 0;
         actions[1] = inrange && stop;
-        actions[2] = !inrange && stop;
-	actions[3] = health > 2;
+        actions[2] = (!inrange) && stop;
+	    actions[3] = health > 2;
     }
 
     /**Action 0: Prevents the droid from doing any actions for <firelag> number of frames.
@@ -62,49 +63,50 @@ public class Droid extends Enemy {
      */
     @Override
     protected void aiAct(){
-        ArrayList<Actor> actors = gamestage.getActorList();
+        Player player = gamestage.getPlayer();
 
         if(actions[0]){
-            fire(actors);
+            fire(player);
             return;
         }
         if(actions[1]) {
             firelag();
         }
         if(actions[2]){
-            target(actors);
+            target(player);
         }
-	if(actions[3]){
-	    super.movePoint();
-	}
+	    if(actions[3]){
+	        super.movePoint();
+	    }
     }
 
-    private void fire(ArrayList<Actor> actors){
+    private void fire(Player player){
         firelag++;
-        if(firelag == 60){	
+        if(firelag == 5){
             //Creates a new bullet.
-            double p_x = actors.get(0).getX();
-            double p_y = actors.get(0).getY();
-            //System.out.println(this.getX()+"        "+this.getY());
+            double p_x = player.getX();
+            double p_y = player.getY();
             gamestage.addActor(new Bullet((int) this.getX(),
                                           (int) this.getY(),
-                                          - Math.atan2(p_y - this.getY(), p_x - this.getX()) + 90,
+                                          - Math.toDegrees(Math.atan2(p_y - this.getY(), p_x - this.getX())) + 90,
                                           gamestage));
-            //System.out.println(this.getX() + "        " + this.getY());
+
+            System.out.println("Droid.fire(): " + Math.toDegrees(Math.atan2(p_y - this.getY(), p_x - this.getX())));
         }
-        if(firelag == 180)
-            firelag = 0;
+        if(firelag == 10)
+            firelag = -1;
     }
 
     private void firelag(){
 	firelag = 1;
     }
 
-    private void target(ArrayList<Actor> actors){
+    private void target(Player player){
         if ((int)goal_x == (int)this.getX() && (int)goal_y == (int)this.getY()) {
-            goal_x = actors.get(0).getX() - range/2 + Math.random()*range;
-            goal_y = actors.get(0).getY() - range/2 + Math.random()*range;
+            goal_x = player.getX() - range / 2 + Math.random() * range;
+            goal_y = player.getY() - range / 2 + Math.random() * range;
         }
+        firelag = 0;
     }
 }
 

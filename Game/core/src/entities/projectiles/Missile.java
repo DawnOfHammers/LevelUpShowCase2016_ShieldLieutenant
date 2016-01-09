@@ -71,7 +71,6 @@ public class Missile extends Weapon {
         }
 
         trajectory = trajectory%360;
-
     }
 
     @Override
