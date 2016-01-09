@@ -2,6 +2,7 @@ package entities.ship.Enemies;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import entities.projectiles.Laser;
+import entities.ship.player.Player;
 import gamestates.playState.GameStage;
 
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class Fighter extends Enemy {
         boolean inrange = range * range > Math.pow(actors.get(0).getX() - this.getX(), 2)
                                         + Math.pow(actors.get(0).getY() - this.getY(), 2);
 	
-        actions[0] = inrange && angle == tg_angle && cool_down == 0;
+        actions[0] = inrange && (int)angle == (int)tg_angle && cool_down == 0;
         actions[1] = cool_down == 0;
         actions[2] = cool_down != 0;
 	    actions[3] = health > 2;
@@ -66,20 +67,20 @@ public class Fighter extends Enemy {
      */
     @Override
     protected void aiAct(){
-        ArrayList<Actor> actors = gamestage.getActorList();
+        Player player = gamestage.getPlayer();
 
-        tg_angle = direction(actors);
+        tg_angle = direction(player);
         
         int turn = shortSide();
 
         if(actions[0]){
-            fire(actors.get(0).getX(), actors.get(0).getY());
+            fire(player.getX(), player.getY());
         }
         if(actions[1]){
-            turn *= -1;
+            turn *= 3;
         }
         if(actions[2]){
-            turn *= 3;
+            turn *= -1;
             cool_down --;
         }
 	    if(actions[3]){
@@ -98,8 +99,8 @@ public class Fighter extends Enemy {
     }
 
 
-    private double direction(ArrayList<Actor> actors){
-        double dx = (actors.get(0).getX() - this.getX()), dy = (actors.get(0).getY() - this.getY());
+    private double direction(Player player){
+        double dx = (player.getX() - this.getX()), dy = (player.getY() - this.getY());
         return -Math.toDegrees(Math.atan2(dy, dx)) + 90;
     }
 

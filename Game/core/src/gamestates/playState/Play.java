@@ -14,6 +14,7 @@ import entities.projectiles.Missile;
 import entities.ship.Enemies.Droid;
 import entities.ship.Enemies.Enemy;
 import entities.ship.Enemies.Fighter;
+import entities.ship.Enemies.MissileDroid;
 import entities.ship.player.Player;
 import game.MainGame;
 import gamestates.GameState;
@@ -68,7 +69,7 @@ public class Play extends GameState{
         bullet = new Bullet(100,-200,0,gStage);
         missile = new Missile(100,100,0, gStage);
 
-        enemy = new Droid(500, 500, gStage);
+        enemy = new MissileDroid(500, 500, gStage);
 
         key_events = new Hashtable<Integer, Boolean>();
         for (int input : relevant_inputs){
