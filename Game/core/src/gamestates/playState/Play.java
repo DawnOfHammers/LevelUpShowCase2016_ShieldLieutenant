@@ -29,8 +29,6 @@ public class Play extends GameState{
     private Laser laser;
     private Bullet bullet;
     private Missile missile;
-    //public static Hashtable<Integer, Boolean> key_events;
-    //public static OrthographicCamera cam;
     private int timer;
 
 

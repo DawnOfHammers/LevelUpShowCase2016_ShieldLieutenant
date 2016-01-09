@@ -4,6 +4,7 @@ package entities.ship.player;
  * Created by Hairuo on 2015-11-05.
  */
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,15 +14,12 @@ import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import entities.projectiles.Bullet;
-
 import entities.projectiles.Laser;
 import entities.shield.*;
 import entities.ship.Ship;
 import gamestates.playState.GameStage;
 import gamestates.playState.Play;
-
 import entities.powerups.*;
-
 import java.util.ArrayList;
 
 public class Player extends Ship {

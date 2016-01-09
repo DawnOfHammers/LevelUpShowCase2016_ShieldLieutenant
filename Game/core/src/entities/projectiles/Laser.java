@@ -174,12 +174,9 @@ public class Laser extends Weapon {
 
     @Override
     protected void update() {
-        if(test) {
-            calc(gamestage);
-            collide = false;
-            test = false;
+        calc(gamestage);
+        collide = false;
 
-        }
 
     }
 

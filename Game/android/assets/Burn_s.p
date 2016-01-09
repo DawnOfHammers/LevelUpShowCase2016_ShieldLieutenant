@@ -1,9 +1,9 @@
-Untitled
+Burn
 - Delay -
 active: false
 - Duration - 
 lowMin: 20000.0
-lowMax: 20000.0
+lowMax: 3000000
 - Count - 
 min: 0
 max: 150
@@ -62,8 +62,8 @@ timeline0: 0.0
 - Scale - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 32.0
-highMax: 32.0
+highMin: 12.0
+highMax: 12.0
 relative: false
 scalingCount: 1
 scaling0: 1.0

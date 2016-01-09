@@ -22,14 +22,25 @@ import java.util.ArrayList;
  */
 public class StandardShield extends Shield {
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
+
+    /**
+     * list of bullets that have passed through the radius
+     */
     private ArrayList<Bullet> reflected;
-    private ArrayList<ParticleEffect> effects;
+
+    /**
+     * list of effects that need to be attached
+     */
+    private ArrayList<ParticleEffect> reflect_effects;
+    private ArrayList<ParticleEffect> shield_effects;
 
 
     public StandardShield(double[] point, int radius) {
         super(point, radius, Math.PI);
-        effects = new ArrayList<ParticleEffect>();
+        reflect_effects = new ArrayList<ParticleEffect>();
+        shield_effects = new ArrayList<ParticleEffect>();
         reflected = new ArrayList<Bullet>();
+        //createShieldEffects();
 
     }
 
@@ -44,9 +55,16 @@ public class StandardShield extends Shield {
         point[0] = x;
         point[1] = y;
 
-        for (ParticleEffect effect : effects) {
+        updateShieldEffects();
+
+        for (ParticleEffect effect : reflect_effects) {
             effect.update(delta);
         }
+        for (ParticleEffect effect : shield_effects) {
+            effect.update(delta);
+        }
+
+
 
 
     }
@@ -64,7 +82,7 @@ public class StandardShield extends Shield {
             double distance_from_player = Math.hypot(delta_x, delta_y);
             if (distance_from_player < radius) {
                 reflected.add(bullet);
-                if (check_in_arc(bullet)) {
+                if (check_in_arc(bullet.getX(), bullet.getY())) {
 
                     double slope_of_tangent = -(delta_x / delta_y);
                     float reflected_angle = (float) Math.toDegrees(-((2 * Math.atan(slope_of_tangent) - (Math.toRadians(-bullet.getTrajectory()) + Math.PI / 2)) - Math.PI / 2));
@@ -84,7 +102,7 @@ public class StandardShield extends Shield {
                     }
 
 
-                    effects.add(splash);
+                    reflect_effects.add(splash);
 
 
                     return true;
@@ -120,9 +138,16 @@ public class StandardShield extends Shield {
 
 
     //TODO Implement this function
-    private boolean check_in_arc(Bullet b) {
-        double d_x = point[0] - b.getX();
-        double d_y = point[1] - b.getY();
+
+    /**
+     *
+     * @param x x value of point to be checked
+     * @param y y value of point to be checked
+     * @return boolean, whether its in arc or not
+     */
+    private boolean check_in_arc(double x, double y) {
+        double d_x = point[0] - x;
+        double d_y = point[1] - y;
         double d_angle = -Math.atan2(d_y, d_x);
 
         if (d_angle < 0.0) {
@@ -135,10 +160,12 @@ public class StandardShield extends Shield {
 
 
         double end_angle = (arc_size + initial_angle) % (Math.PI * 2);
-        if (initial_angle < d_angle && d_angle < end_angle) {
+
+
+        if (initial_angle <= d_angle && d_angle <= end_angle) {
             return true;
-        } else if (initial_angle > end_angle) {
-            return (initial_angle > d_angle && d_angle < end_angle) || (initial_angle < d_angle && d_angle > end_angle);
+        } else if (initial_angle >= end_angle) {
+            return (initial_angle >= d_angle && d_angle <= end_angle) || (initial_angle <= d_angle && d_angle >= end_angle);
         } else {
             return false;
         }
@@ -164,7 +191,11 @@ public class StandardShield extends Shield {
 
         batch.begin();
 
-        for (ParticleEffect effect : effects) {
+        for (ParticleEffect effect : reflect_effects) {
+            effect.draw(batch);
+        }
+
+        for (ParticleEffect effect : shield_effects) {
             effect.draw(batch);
         }
 
@@ -173,7 +204,67 @@ public class StandardShield extends Shield {
     /**
      * Calculates the points and the rotations for the effects that compose the shield
      */
-    public void calculatePoints(){
+    public void createShieldEffects(){
+        double s_angle = initial_angle+ 0.001;
+        double x = radius * Math.cos(s_angle) + point[0];
+        double y = radius * Math.sin(s_angle) + point[1];
+
+        ParticleEffect burn_1 = new ParticleEffect();
+        burn_1.load(Gdx.files.internal("Burn_s.p"), Gdx.files.internal(""));
+        burn_1.setPosition((float) x, (float) y);
+        burn_1.start();
+
+
+        shield_effects.add(burn_1);
+
+        while(check_in_arc(x, y)) {
+            if (!check_in_arc(x, y)){
+                break;
+            }
+            s_angle = s_angle % (Math.PI*2);
+            s_angle += Math.PI/18;
+
+            if(s_angle < 0){
+                s_angle += Math.PI*2;
+            }
+
+            x = radius * Math.cos(s_angle) + point[0];
+            y = radius * Math.sin(s_angle) + point[1];
+
+            System.out.println(s_angle + "," + x + "," + y);
+
+            ParticleEffect burn_2 = new ParticleEffect();
+            burn_2.load(Gdx.files.internal("Burn_s.p"), Gdx.files.internal(""));
+            burn_2.setPosition((float)x, (float)y);
+            burn_2.start();
+
+            shield_effects.add(burn_2);
+        }
+    }
+
+    public void updateShieldEffects(){
+        double s_angle = initial_angle;
+        for(ParticleEffect effect : shield_effects){
+            double x = radius * Math.cos(s_angle) + point[0];
+            double y = radius * Math.sin(s_angle) + point[1];
+            com.badlogic.gdx.utils.Array<ParticleEmitter> emitters = effect.getEmitters();
+            for (ParticleEmitter i : emitters) {
+
+                s_angle = s_angle % (Math.PI*2);
+                s_angle += Math.PI/18;
+
+                if(s_angle < 0){
+                    s_angle += Math.PI*2;
+                }
+
+                i.setPosition((float)x, (float)y);
+                ParticleEmitter.ScaledNumericValue angle = i.getAngle();
+                angle.setLow((float)s_angle);
+                angle.setHigh((float)s_angle);
+
+            }
+            s_angle += 10;
+        }
 
     }
 

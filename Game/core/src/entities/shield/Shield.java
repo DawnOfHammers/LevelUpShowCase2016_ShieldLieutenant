@@ -28,7 +28,7 @@ public abstract class Shield extends Actor {
     /**
      * The initial angle of the entities.shield. This will automatically be initiated to be 0.
      */
-    protected double initial_angle = 1.3;
+    protected double initial_angle = 0;
 
     /**
      * This is the angular velocity of the entities.shield.

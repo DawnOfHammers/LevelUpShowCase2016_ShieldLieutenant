@@ -81,6 +81,9 @@ public class Missile extends Weapon {
         effect.draw(batch);
     }
 
+    /**
+     * updates positions
+     */
     protected void update() {
 
         track(gamestage.getPlayer());
