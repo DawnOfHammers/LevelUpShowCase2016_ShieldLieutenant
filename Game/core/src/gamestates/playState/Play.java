@@ -11,6 +11,9 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import entities.projectiles.Bullet;
 import entities.projectiles.Laser;
 import entities.projectiles.Missile;
+import entities.ship.Enemies.Droid;
+import entities.ship.Enemies.Enemy;
+import entities.ship.Enemies.Fighter;
 import entities.ship.player.Player;
 import game.MainGame;
 import gamestates.GameState;
@@ -29,6 +32,11 @@ public class Play extends GameState{
     private Laser laser;
     private Bullet bullet;
     private Missile missile;
+
+    private Enemy enemy;
+    //public static Hashtable<Integer, Boolean> key_events;
+    //public static OrthographicCamera cam;
+
     private int timer;
 
 
@@ -60,6 +68,8 @@ public class Play extends GameState{
         bullet = new Bullet(100,-200,0,gStage);
         missile = new Missile(100,100,0, gStage);
 
+        enemy = new Droid(500, 500, gStage);
+
         key_events = new Hashtable<Integer, Boolean>();
         for (int input : relevant_inputs){
             key_events.put(input, false);
@@ -74,6 +84,7 @@ public class Play extends GameState{
         //gStage.addActor(bullet);
         gStage.addActor(missile);
         gStage.addActor(main_player = new Player(200,100, gStage));
+        gStage.addActor(enemy);
 
 
 
@@ -109,7 +120,8 @@ public class Play extends GameState{
     @Override
     public void handleInput() {
         for (int i : Play.key_events.keySet()){
-            Play.key_events.replace(i, Gdx.input.isKeyPressed(i));
+//            Play.key_events.replace(i, Gdx.input.isKeyPressed(i));
+            Play.key_events.put(i, Gdx.input.isKeyPressed(i));
         }
 
 

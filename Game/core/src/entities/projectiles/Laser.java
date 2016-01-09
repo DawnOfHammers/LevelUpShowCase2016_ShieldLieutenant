@@ -42,8 +42,8 @@ public class Laser extends Weapon {
     }
 
     /**
-     * draw method for laser
-     * iterates through all pieces and draws them
+     * Draw method for laser.
+     * Iterates through all pieces and draws them.
      *
      * @param batch
      * @param parentAlpha

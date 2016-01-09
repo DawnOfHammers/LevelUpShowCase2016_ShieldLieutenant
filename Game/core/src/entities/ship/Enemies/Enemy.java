@@ -34,7 +34,7 @@ public abstract class Enemy extends Ship {
         {// Sprite Setup
             super.sprite = new Sprite(new Texture((sprite_path)));
             sprite.setOrigin(sprite.getWidth()/2,sprite.getHeight()/2);
-            setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(),sprite.getHeight()); //initilization stuff for the actor
+//            setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(),sprite.getHeight()); //initilization stuff for the actor
             setTouchable(Touchable.enabled);
         }
     }
@@ -50,7 +50,7 @@ public abstract class Enemy extends Ship {
     @Override
     public void act(float dt){
         this.aiPlan();
-        this.aiPlan();
+        this.aiAct();
     }
 
 
@@ -63,7 +63,7 @@ public abstract class Enemy extends Ship {
         double hyp = Math.hypot(dx, dy);
         
         {//Angle set.
-            this.angle = -Math.toDegrees(Math.atan2(dy, dx)) + 90;//TODO set angle based on dx and dy.
+            this.angle = Math.toDegrees(Math.atan2(dy, dx)) + 90;//TODO set angle based on dx and dy.
         }
         {// Ship Movement
             if(hyp > speed) {
