@@ -27,7 +27,7 @@ public class Laser extends Weapon {
     private double life_time;
     private int length;
 
-    public Laser(int x, int y, double trajectory, GameStage gs, Double Life_time) {
+    public Laser(int x, int y, double trajectory, GameStage gs, double Life_time) {
         super(x, y, trajectory, gs);
         this.sprite = new Sprite(new Texture(("bullet.jpg")));
         this.middle = new Sprite(new Texture(("S2.png")));
@@ -111,14 +111,7 @@ public class Laser extends Weapon {
 
                 i = s_vert;
 
-
-
-
-
         }
-
-
-
     }
 
     /**
@@ -184,7 +177,7 @@ public class Laser extends Weapon {
         current_life++;
 
         if(current_life > life_time){
-            gamestage.deleteActor(this);
+            this.remove();
         }
 
     }

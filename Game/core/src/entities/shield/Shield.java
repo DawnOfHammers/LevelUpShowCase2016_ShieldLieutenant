@@ -109,6 +109,14 @@ public abstract class Shield extends Actor {
     public abstract double collideLaser(double x, double y, double trajectory);
 
     /**
+     * Collision between missile and a shield
+     * @param x: x coordinate to be checked
+     * @param y: y coordinate to be checked
+     * @return Whether or not the missile
+     */
+    public abstract boolean collideMissile(double x, double y);
+
+    /**
      * Returns the ending angle of the arc that represents the entities.shield.
      *
      * @return double: The ending angle of the arc

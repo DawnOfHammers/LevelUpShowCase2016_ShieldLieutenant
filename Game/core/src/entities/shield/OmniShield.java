@@ -24,6 +24,10 @@ public class OmniShield extends Shield{
         return 10.0;
     }
 
+    public boolean collideMissile(double x, double y){
+        return true;
+    }
+
     public void update(double x, double y, float delta){
         point[0] = x;
         point[1] = y;

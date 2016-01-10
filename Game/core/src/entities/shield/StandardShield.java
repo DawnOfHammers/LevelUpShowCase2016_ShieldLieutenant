@@ -128,6 +128,25 @@ public class StandardShield extends Shield {
         return 10000;
     }
 
+    /**
+     * Checks whether or not the missile has hit the shield
+     *
+     * @param x:        x coordinate to be checked
+     * @param y:        y coordinate to be checked
+     * @return whether or not the missile has hit an arc
+     */
+    public boolean collideMissile(double x, double y){
+        double delta_x = point[0] - x;
+        double delta_y = point[1] - y;
+        double distance_from_player = Math.hypot(delta_x, delta_y);
+        if (distance_from_player < radius) {
+            if (check_in_arc(x, y)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     //TODO Implement this function
 
