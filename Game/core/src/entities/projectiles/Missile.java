@@ -3,6 +3,7 @@ package entities.projectiles;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
+import entities.shield.Shield;
 import entities.ship.player.Player;
 import gamestates.playState.GameStage;
 
@@ -100,7 +101,12 @@ public class Missile extends Weapon {
         for( ParticleEmitter i : emitters){
             ParticleEmitter.ScaledNumericValue angle = i.getAngle();
             angle.setLow((float)this.trajectory+90);
+        }
 
+        for(Shield shield : gamestage.getPlayer().getShields()){
+            if(shield.collideMissile(this.getX(), this.getY())){
+                this.remove();
+            }
         }
 
     }

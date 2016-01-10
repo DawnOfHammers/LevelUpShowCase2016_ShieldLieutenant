@@ -111,14 +111,7 @@ public class Laser extends Weapon {
 
                 i = s_vert;
 
-
-
-
-
         }
-
-
-
     }
 
     /**
@@ -184,7 +177,7 @@ public class Laser extends Weapon {
         current_life++;
 
         if(current_life > life_time){
-            gamestage.deleteActor(this);
+            this.remove();
         }
 
     }
