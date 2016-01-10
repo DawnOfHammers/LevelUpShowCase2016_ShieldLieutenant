@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import gamestates.GameStateManager;
 
@@ -15,7 +16,6 @@ public class MainGame extends ApplicationAdapter{
     public static final int FPS = 60;
     public static int WIDTH;
     public static int HEIGHT;
-    private SpriteBatch batch;
     private long start = System.currentTimeMillis();
 
 
@@ -23,37 +23,44 @@ public class MainGame extends ApplicationAdapter{
 
     private GameStateManager gsm;
 
-
+    @Override
     public void create() {
         WIDTH = Gdx.graphics.getWidth();
         HEIGHT = Gdx.graphics.getHeight();
-        batch = new SpriteBatch();
+        SpriteBatch batch = new SpriteBatch();
         gsm = new GameStateManager(batch);
     }
 
-
+    @Override
     public void render() {
         sleep();
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.draw();
     }
 
+    @Override
     public void resize(int width, int height){
 
     }
 
+    @Override
     public void pause() {
 
     }
 
+    @Override
     public void resume() {
 
     }
 
+    @Override
     public void dispose(){
         gsm.dispose();
     }
 
+    /* This is a method that will sleep the current application adapter thread. This is done mainly to cap the FPS.
+     *
+     */
     private void sleep() {
         long difference = System.currentTimeMillis() - start;
         long targetDelay = 1000/FPS;
@@ -64,4 +71,34 @@ public class MainGame extends ApplicationAdapter{
         }
         start = System.currentTimeMillis();
     }
+
+    /**
+     * A public static method that converts a GDX angle into an angle in radians.
+     * @param angle Angle in LIBGDX degrees.
+     * @return Angle in Radians.
+     */
+    public static float fromGDXAngle(float angle){
+        float return_angle = (float)Math.toRadians(-angle + 90);
+        while (return_angle < 0){
+            return_angle += Math.PI*2;
+        }
+        return return_angle;
+
+    }
+
+    /**
+     * A public static method that converts an angle in radians into an angle in LibGDX degrees.
+     * @param angle Angle in Radians.
+     * @return Angle in LibGDX degrees.
+     */
+    public static float toGDXAngle(float angle){
+        float return_angle = -(float)Math.toDegrees(angle) + 90;
+        while (return_angle < 0){
+            return_angle += 360;
+        }
+        return return_angle;
+    }
+
+
+
 }
