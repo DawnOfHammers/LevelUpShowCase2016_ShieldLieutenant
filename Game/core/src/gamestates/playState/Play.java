@@ -13,6 +13,7 @@ import entities.projectiles.Bullet;
 import entities.projectiles.Laser;
 import entities.projectiles.Missile;
 import entities.ship.Enemies.Enemy;
+import entities.ship.Enemies.Fighter;
 import entities.ship.Enemies.MissileDroid;
 import entities.ship.player.Player;
 import game.MainGame;
