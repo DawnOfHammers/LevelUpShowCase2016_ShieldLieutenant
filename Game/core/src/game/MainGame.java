@@ -3,11 +3,10 @@ package game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import gamestates.GameStateManager;
+import entities.managers.GameStateManager;
+import entities.managers.InputManager;
 
 /**
  * Created by Hongyu Wang on 12/27/2015.
@@ -18,7 +17,7 @@ public class MainGame extends ApplicationAdapter{
     public static int HEIGHT;
     private long start = System.currentTimeMillis();
 
-
+    private InputManager input_manager;
     public static OrthographicCamera cam;
 
     private GameStateManager gsm;
@@ -28,7 +27,9 @@ public class MainGame extends ApplicationAdapter{
         WIDTH = Gdx.graphics.getWidth();
         HEIGHT = Gdx.graphics.getHeight();
         SpriteBatch batch = new SpriteBatch();
-        gsm = new GameStateManager(batch);
+        gsm = new GameStateManager(batch, this);
+        input_manager = new InputManager();
+        Gdx.input.setInputProcessor(input_manager);
     }
 
     @Override
@@ -72,6 +73,10 @@ public class MainGame extends ApplicationAdapter{
         start = System.currentTimeMillis();
     }
 
+
+
+
+
     /**
      * A public static method that converts a GDX angle into an angle in radians.
      * @param angle Angle in LIBGDX degrees.
@@ -98,7 +103,4 @@ public class MainGame extends ApplicationAdapter{
         }
         return return_angle;
     }
-
-
-
 }

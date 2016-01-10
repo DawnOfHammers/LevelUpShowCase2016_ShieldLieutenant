@@ -7,9 +7,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import entities.managers.InputManager;
 import game.MainGame;
 import gamestates.GameState;
-import gamestates.GameStateManager;
+import entities.managers.GameStateManager;
 
 
 
@@ -100,16 +101,16 @@ public class Menu extends GameState {
 
     @Override
     public void handleInput() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+        if (InputManager.get_input_state(InputManager.MENU_UP)){
             current_selection = Math.max(0, current_selection - 1);
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){
+        if (InputManager.get_input_state(InputManager.MENU_DOWN)){
             if (current_selection + 1 < MENU_ITEMS.length)
                 current_selection++;
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
+        if (InputManager.get_input_state(InputManager.MENU_CONFIRM)){
             handleStateSwitch();
         }
     }

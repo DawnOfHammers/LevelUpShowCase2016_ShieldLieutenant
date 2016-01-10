@@ -8,17 +8,16 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import entities.managers.InputManager;
 import entities.projectiles.Bullet;
 import entities.projectiles.Laser;
 import entities.projectiles.Missile;
-import entities.ship.Enemies.Droid;
 import entities.ship.Enemies.Enemy;
-import entities.ship.Enemies.Fighter;
 import entities.ship.Enemies.MissileDroid;
 import entities.ship.player.Player;
 import game.MainGame;
 import gamestates.GameState;
-import gamestates.GameStateManager;
+import entities.managers.GameStateManager;
 import gamestates.TestActor;
 import java.util.Hashtable;
 
@@ -35,8 +34,7 @@ public class Play extends GameState{
     private Missile missile;
 
     private Enemy enemy;
-    //public static Hashtable<Integer, Boolean> key_events;
-    //public static OrthographicCamera cam;
+
 
     private int timer;
 
@@ -44,16 +42,7 @@ public class Play extends GameState{
 
     public static Hashtable<Integer, Boolean> key_events;
     public static OrthographicCamera cam;
-    public static int [] relevant_inputs = {
-            Input.Keys.Q,
-            Input.Keys.W,
-            Input.Keys.E,
-            Input.Keys.R,
-            Input.Keys.UP,
-            Input.Keys.LEFT,
-            Input.Keys.RIGHT,
-            Input.Keys.T
-    };
+    ;
 
     public Play(GameStateManager gsm) {
         super(gsm);
@@ -71,10 +60,7 @@ public class Play extends GameState{
 
         enemy = new MissileDroid(500, 500, gStage);
 
-        key_events = new Hashtable<Integer, Boolean>();
-        for (int input : relevant_inputs){
-            key_events.put(input, false);
-        }
+
 
 
         //gStage.addActor(laser);
@@ -120,15 +106,7 @@ public class Play extends GameState{
 
     @Override
     public void handleInput() {
-        for (int i : Play.key_events.keySet()){
-//            Play.key_events.replace(i, Gdx.input.isKeyPressed(i));
-            Play.key_events.put(i, Gdx.input.isKeyPressed(i));
-        }
-
-
-
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+        if (InputManager.get_input_state(InputManager.RETURN_TO_MENU)){
             gsm.setState(GameStateManager.MENU);
         }
     }
