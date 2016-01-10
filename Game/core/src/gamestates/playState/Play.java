@@ -65,7 +65,6 @@ public class Play extends GameState{
         ScreenViewport viewport = new ScreenViewport(cam);
         gStage = new GameStage(viewport);
 
-        laser = new Laser(0, 0, 270, gStage);
         bullet = new Bullet(100,-200,0,gStage);
         missile = new Missile(100,100,0, gStage);
 

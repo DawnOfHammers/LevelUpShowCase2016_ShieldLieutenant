@@ -75,7 +75,7 @@ public class Fighter extends Enemy {
         int turn = shortSide();
 
         if(actions[0]){
-            fire(player.getX(), player.getY());
+            fire();
         }
         if(actions[1]){
             turn *= 3;
@@ -90,12 +90,12 @@ public class Fighter extends Enemy {
 	    }
     }
 
-    private void fire(double p_x, double p_y){
+    private void fire(){
         gamestage.addActor(new Laser((int) this.getX(),
                                      (int) this.getY(),
                                      this.angle,
-                                     gamestage));
-        cool_down = 300;
+                                     gamestage,
+                                     3600d));
     }
 
 
@@ -111,6 +111,7 @@ public class Fighter extends Enemy {
         inside = Math.abs(angle - tg_angle) < Math.min(angle, tg_angle) - Math.max(angle, tg_angle) + 360;
         if(inside == (tg_angle > angle))
             return 1;
+
         return -1;
     }
 }

@@ -120,7 +120,7 @@ public class StandardShield extends Shield {
         if (distance_from_player < radius) {
 
 
-            if (true) {
+            if (check_in_arc(x, y)) {
                 double slope_of_tangent = -(delta_x / delta_y);
                 return (Math.toDegrees(-((2 * Math.atan(slope_of_tangent) - (Math.toRadians(-trajectory) + Math.PI / 2)) - Math.PI / 2)));
             }
@@ -214,7 +214,7 @@ public class StandardShield extends Shield {
                 break;
             }
             s_angle = s_angle % (Math.PI*2);
-            s_angle += Math.PI/24;
+            s_angle += Math.PI/48;
 
             if(s_angle < 0){
                 s_angle += Math.PI*2;
@@ -264,7 +264,7 @@ public class StandardShield extends Shield {
 
             }
             s_angle = s_angle % (Math.PI*2);
-            s_angle += Math.PI/24;
+            s_angle += Math.PI/48;
         }
 
     }

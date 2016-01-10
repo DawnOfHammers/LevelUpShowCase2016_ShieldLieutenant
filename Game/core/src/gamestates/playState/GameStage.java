@@ -20,6 +20,7 @@ public class GameStage extends com.badlogic.gdx.scenes.scene2d.Stage {
     private ArrayList<Actor> enemies = new ArrayList<Actor>();
     private ArrayList<Actor> weapons = new ArrayList<Actor>();
     private ArrayList<Actor> actors = new ArrayList<Actor>();
+    private ArrayList<Actor> remove = new ArrayList<>();
     private Player player;
     private ArrayList<ParticleEffect> effects;
     private ParticleEffectPool pool;
@@ -43,6 +44,9 @@ public class GameStage extends com.badlogic.gdx.scenes.scene2d.Stage {
     public void act(float delta) {
         super.act(delta);
 
+        for(Actor removed : remove){
+            this.deleteActor(removed);
+        }
     }
 
     @Override
@@ -64,6 +68,9 @@ public class GameStage extends com.badlogic.gdx.scenes.scene2d.Stage {
         return player;
     }
 
+    public void deleteActor(Actor actor){
+        remove.add(actor);
+    }
 
 
     public ArrayList<Actor> getEnemies() {
