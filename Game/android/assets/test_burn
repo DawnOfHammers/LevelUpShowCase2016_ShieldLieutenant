@@ -2,16 +2,16 @@ Untitled
 - Delay -
 active: false
 - Duration - 
-lowMin: 30000000.0
-lowMax: 30000000.0
+lowMin: 3000.0
+lowMax: 3000.0
 - Count - 
 min: 0
 max: 200
 - Emission - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 75.0
-highMax: 75.0
+highMin: 250.0
+highMax: 250.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -62,8 +62,8 @@ timeline0: 0.0
 - Scale - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 10.0
-highMax: 10.0
+highMin: 32.0
+highMax: 32.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -73,8 +73,8 @@ timeline0: 0.0
 active: true
 lowMin: 0.0
 lowMax: 0.0
-highMin: 0.0
-highMax: 30.0
+highMin: 30.0
+highMax: 100.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -103,9 +103,9 @@ active: false
 active: false
 - Tint - 
 colorsCount: 3
-colors0: 0.047058824
-colors1: 0.20392157
-colors2: 1.0
+colors0: 1.0
+colors1: 0.22352941
+colors2: 0.047058824
 timelineCount: 1
 timeline0: 0.0
 - Transparency - 

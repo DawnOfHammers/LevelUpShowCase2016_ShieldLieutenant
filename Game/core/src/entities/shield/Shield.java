@@ -36,16 +36,22 @@ public abstract class Shield extends Actor {
     private final double PRESS_SPEED = Math.PI / 36;
 
     /**
+     * String representation of the colour of the shield
+     */
+    protected String colour;
+
+    /**
      * The primary constructor of entities.shield.
      *
      * @param p:        Point
      * @param radius:   int
      * @param arc_size: double
      */
-    public Shield(double[] p, int radius, double arc_size) {
+    public Shield(double[] p, int radius, double arc_size, String colour) {
         this.point = p;
         this.radius = radius;
         this.arc_size = arc_size;
+        this.colour = colour;
     }
 
     /**

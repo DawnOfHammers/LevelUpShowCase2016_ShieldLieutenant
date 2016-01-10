@@ -17,7 +17,7 @@ public class Omni extends Powerup{
         timer-=1;
         if (timer>0){
             if (player.getShields().size() == 2)
-                player.addShield(new OmniShield(new double[]{player.getX(), player.getY()}, 125));
+                player.addShield(new OmniShield(new double[]{player.getX(), player.getY()}, 125, "blue"));
         }else{
             this.deactivate(player);
             player.removeActivePowerup();

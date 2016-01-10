@@ -58,8 +58,8 @@ public class Player extends Ship {
         this.trueSpeed = 0;
         this.speed = 0;
         this.health = 100;
-        this.shields.add(new StandardShield(new double[]{this.getX(),this.getY()}, 75));
-        this.shields.add(new StandardShield(new double[]{this.getX(),this.getY()}, 100));
+        this.shields.add(new StandardShield(new double[]{this.getX(),this.getY()}, 75, "orange"));
+        this.shields.add(new StandardShield(new double[]{this.getX(),this.getY()}, 100, "blue"));
 
 
         sprite = new Sprite(new Texture(("S2.png"))); //initializing the sprite of the player

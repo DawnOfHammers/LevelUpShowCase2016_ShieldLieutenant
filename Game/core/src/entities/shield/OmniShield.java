@@ -11,8 +11,8 @@ import entities.projectiles.Bullet;
 public class OmniShield extends Shield{
     ShapeRenderer shapeRenderer = new ShapeRenderer();
 
-    public OmniShield(double[] point, int radius){
-        super(point, radius, Math.PI*2);
+    public OmniShield(double[] point, int radius, String colour){
+        super(point, radius, Math.PI*2, colour);
 
     }
     //TODO Gotta implement these two based off of Standard Shield, will tackle later

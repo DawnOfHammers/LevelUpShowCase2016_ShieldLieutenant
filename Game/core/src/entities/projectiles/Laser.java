@@ -50,13 +50,14 @@ public class Laser extends Weapon {
      */
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
         for (float[] i : chain) {
             Sprite draw_sprite = sprite;
+            draw_sprite.setOrigin(0, 0);
             draw_sprite.setRotation(-i[2]);
             draw_sprite.setPosition(i[0], i[1]);
 
-            sprite.setOrigin(0, 0);
+
+
 
             draw_sprite.draw(batch, parentAlpha);
 
@@ -78,42 +79,41 @@ public class Laser extends Weapon {
     public void calc(GameStage game_stage) {
         double cur_x = this.getX();
         double cur_y = this.getY();
-        System.out.println(cur_x + "," + cur_y);
+        double curr_trajectory = trajectory;
+        double[] i = vertices.get(0);
         while (onScreen(cur_x, cur_y, game_stage)) {
-            for (double[] i : vertices) {
 
-                //double[] f_vert = transform(i[0] + sprite.getWidth(), i[1], trajectory, this.getX(), this.getY());
-                double[] s_vert = transform(i[0] , i[1] + sprite.getHeight(), trajectory, cur_x, cur_y);
-                //System.out.println(s_vert[0] + "," + s_vert[1]);
-                //System.out.println(f_vert[0] + "," + f_vert[1]);
-                //System.out.println("b");
+                double[] s_vert = transform(i[0] , i[1] + sprite.getHeight(), curr_trajectory, cur_x, cur_y);
                 for (Shield shield : game_stage.getPlayer().getShields()) {
-                    //double f_trajectory = shield.collideLaser(f_vert[0], f_vert[1], trajectory);
 
-                    double s_trajectory = trajectory;
+
+                    double s_trajectory = curr_trajectory;
                     if(!collide) {
-                        s_trajectory = shield.collideLaser(s_vert[0], s_vert[1], trajectory);
+                        s_trajectory = shield.collideLaser(s_vert[0], s_vert[1], curr_trajectory);
 
                     }
-                    /*if (f_trajectory < 1000) {
-                        trajectory = f_trajectory;
-                    } */
+
                     if (s_trajectory < 1000) {
-                        trajectory = s_trajectory;
-                        s_vert = transform(i[0] , i[1]+sprite.getHeight(), trajectory, cur_x, cur_y);
+                        curr_trajectory = s_trajectory;
+                        s_vert = transform(i[0] , i[1]+sprite.getHeight(), curr_trajectory, cur_x, cur_y);
                         collide = true;
                     }
                 }
 
-                chain.add(new float[]{(float) i[0], (float) i[1], (float) trajectory});
+                chain.add(new float[]{(float) i[0], (float) i[1], (float) curr_trajectory});
 
-                vertices.set(vertices.indexOf(i),s_vert);
                 cur_x = s_vert[0];
                 cur_y = s_vert[1];
 
-            }
+                i = s_vert;
+
+
+
+
 
         }
+
+
 
     }
 
@@ -169,14 +169,14 @@ public class Laser extends Weapon {
      * Checks whether or not the laser is still on the screen
      */
     public boolean onScreen(double x, double y, GameStage game_stage) {
-        return !(x > 1000 || y > 1000 || x < -1000 || y < -1000);
+        return !(x > 500 || y > 500 || x < -500 || y < -500);
     }
 
     @Override
     protected void update() {
-        calc(gamestage);
-        collide = false;
-
+            chain.clear();
+            calc(gamestage);
+            collide = false;
 
     }
 
