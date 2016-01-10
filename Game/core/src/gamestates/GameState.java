@@ -1,6 +1,7 @@
 package gamestates;
 
-import com.badlogic.gdx.Gdx;
+import entities.managers.GameStateManager;
+import game.MainGame;
 
 /**
  * Created by Hongyu Wang on 12/27/2015.
@@ -12,7 +13,6 @@ public abstract class GameState {
 
     //The instance of the GameStateManager.
     protected GameStateManager gsm;
-
     protected GameState(GameStateManager gsm){
         this.gsm = gsm;
         init();

@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import entities.managers.InputManager;
 import entities.projectiles.Bullet;
 import entities.projectiles.Laser;
 import entities.shield.*;
@@ -91,30 +92,30 @@ public class Player extends Ship {
 
     public void inputExecute(){ //executes all input commands
 
-        if (Play.key_events.get(Input.Keys.LEFT)){
+        if (InputManager.get_input_state(InputManager.PLAYER_LEFT)){
             angle += 1;
         }
-        if (Play.key_events.get(Input.Keys.RIGHT)){
+        if (InputManager.get_input_state(InputManager.PLAYER_RIGHT)){
             angle -= 1;
 
         }
-        if(Play.key_events.get(Input.Keys.Q)){
+        if(InputManager.get_input_state(InputManager.PLAYER_SHIELD_1_LEFT)){
             shields.get(0).rotateCounterClockwise();
         }
 
-        if(Play.key_events.get(Input.Keys.W)){
+        if(InputManager.get_input_state(InputManager.PLAYER_SHIELD_1_RIGHT)){
             shields.get(0).rotateClockwise();
         }
 
-        if(Play.key_events.get(Input.Keys.E)){
+        if(InputManager.get_input_state(InputManager.PLAYER_SHIELD_2_LEFT)){
             shields.get(1).rotateCounterClockwise();
         }
 
-        if(Play.key_events.get(Input.Keys.R)){
+        if(InputManager.get_input_state(InputManager.PLAYER_SHIELD_2_RIGHT)){
             shields.get(1).rotateClockwise();
         }
 
-        if (Play.key_events.get(Input.Keys.T)) {
+        if (InputManager.get_input_state(InputManager.ACTIVATE_POWERUP_1)) {
             if(powerups.size()>0)
                 powerups.get(activePowerup).activate(this);
         }else{
@@ -122,7 +123,7 @@ public class Player extends Ship {
                 powerups.get(activePowerup).deactivate(this);
         }
 
-        if (Play.key_events.get(Input.Keys.UP)) {
+        if (InputManager.get_input_state(InputManager.PLAYER_FORWARD)) {
             if (speed < 4)
                 speed += 0.005;
 

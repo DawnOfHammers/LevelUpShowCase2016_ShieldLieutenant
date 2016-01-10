@@ -1,7 +1,9 @@
-package gamestates;
+package entities.managers;
 
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import game.MainGame;
+import gamestates.GameState;
 import gamestates.menuState.Menu;
 import gamestates.playState.Play;
 
@@ -17,10 +19,11 @@ public class GameStateManager {
     private SpriteBatch sprite_batch;
     public static final int MENU = 0;
     public static final int PLAY = 1;
-
-    public GameStateManager(SpriteBatch sb){
+    private MainGame game;
+    public GameStateManager(SpriteBatch sb, MainGame game){
         sprite_batch = sb;
         setState(MENU);
+        this.game = game;
 
     }
 
