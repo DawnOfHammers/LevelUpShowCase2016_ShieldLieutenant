@@ -1,7 +1,10 @@
 package entities.shield;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import entities.projectiles.Bullet;
+
+import java.util.ArrayList;
 
 /**
  * This class will be the superclass of the primary entities.shield of the character.
@@ -36,16 +39,34 @@ public abstract class Shield extends Actor {
     private final double PRESS_SPEED = Math.PI / 36;
 
     /**
+     * String representation of the colour of the shield
+     */
+    protected String colour;
+
+    /**
+     * list of bullets that have passed through the radius
+     */
+    protected ArrayList<Bullet> reflected;
+
+    /**
+     * list of effects that need to be attached
+     */
+    protected ArrayList<ParticleEffect> reflect_effects;
+    protected ArrayList<ParticleEffect> shield_effects;
+
+
+    /**
      * The primary constructor of entities.shield.
      *
      * @param p:        Point
      * @param radius:   int
      * @param arc_size: double
      */
-    public Shield(double[] p, int radius, double arc_size) {
+    public Shield(double[] p, int radius, double arc_size, String colour) {
         this.point = p;
         this.radius = radius;
         this.arc_size = arc_size;
+        this.colour = colour;
     }
 
     /**
@@ -86,6 +107,14 @@ public abstract class Shield extends Actor {
      * @return: Whether the bullet has collided or not.
      */
     public abstract double collideLaser(double x, double y, double trajectory);
+
+    /**
+     * Collision between missile and a shield
+     * @param x: x coordinate to be checked
+     * @param y: y coordinate to be checked
+     * @return Whether or not the missile
+     */
+    public abstract boolean collideMissile(double x, double y);
 
     /**
      * Returns the ending angle of the arc that represents the entities.shield.

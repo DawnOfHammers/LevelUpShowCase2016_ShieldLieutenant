@@ -2,6 +2,7 @@ package entities.ship.Enemies;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+
 import entities.projectiles.Laser;
 import entities.ship.player.Player;
 
@@ -25,7 +26,7 @@ public class Fighter extends Enemy {
         super(x,y,"Proto.png", gs);
         super.health = 5;
         super.speed = 3;
-        super.range = 250;
+        super.range = 500;
 
         super.actions = new boolean[4];
 
@@ -51,13 +52,12 @@ public class Fighter extends Enemy {
         ArrayList<Actor> actors = gamestage.getActorList();
 
         boolean in_range = range * range > Math.pow(actors.get(0).getX() - this.getX(), 2)
-                                        + Math.pow(actors.get(0).getY() - this.getY(), 2);
+                                         + Math.pow(actors.get(0).getY() - this.getY(), 2);
+        boolean aim = Math.abs((int)angle - (int)tg_angle) < 5;
 	
-
-        actions[0] = in_range && (int)angle == (int)tg_angle && cool_down == 0;
+        actions[0] = in_range && aim && cool_down == 0;
         actions[1] = cool_down == 0;
         actions[2] = cool_down != 0;
-
 	    actions[3] = health > 2;
     }
 
@@ -78,7 +78,7 @@ public class Fighter extends Enemy {
         int turn = shortSide();
 
         if(actions[0]){
-            fire(player.getX(), player.getY());
+            fire();
         }
         if(actions[1]){
             turn *= 3;
@@ -93,13 +93,12 @@ public class Fighter extends Enemy {
 	    }
     }
 
-    private void fire(double p_x, double p_y){
+    private void fire(){
         gamestage.addActor(new Laser((int) this.getX(),
-                (int) this.getY(),
-                - Math.atan2(p_y - this.getY(),
-                        p_x - this.getX()) + 90,
-                gamestage));
-        cool_down = 300;
+                                     (int) this.getY(),
+                                     this.angle,
+                                     gamestage,
+                                     3600d));
     }
 
 
@@ -115,6 +114,7 @@ public class Fighter extends Enemy {
         inside = Math.abs(angle - tg_angle) < Math.min(angle, tg_angle) - Math.max(angle, tg_angle) + 360;
         if(inside == (tg_angle > angle))
             return 1;
+
         return -1;
     }
 }

@@ -54,16 +54,16 @@ public class Play extends GameState{
         ScreenViewport viewport = new ScreenViewport(cam);
         gStage = new GameStage(viewport);
 
-        laser = new Laser(200,200, 220, gStage);
+        laser = new Laser(0, 0, 270, gStage, 3600);
         bullet = new Bullet(100,-200,0,gStage);
         missile = new Missile(100,100,0, gStage);
 
-        enemy = new MissileDroid(500, 500, gStage);
+        enemy = new Fighter(500, 500, gStage);
 
 
 
 
-        //gStage.addActor(laser);
+        gStage.addActor(laser);
         Actor test = new TestActor();
         test.setX(0);
         test.setY(0);
@@ -76,7 +76,7 @@ public class Play extends GameState{
 
 
 
-        gStage.addActor(test);
+        //gStage.addActor(test);
         gStage.getPlayer().updateCamera();
 
     }

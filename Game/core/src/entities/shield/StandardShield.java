@@ -23,24 +23,16 @@ import java.util.ArrayList;
 public class StandardShield extends Shield {
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
 
-    /**
-     * list of bullets that have passed through the radius
-     */
-    private ArrayList<Bullet> reflected;
-
-    /**
-     * list of effects that need to be attached
-     */
-    private ArrayList<ParticleEffect> reflect_effects;
-    private ArrayList<ParticleEffect> shield_effects;
 
 
-    public StandardShield(double[] point, int radius) {
-        super(point, radius, Math.PI);
+
+
+    public StandardShield(double[] point, int radius, String colour) {
+        super(point, radius, Math.PI, colour);
         reflect_effects = new ArrayList<ParticleEffect>();
         shield_effects = new ArrayList<ParticleEffect>();
         reflected = new ArrayList<Bullet>();
-        //createShieldEffects();
+        createShieldEffects();
 
     }
 
@@ -128,12 +120,31 @@ public class StandardShield extends Shield {
         if (distance_from_player < radius) {
 
 
-            if (true) {
+            if (check_in_arc(x, y)) {
                 double slope_of_tangent = -(delta_x / delta_y);
                 return (Math.toDegrees(-((2 * Math.atan(slope_of_tangent) - (Math.toRadians(-trajectory) + Math.PI / 2)) - Math.PI / 2)));
             }
         }
         return 10000;
+    }
+
+    /**
+     * Checks whether or not the missile has hit the shield
+     *
+     * @param x:        x coordinate to be checked
+     * @param y:        y coordinate to be checked
+     * @return whether or not the missile has hit an arc
+     */
+    public boolean collideMissile(double x, double y){
+        double delta_x = point[0] - x;
+        double delta_y = point[1] - y;
+        double distance_from_player = Math.hypot(delta_x, delta_y);
+        if (distance_from_player < radius) {
+            if (check_in_arc(x, y)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -183,12 +194,13 @@ public class StandardShield extends Shield {
         //The following is just test code to see the actual arc
         batch.end();
 
+        /**
         shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
         shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.arc((float) point[0], (float) point[1], radius, (float) Math.toDegrees(initial_angle) % 360, (float) Math.toDegrees(this.getFinalAngle()) % 360);
         shapeRenderer.end();
-
+        **/
         batch.begin();
 
         for (ParticleEffect effect : reflect_effects) {
@@ -210,7 +222,6 @@ public class StandardShield extends Shield {
         double y = radius * Math.sin(s_angle) + point[1];
 
         ParticleEffect burn_1 = new ParticleEffect();
-        burn_1.load(Gdx.files.internal("Burn_s.p"), Gdx.files.internal(""));
         burn_1.setPosition((float) x, (float) y);
         burn_1.start();
 
@@ -222,7 +233,7 @@ public class StandardShield extends Shield {
                 break;
             }
             s_angle = s_angle % (Math.PI*2);
-            s_angle += Math.PI/18;
+            s_angle += Math.PI/48;
 
             if(s_angle < 0){
                 s_angle += Math.PI*2;
@@ -231,7 +242,6 @@ public class StandardShield extends Shield {
             x = radius * Math.cos(s_angle) + point[0];
             y = radius * Math.sin(s_angle) + point[1];
 
-            System.out.println(s_angle + "," + x + "," + y);
 
             ParticleEffect burn_2 = new ParticleEffect();
             burn_2.load(Gdx.files.internal("Burn_s.p"), Gdx.files.internal(""));
@@ -245,25 +255,35 @@ public class StandardShield extends Shield {
     public void updateShieldEffects(){
         double s_angle = initial_angle;
         for(ParticleEffect effect : shield_effects){
+
             double x = radius * Math.cos(s_angle) + point[0];
             double y = radius * Math.sin(s_angle) + point[1];
             com.badlogic.gdx.utils.Array<ParticleEmitter> emitters = effect.getEmitters();
             for (ParticleEmitter i : emitters) {
 
-                s_angle = s_angle % (Math.PI*2);
-                s_angle += Math.PI/18;
+
 
                 if(s_angle < 0){
                     s_angle += Math.PI*2;
                 }
 
-                i.setPosition((float)x, (float)y);
+                i.setPosition((float) x, (float) y);
                 ParticleEmitter.ScaledNumericValue angle = i.getAngle();
-                angle.setLow((float)s_angle);
-                angle.setHigh((float)s_angle);
+                angle.setLow((float)Math.toDegrees(s_angle-90));
+                angle.setHigh((float) Math.toDegrees(s_angle - 90), (float) Math.toDegrees(s_angle + 90));
+
+                ParticleEmitter.ScaledNumericValue velo = i.getVelocity();
+
+
+                if(colour.equals("orange")){
+                    ParticleEmitter.GradientColorValue c_colour = i.getTint();
+                    c_colour.setColors(new float[]{1, 0.22352941f, 0.047058824f});
+
+                }
 
             }
-            s_angle += 10;
+            s_angle = s_angle % (Math.PI*2);
+            s_angle += Math.PI/48;
         }
 
     }

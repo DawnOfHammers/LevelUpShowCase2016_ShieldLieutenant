@@ -59,8 +59,8 @@ public class Player extends Ship {
         this.trueSpeed = 0;
         this.speed = 0;
         this.health = 100;
-        this.shields.add(new StandardShield(new double[]{this.getX(),this.getY()}, 75));
-        this.shields.add(new StandardShield(new double[]{this.getX(),this.getY()}, 100));
+        this.shields.add(new StandardShield(new double[]{this.getX(),this.getY()}, 75, "orange"));
+        this.shields.add(new StandardShield(new double[]{this.getX(),this.getY()}, 100, "blue"));
 
 
         sprite = new Sprite(new Texture(("S2.png"))); //initializing the sprite of the player
@@ -185,6 +185,10 @@ public class Player extends Ship {
     }
     public void update(float delta){
 
+        ArrayList<Actor> weapons = gamestage.getWeapons();
+        inputExecute();
+        move();
+
         double[] t_coords = Laser.transform(this.getX() + this.sprite.getWidth()/2 , this.getY(), 360 - this.angle , this.getX() + this.sprite.getWidth()/2, this.getY() + this.sprite.getHeight()/2);
         effect.setPosition((float)t_coords[0] , (float)t_coords[1]);
         com.badlogic.gdx.utils.Array<ParticleEmitter> emitters = effect.getEmitters();
@@ -195,9 +199,7 @@ public class Player extends Ship {
 
         }
 
-        ArrayList<Actor> weapons = gamestage.getWeapons();
-        inputExecute();
-        move();
+
         for(Shield shield : shields){
             shield.update(this.getX()+sprite.getWidth()/2,this.getY()+sprite.getHeight()/2, delta);
         }
