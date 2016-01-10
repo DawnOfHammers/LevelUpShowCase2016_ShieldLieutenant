@@ -23,16 +23,8 @@ import java.util.ArrayList;
 public class StandardShield extends Shield {
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
 
-    /**
-     * list of bullets that have passed through the radius
-     */
-    private ArrayList<Bullet> reflected;
 
-    /**
-     * list of effects that need to be attached
-     */
-    private ArrayList<ParticleEffect> reflect_effects;
-    private ArrayList<ParticleEffect> shield_effects;
+
 
 
     public StandardShield(double[] point, int radius, String colour) {
@@ -259,7 +251,10 @@ public class StandardShield extends Shield {
                 i.setPosition((float) x, (float) y);
                 ParticleEmitter.ScaledNumericValue angle = i.getAngle();
                 angle.setLow((float)Math.toDegrees(s_angle-90));
-                angle.setHigh((float)Math.toDegrees(s_angle-90),(float)Math.toDegrees(s_angle+90));
+                angle.setHigh((float) Math.toDegrees(s_angle - 90), (float) Math.toDegrees(s_angle + 90));
+
+                ParticleEmitter.ScaledNumericValue velo = i.getVelocity();
+
 
                 if(colour.equals("orange")){
                     ParticleEmitter.GradientColorValue c_colour = i.getTint();

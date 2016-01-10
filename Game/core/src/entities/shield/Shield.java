@@ -1,7 +1,10 @@
 package entities.shield;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import entities.projectiles.Bullet;
+
+import java.util.ArrayList;
 
 /**
  * This class will be the superclass of the primary entities.shield of the character.
@@ -39,6 +42,18 @@ public abstract class Shield extends Actor {
      * String representation of the colour of the shield
      */
     protected String colour;
+
+    /**
+     * list of bullets that have passed through the radius
+     */
+    protected ArrayList<Bullet> reflected;
+
+    /**
+     * list of effects that need to be attached
+     */
+    protected ArrayList<ParticleEffect> reflect_effects;
+    protected ArrayList<ParticleEffect> shield_effects;
+
 
     /**
      * The primary constructor of entities.shield.
