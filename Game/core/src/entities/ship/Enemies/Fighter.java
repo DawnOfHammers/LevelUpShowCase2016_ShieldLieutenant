@@ -96,6 +96,8 @@ public class Fighter extends Enemy {
                                      this.angle,
                                      gamestage,
                                      3600d));
+
+        cool_down = 100;
     }
 
 
