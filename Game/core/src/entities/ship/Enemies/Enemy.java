@@ -86,8 +86,8 @@ public abstract class Enemy extends Ship {
      */
     @Override
     protected void moveAngle(){
-        double dx = Math.sin(Math.toRadians(angle - 90));
-	double dy = Math.cos(Math.toRadians(angle - 90));
+        double dx = Math.sin(Math.toRadians(angle));
+	    double dy = Math.cos(Math.toRadians(angle));
 
         {// Ship Movement
             this.setX(this.getX() + (float) (speed * dx));

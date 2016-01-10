@@ -1,13 +1,8 @@
 package entities.ship.Enemies;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-<<<<<<< HEAD:Game/core/src/entities/ship/Enemies/Fighter.java
-import entities.projectiles.Bullet;
-import entities.projectiles.Laser;
-=======
 import entities.projectiles.Laser;
 import entities.ship.player.Player;
->>>>>>> origin/master:Game/core/src/entities/ship/Enemies/Fighter.java
 import gamestates.playState.GameStage;
 
 import java.util.ArrayList;
@@ -28,7 +23,7 @@ public class Fighter extends Enemy {
         super(x,y,"Proto.png", gs);
         super.health = 5;
         super.speed = 3;
-        super.range = 250;
+        super.range = 500;
 
         super.actions = new boolean[4];
 
@@ -54,13 +49,12 @@ public class Fighter extends Enemy {
         ArrayList<Actor> actors = gamestage.getActorList();
 
         boolean in_range = range * range > Math.pow(actors.get(0).getX() - this.getX(), 2)
-                                        + Math.pow(actors.get(0).getY() - this.getY(), 2);
+                                         + Math.pow(actors.get(0).getY() - this.getY(), 2);
+        boolean aim = Math.abs((int)angle - (int)tg_angle) < 5;
 	
-
-        actions[0] = in_range && (int)angle == (int)tg_angle && cool_down == 0;
+        actions[0] = in_range && aim && cool_down == 0;
         actions[1] = cool_down == 0;
         actions[2] = cool_down != 0;
-
 	    actions[3] = health > 2;
     }
 
@@ -98,10 +92,9 @@ public class Fighter extends Enemy {
 
     private void fire(double p_x, double p_y){
         gamestage.addActor(new Laser((int) this.getX(),
-                (int) this.getY(),
-                - Math.atan2(p_y - this.getY(),
-                        p_x - this.getX()) + 90,
-                gamestage));
+                                     (int) this.getY(),
+                                     this.angle,
+                                     gamestage));
         cool_down = 300;
     }
 
