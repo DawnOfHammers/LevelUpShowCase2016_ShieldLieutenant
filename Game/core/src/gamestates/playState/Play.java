@@ -69,7 +69,7 @@ public class Play extends GameState{
         bullet = new Bullet(100,-200,0,gStage);
         missile = new Missile(100,100,0, gStage);
 
-        enemy = new MissileDroid(500, 500, gStage);
+        enemy = new Fighter(500, 500, gStage);
 
         key_events = new Hashtable<Integer, Boolean>();
         for (int input : relevant_inputs){
