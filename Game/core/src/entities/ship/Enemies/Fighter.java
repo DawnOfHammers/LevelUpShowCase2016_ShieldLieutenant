@@ -1,13 +1,8 @@
 package entities.ship.Enemies;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-<<<<<<< HEAD:Game/core/src/entities/ship/Enemies/Fighter.java
-import entities.projectiles.Bullet;
-import entities.projectiles.Laser;
-=======
 import entities.projectiles.Laser;
 import entities.ship.player.Player;
->>>>>>> origin/master:Game/core/src/entities/ship/Enemies/Fighter.java
 import gamestates.playState.GameStage;
 
 import java.util.ArrayList;
@@ -101,7 +96,7 @@ public class Fighter extends Enemy {
                 (int) this.getY(),
                 - Math.atan2(p_y - this.getY(),
                         p_x - this.getX()) + 90,
-                gamestage));
+                gamestage, 3600d));
         cool_down = 300;
     }
 
@@ -118,6 +113,7 @@ public class Fighter extends Enemy {
         inside = Math.abs(angle - tg_angle) < Math.min(angle, tg_angle) - Math.max(angle, tg_angle) + 360;
         if(inside == (tg_angle > angle))
             return 1;
+
         return -1;
     }
 }

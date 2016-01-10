@@ -214,7 +214,7 @@ public class StandardShield extends Shield {
                 break;
             }
             s_angle = s_angle % (Math.PI*2);
-            s_angle += Math.PI/24;
+            s_angle += Math.PI/48;
 
             if(s_angle < 0){
                 s_angle += Math.PI*2;
@@ -264,7 +264,7 @@ public class StandardShield extends Shield {
 
             }
             s_angle = s_angle % (Math.PI*2);
-            s_angle += Math.PI/24;
+            s_angle += Math.PI/48;
         }
 
     }

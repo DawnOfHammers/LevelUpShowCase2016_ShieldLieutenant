@@ -15,21 +15,24 @@ import java.util.ArrayList;
  */
 public class Laser extends Weapon {
 
-    Sprite middle;
-    Sprite turn;
-    Sprite end;
-    ArrayList<float[]> chain;
-    ArrayList<double[]> vertices;
-    Player player;
-    boolean test = true;
-    boolean collide = false;
-    int length;
+    private Sprite middle;
+    private Sprite turn;
+    private Sprite end;
+    private ArrayList<float[]> chain;
+    private ArrayList<double[]> vertices;
+    private Player player;
+    private boolean test = true;
+    private boolean collide = false;
+    private double current_life;
+    private double life_time;
+    private int length;
 
-    public Laser(int x, int y, double trajectory, GameStage gs) {
+    public Laser(int x, int y, double trajectory, GameStage gs, Double Life_time) {
         super(x, y, trajectory, gs);
         this.sprite = new Sprite(new Texture(("bullet.jpg")));
         this.middle = new Sprite(new Texture(("S2.png")));
         this.end = new Sprite(new Texture(("S2.png")));
+        this.life_time = life_time;
 
         this.trajectory = trajectory;
         this.player = player;
@@ -81,6 +84,7 @@ public class Laser extends Weapon {
         double cur_y = this.getY();
         double curr_trajectory = trajectory;
         double[] i = vertices.get(0);
+
         while (onScreen(cur_x, cur_y, game_stage)) {
 
                 double[] s_vert = transform(i[0] , i[1] + sprite.getHeight(), curr_trajectory, cur_x, cur_y);
@@ -174,9 +178,14 @@ public class Laser extends Weapon {
 
     @Override
     protected void update() {
-            chain.clear();
-            calc(gamestage);
-            collide = false;
+        chain.clear();
+        calc(gamestage);
+        collide = false;
+        current_life++;
+
+        if(current_life > life_time){
+            gamestage.deleteActor(this);
+        }
 
     }
 
