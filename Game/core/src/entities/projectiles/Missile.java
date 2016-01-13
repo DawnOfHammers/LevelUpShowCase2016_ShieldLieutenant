@@ -105,7 +105,8 @@ public class Missile extends Weapon {
 
         for(Shield shield : gamestage.getPlayer().getShields()){
             if(shield.collideMissile(this.getX(), this.getY())){
-                this.remove();
+                gamestage.deleteActor(this);
+                //this.remove();
             }
         }
 

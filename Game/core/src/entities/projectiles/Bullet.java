@@ -78,7 +78,12 @@ public class Bullet extends Weapon {
         this.setY((float) (this.getY() + y_velo));
         //System.out.println("x: "+this.getX() + " y: "+ this.getY());
         sprite.setPosition(this.getX(),this.getY());
-        sprite.setRotation( 360 - (float)trajectory);
+        sprite.setRotation(360 - (float) trajectory);
+
+        if (!onScreen(this.getX(), this.getY(), gamestage)){
+            //this.remove();
+            gamestage.deleteActor(this);
+        }
     }
 
     public boolean isBounced() {
@@ -88,4 +93,9 @@ public class Bullet extends Weapon {
     public void setBounced(boolean bounced) {
         this.bounced = bounced;
     }
+
+    public boolean onScreen(double x, double y, GameStage game_stage) {
+        return !(x > 500 || y > 500 || x < -500 || y < -500);
+    }
+
 }

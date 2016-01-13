@@ -38,6 +38,7 @@ public class GameStage extends com.badlogic.gdx.scenes.scene2d.Stage {
 
 
 
+
     }
 
     @Override
@@ -54,7 +55,6 @@ public class GameStage extends com.badlogic.gdx.scenes.scene2d.Stage {
         //System.out.println(actors.size());
         super.addActor(actor);
 
-        actors.add(actor);
         if (actor instanceof Enemy){
             enemies.add(actor);
         }else if (actor instanceof Weapon){
@@ -92,5 +92,13 @@ public class GameStage extends com.badlogic.gdx.scenes.scene2d.Stage {
 
     public ParticleEffectPool getPool() {
         return pool;
+    }
+
+    public ArrayList<Actor> getRemove() {
+        return remove;
+    }
+
+    public ArrayList<ParticleEffect> getEffects() {
+        return effects;
     }
 }
