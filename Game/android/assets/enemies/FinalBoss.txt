@@ -1,0 +1,7 @@
+Enemy: -Final Boss-
+Sprite: FinalBoss.png
+Weapons: Bullet, Laser, Missles
+Health:
+Speed:
+Range:
+Description:

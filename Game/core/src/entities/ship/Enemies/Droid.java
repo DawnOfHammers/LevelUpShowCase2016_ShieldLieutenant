@@ -19,15 +19,18 @@ public class Droid extends Enemy {
     private int firelag;    //After the firing of its weapons a droid will not move for <firelag> seconds.
     public Droid(int x, int y, GameStage gs, String sprite_name){
         super(x,y,sprite_name, gs);
+
+        this.firelag = 1;
+    }
+
+    @Override
+    protected void init(){
         super.health = 5;
         super.range = 750;
         super.speed = 4;
 
         super.actions = new boolean[4];
-
-        this.firelag = 1;
     }
-
 
     /**
      * Action 0: When droid is suffering from weapon's lag.

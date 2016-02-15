@@ -1,0 +1,7 @@
+Enemy: -Missile Scout-
+Sprite: MissileDroid.png
+Weapons: Missile
+Health: 5
+Speed: 4
+Range: 500
+Description: A point defense drone sent to assist scouts in need of assistance, these guy'll be a little tougher.

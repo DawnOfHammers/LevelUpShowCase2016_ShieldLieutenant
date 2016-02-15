@@ -1,0 +1,7 @@
+Enemy: -Fighter-
+Sprite: Fighter.png
+Weapons: Laser
+Health: 5
+Speed: 3
+Range: 500
+Description: The first of the empire's warships, these fighters are armed with particle lasers to pack a mean punch.

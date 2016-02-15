@@ -5,9 +5,14 @@ import gamestates.playState.GameStage;
 /**
  * Created by Kevin Zheng on 2016-02-15.
  */
-public class MissleBoss extends Enemy {
-    public MissleBoss(int x, int y, GameStage gs){
+public class MissileBoss extends Enemy {
+    public MissileBoss(int x, int y, GameStage gs){
         super(x, y, "Proto.png", gs);
+    }
+
+    @Override
+    protected void init(){
+
     }
 
     @Override

@@ -11,6 +11,13 @@ public class BulletBoss extends Enemy {
     }
 
     @Override
+    protected void init(){
+        super.health = 100;
+        super.range = 500;
+        super.speed = 1;
+    }
+
+    @Override
     public void aiPlan(){
 
     }

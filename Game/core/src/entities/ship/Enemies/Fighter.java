@@ -25,15 +25,19 @@ public class Fighter extends Enemy {
     private int cool_down;
     public Fighter(int x, int y, GameStage gs, String sprite_string){
         super(x,y, sprite_string, gs);
+
+        this.tg_angle = super.angle;
+        this.turn_rate = 3;
+        this.cool_down = 0;
+    }
+
+    @Override
+    protected void init(){
         super.health = 5;
         super.speed = 3;
         super.range = 500;
 
         super.actions = new boolean[4];
-
-	    this.tg_angle = super.angle;
-        this.turn_rate = 3;
-        this.cool_down = 0;
     }
 
     /**

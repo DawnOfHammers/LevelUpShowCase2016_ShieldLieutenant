@@ -11,6 +11,11 @@ public class LaserBoss extends Enemy {
     }
 
     @Override
+    protected void init(){
+
+    }
+
+    @Override
     public void aiPlan(){
 
     }

@@ -21,13 +21,16 @@ public class MissileDroid extends Enemy {
     private int firelag;    //After the firing of its weapons a droid will not move for <firelag> seconds.
     public MissileDroid(int x, int y, GameStage gs, String sprite_name){
         super(x,y, sprite_name, gs);
+        this.firelag = 1;
+    }
+
+    @Override
+    protected void init(){
         super.health = 5;
         super.range = 500;
         super.speed = 4;
 
         super.actions = new boolean[4];
-
-        this.firelag = 1;
     }
 
     /**
@@ -88,9 +91,9 @@ public class MissileDroid extends Enemy {
             double p_x = player.getX();
             double p_y = player.getY();
             gamestage.addActor(new Missile((int) this.getX(),
-                                           (int) this.getY(),
-                                           Math.toDegrees(Math.atan2(p_y - this.getY(), p_x - this.getX())) + 90,
-                                           gamestage, "Bullet"));
+                    (int) this.getY(),
+                    Math.toDegrees(Math.atan2(p_y - this.getY(), p_x - this.getX())) + 90,
+                    gamestage, "Bullet"));
 
             //System.out.println("MissileDroid.fire(): " + Math.toDegrees(Math.atan2(p_y - this.getY(), p_x - this.getX())));
         }

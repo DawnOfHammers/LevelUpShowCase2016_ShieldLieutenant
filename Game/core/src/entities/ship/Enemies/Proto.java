@@ -16,6 +16,10 @@ public class Proto extends Enemy {
      */
     public Proto(int x, int y, GameStage gs, String sprite_name){
         super(x,y, sprite_name, gs);
+    }
+
+    @Override
+    protected void init(){
         super.health = 5;
         super.actions = new boolean[2];
     }

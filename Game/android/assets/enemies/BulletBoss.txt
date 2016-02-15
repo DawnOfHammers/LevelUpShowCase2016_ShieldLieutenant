@@ -1,0 +1,7 @@
+Enemy: -Bullet Boss-
+Sprite: BulletBoss.png
+Weapons: Bullet
+Health:
+Speed:
+Range:
+Description:

@@ -1,0 +1,7 @@
+Enemy: -Missile Boss-
+Sprite: MissileBoss.png
+Weapons: Missile
+Health:
+Speed:
+Range:
+Description:

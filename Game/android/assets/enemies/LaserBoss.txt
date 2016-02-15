@@ -1,0 +1,7 @@
+Enemy: -Laser Boss-
+Sprite: LaserBoss.png
+Weapons: Laser
+Health:
+Speed:
+Range:
+Description:

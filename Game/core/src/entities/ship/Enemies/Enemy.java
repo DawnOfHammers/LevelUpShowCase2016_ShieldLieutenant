@@ -28,6 +28,7 @@ public abstract class Enemy extends Ship {
      */
     protected Enemy(int x, int y, String sprite_name, GameStage gs){
         super(x, y, gs, sprite_name);
+        init();
 
         goal_x = x;
         goal_y = y;
@@ -40,6 +41,11 @@ public abstract class Enemy extends Ship {
             setTouchable(Touchable.enabled);
         }
     }
+
+    /**Initializes all required stats in an enemy.
+     *
+     */
+    abstract protected void init();
 
     /**Enemies interact with the world in 3 ways.
      *

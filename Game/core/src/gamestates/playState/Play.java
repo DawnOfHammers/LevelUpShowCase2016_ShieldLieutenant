@@ -21,6 +21,7 @@ import entities.projectiles.Laser;
 import entities.projectiles.Missile;
 import entities.ship.Enemies.Droid;
 import entities.ship.Enemies.Enemy;
+import entities.ship.Enemies.Fighter;
 import entities.ship.Enemies.MissileDroid;
 import entities.ship.player.Player;
 import game.MainGame;
@@ -87,7 +88,7 @@ public class Play extends GameState{
         missile = new Missile(100,100,0, gStage, "Bullet");
 
         enemy = new Droid(500, 500, gStage, "Proto");
-        enemy2 = new Droid(-500, 500, gStage, "Proto");
+        enemy2 = new Fighter(-500, 500, gStage, "Proto");
         enemy3 = new MissileDroid(-500, -500, gStage, "Proto");
         //splitter.draw();
         //haha hairiou i obstructed your code. hahahahahhaha.. letts see how you can fix it. I put a dot somewhere .... mwua hahahahahahha

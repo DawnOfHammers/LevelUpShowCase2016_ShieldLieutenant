@@ -11,6 +11,11 @@ public class FinalBoss extends Enemy{
     }
 
     @Override
+    protected void init(){
+
+    }
+
+    @Override
     public void aiPlan(){
 
     }
