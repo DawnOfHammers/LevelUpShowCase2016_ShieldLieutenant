@@ -53,4 +53,60 @@ public class StatManager {
         System.out.println();
         System.out.println(flavor_text);
     }
+
+    /**Gets the name of the ship.
+     *
+     * @return  name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**Gets the description of the ship.
+     *
+     * @return  flavor_text
+     */
+    public String getFlavorText() {
+        return flavor_text;
+    }
+
+    /**Gets the weapons of the ship.
+     *
+     * @return  weapons
+     */
+    public String[] getWeapons() {
+        return weapons;
+    }
+
+    /**Gets the sprite of the ship.
+     *
+     * @return  sprite_path
+     */
+    public String getSprite() {
+        return sprite_path;
+    }
+
+    /**Gets the speed stat of the ship.
+     *
+     * @return  speed
+     */
+    public int getSpeed() {
+        return speed;
+    }
+
+    /**Gets the health stat of the ship.
+     *
+     * @return  health
+     */
+    public int getHealth() {
+        return health;
+    }
+
+    /**Gets the range stat of the ship.
+     *
+     * @return range
+     */
+    public int getRange() {
+        return range;
+    }
 }
