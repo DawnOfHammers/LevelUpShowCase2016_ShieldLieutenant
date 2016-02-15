@@ -3,6 +3,8 @@ package entities.ship.Enemies;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import entities.shield.Shield;
+import entities.shield.StandardShield;
 import entities.ship.Ship;
 import gamestates.playState.GameStage;
 
@@ -24,15 +26,15 @@ public abstract class Enemy extends Ship {
      * @param x X - Cord
      * @param y Y - Cord
      */
-    protected Enemy(int x, int y, String sprite_path, GameStage gs){
-        super(x, y, gs);
+    protected Enemy(int x, int y, String sprite_name, GameStage gs){
+        super(x, y, gs, sprite_name);
 
         goal_x = x;
         goal_y = y;
-	this.angle = Math.random()*Math.PI;
+	    this.angle = Math.random()*Math.PI;
 
+        this.sprite = new Sprite(new Texture(sprite_name+".png"));
         {// Sprite Setup
-            super.sprite = new Sprite(new Texture((sprite_path)));
             sprite.setOrigin(sprite.getWidth()/2,sprite.getHeight()/2);
 //            setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(),sprite.getHeight()); //initilization stuff for the actor
             setTouchable(Touchable.enabled);
@@ -49,8 +51,19 @@ public abstract class Enemy extends Ship {
      */
     @Override
     public void act(float dt){
+        super.act(dt);
         this.aiPlan();
         this.aiAct();
+
+        for(double[] i : vertices) {
+            for(Shield shield: gamestage.getPlayer().getShields()){
+                if(shield.check_in_bounds(i[0], i[1])){
+                    if(shield.check_in_arc(i[0], i[1])){
+                        this.remove();
+                    }
+                }
+            }
+        }
     }
 
 

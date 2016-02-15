@@ -7,6 +7,7 @@ package entities.ship.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import entities.managers.InputManager;
 import entities.projectiles.Bullet;
 import entities.projectiles.Laser;
+import entities.projectiles.Weapon;
 import entities.shield.*;
 import entities.ship.Ship;
 import gamestates.playState.GameStage;
@@ -38,9 +40,10 @@ public class Player extends Ship {
 
     private ArrayList<Shield> shields = new ArrayList<Shield>();
 
-    public Player(int x,int y, GameStage gs){
-        super(x, y, gs);
+    public Player(int x,int y, GameStage gs, String sprite_name){
+        super(x, y, gs, sprite_name);
         init();
+
 
         //this.powerups.add(new Afterburner(0, 0));
         //this.powerups.add(new Omni(0,0));
@@ -58,12 +61,11 @@ public class Player extends Ship {
         this.angle = 0;
         this.trueSpeed = 0;
         this.speed = 0;
-        this.health = 100;
-        this.shields.add(new StandardShield(new double[]{this.getX(),this.getY()}, 75, "orange"));
-        this.shields.add(new StandardShield(new double[]{this.getX(),this.getY()}, 100, "blue"));
+        this.health = 1000;
+        this.shields.add(new StandardShield((int)this.getX(),(int)this.getY(),gamestage, 75, "orange", "bullet"));
+        this.shields.add(new StandardShield((int)this.getX(),(int)this.getY(),gamestage, 100, "blue", "bullet"));
 
 
-        sprite = new Sprite(new Texture(("S2.png"))); //initializing the sprite of the player
         sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 
         //setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight()); //initilization stuff for the actor
@@ -100,19 +102,19 @@ public class Player extends Ship {
 
         }
         if(InputManager.get_input_state(InputManager.PLAYER_SHIELD_1_LEFT)){
-            shields.get(0).rotateCounterClockwise();
-        }
-
-        if(InputManager.get_input_state(InputManager.PLAYER_SHIELD_1_RIGHT)){
             shields.get(0).rotateClockwise();
         }
 
+        if(InputManager.get_input_state(InputManager.PLAYER_SHIELD_1_RIGHT)){
+            shields.get(0).rotateCounterClockwise();
+        }
+
         if(InputManager.get_input_state(InputManager.PLAYER_SHIELD_2_LEFT)){
-            shields.get(1).rotateCounterClockwise();
+            shields.get(1).rotateClockwise();
         }
 
         if(InputManager.get_input_state(InputManager.PLAYER_SHIELD_2_RIGHT)){
-            shields.get(1).rotateClockwise();
+            shields.get(1).rotateCounterClockwise();
         }
 
         if (InputManager.get_input_state(InputManager.ACTIVATE_POWERUP_1)) {
@@ -178,8 +180,9 @@ public class Player extends Ship {
 
         this.setX(this.getX() - (float) veloX);
         this.setY(this.getY() + (float) veloY);
-
         this.setRotation((float) angle);
+        sprite.setPosition(this.getX(), this.getY());
+        sprite.setRotation(this.getRotation());
         updateCamera();
 
     }
@@ -201,11 +204,11 @@ public class Player extends Ship {
 
 
         for(Shield shield : shields){
-            shield.update(this.getX()+sprite.getWidth()/2,this.getY()+sprite.getHeight()/2, delta);
+            shield.update(this.getX() + sprite.getWidth() / 2, this.getY() + sprite.getHeight() / 2, delta);
         }
+
         checkCollisions(weapons);
-        sprite.setRotation(this.getRotation());
-        sprite.setPosition(this.getX(), this.getY());
+        gamestage.checkBounds(this);
     }
 
     /**

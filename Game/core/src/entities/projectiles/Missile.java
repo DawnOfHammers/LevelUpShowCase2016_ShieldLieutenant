@@ -11,19 +11,19 @@ import gamestates.playState.GameStage;
 /**
  * Created by Hairuo on 2015-11-23.
  */
+
 public class Missile extends Weapon {
     private double turn_speed;
     private ParticleEffect effect;
 
 
-    public Missile(int x, int y, double trajectory, GameStage gs){
-        super(x, y, trajectory, gs);
-        this.speed = 3;
-        this.sprite = new Sprite(new Texture(("bullet.jpg")));
+    public Missile(int x, int y, double trajectory, GameStage gs, String sprite_name){
+        super(x, y, trajectory, gs, sprite_name);
+        this.speed = 6;
         this.turn_speed = 0.75;
 
         effect = new ParticleEffect();
-        effect.load(Gdx.files.internal("Trail_1.p"), Gdx.files.internal(""));
+        effect.load(Gdx.files.internal("trail_2.p"), Gdx.files.internal(""));
         effect.setPosition(this.getX() + sprite.getWidth()/2, this.getY());
         effect.start();
 
@@ -41,6 +41,7 @@ public class Missile extends Weapon {
      * updates the missiles trajectory based on the players position
      * does this by calculating the angle to the player
      * and adjusting its own trajectory accordingly
+     *
      * @param player
      */
 
@@ -50,13 +51,11 @@ public class Missile extends Weapon {
         double target_y = player.getY() - this.getY();
         double target_trajectory = (Math.toDegrees(Math.atan2(target_y, target_x))+90+360)%360;
 
-
-
-
         //System.out.println(target_trajectory + "," + trajectory);
         if(Math.abs(trajectory - target_trajectory) < turn_speed){
             trajectory = target_trajectory;
         }else{
+
             double difference = trajectory - target_trajectory;
             double other_difference = 360 - Math.abs(difference);
 
@@ -76,16 +75,16 @@ public class Missile extends Weapon {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-
-        sprite.draw(batch, parentAlpha);
+        super.draw(batch, parentAlpha);
         effect.draw(batch);
     }
 
     /**
-     * updates positions
+     * updates positions and rotations
+     *
      */
-    protected void update() {
-
+    protected void update(){
+        super.update();
         track(gamestage.getPlayer());
         this.x_velo =  Math.sin(Math.toRadians(trajectory)) * speed;
         this.y_velo =  Math.cos(Math.toRadians(trajectory)) * speed;
@@ -93,20 +92,24 @@ public class Missile extends Weapon {
         this.setY((float) (this.getY() - y_velo));
         sprite.setPosition(this.getX(),this.getY());
         sprite.setRotation((float)trajectory);
+        this.setRotation((float)trajectory);
 
         double[] t_coords = Laser.transform(this.getX() + sprite.getWidth()/2, this.getY() + sprite.getHeight(), 360 - this.trajectory , this.getX() + this.sprite.getWidth()/2, this.getY() + this.sprite.getHeight()/2);
         effect.setPosition((float)t_coords[0] , (float)t_coords[1]);
         com.badlogic.gdx.utils.Array<ParticleEmitter> emitters = effect.getEmitters();
 
+
         for( ParticleEmitter i : emitters){
             ParticleEmitter.ScaledNumericValue angle = i.getAngle();
-            angle.setLow((float)this.trajectory+90);
+            angle.setLow((float) this.trajectory + 90);
+
         }
 
-        for(Shield shield : gamestage.getPlayer().getShields()){
-            if(shield.collideMissile(this.getX(), this.getY())){
-                gamestage.deleteActor(this);
-                //this.remove();
+        for(double[] i : vertices) {
+            for (Shield shield : gamestage.getPlayer().getShields()) {
+                if (shield.collideMissile(i[0], i[1])) {
+                    this.remove();
+                }
             }
         }
 

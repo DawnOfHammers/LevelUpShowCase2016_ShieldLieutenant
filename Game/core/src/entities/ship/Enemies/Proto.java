@@ -1,6 +1,7 @@
 package entities.ship.Enemies;
 
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import entities.ship.Enemies.Enemy;
 import gamestates.playState.GameStage;
 
@@ -13,8 +14,8 @@ public class Proto extends Enemy {
      * @param x X - Cord
      * @param y Y - Cord
      */
-    public Proto(int x, int y, GameStage gs){
-        super(x,y, "Proto.png", gs);
+    public Proto(int x, int y, GameStage gs, String sprite_name){
+        super(x,y, sprite_name, gs);
         super.health = 5;
         super.actions = new boolean[2];
     }
