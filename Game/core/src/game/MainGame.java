@@ -12,7 +12,7 @@ import entities.managers.InputManager;
  * Created by Hongyu Wang on 12/27/2015.
  */
 public class MainGame extends ApplicationAdapter{
-    public static final int FPS = 60;
+    private static final int FPS = 60;
     public static int WIDTH;
     public static int HEIGHT;
     private long start = System.currentTimeMillis();
