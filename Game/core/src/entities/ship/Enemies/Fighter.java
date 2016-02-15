@@ -23,7 +23,7 @@ public class Fighter extends Enemy {
     private int turn_rate;
     private int cool_down;
     public Fighter(int x, int y, GameStage gs){
-        super(x,y,"Proto.png", gs);
+        super(x,y,"Fighter.png", gs);
         super.health = 5;
         super.speed = 3;
         super.range = 500;

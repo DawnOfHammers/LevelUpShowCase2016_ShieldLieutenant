@@ -16,10 +16,11 @@ public class Droid extends Enemy {
      * @param y Y - Cord
      */
     private int firelag;    //After the firing of its weapons a droid will not move for <firelag> seconds.
+
     public Droid(int x, int y, GameStage gs){
-        super(x,y,"Proto.png", gs);
+        super(x,y,"Droid.png", gs);
         super.health = 5;
-        super.range = 500;
+        super.range = 700;
         super.speed = 2;
 
         super.actions = new boolean[4];
@@ -90,8 +91,6 @@ public class Droid extends Enemy {
                                           (int) this.getY(),
                                           - Math.toDegrees(Math.atan2(p_y - this.getY(), p_x - this.getX())) + 90,
                                           gamestage));
-
-            System.out.println("Droid.fire(): " + Math.toDegrees(Math.atan2(p_y - this.getY(), p_x - this.getX())));
         }
         if(firelag == 10)
             firelag = -1;
@@ -103,8 +102,8 @@ public class Droid extends Enemy {
 
     private void target(Player player){
         if ((int)goal_x == (int)this.getX() && (int)goal_y == (int)this.getY()) {
-            goal_x = player.getX() - range / 2 + Math.random() * range;
-            goal_y = player.getY() - range / 2 + Math.random() * range;
+            goal_x = player.getX() + ((int)(Math.random()*2) - 1) * (Math.random() * range/2 + range/4);
+            goal_y = player.getY() + ((int)(Math.random()*2) - 1) * (Math.random() * range/2 + range/4);
         }
         firelag = 0;
     }

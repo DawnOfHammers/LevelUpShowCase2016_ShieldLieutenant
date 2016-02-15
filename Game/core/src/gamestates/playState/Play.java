@@ -92,7 +92,7 @@ public class Play extends GameState{
         gStage.addActor(bullet);
         gStage.addActor(missile);
         gStage.addActor(main_player = new Player(200, 100, gStage));
-        //gStage.addActor(enemy);
+        gStage.addActor(enemy);
 
 
         //gStage.addActor(test);

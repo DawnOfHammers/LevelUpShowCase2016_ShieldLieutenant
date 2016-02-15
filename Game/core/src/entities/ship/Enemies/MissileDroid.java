@@ -19,7 +19,7 @@ public class MissileDroid extends Enemy {
      */
     private int firelag;    //After the firing of its weapons a droid will not move for <firelag> seconds.
     public MissileDroid(int x, int y, GameStage gs){
-        super(x,y,"Proto.png", gs);
+        super(x,y,"Droid.png", gs);
         super.health = 5;
         super.range = 250;
         super.speed = 2;
