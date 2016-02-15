@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 import entities.projectiles.Bullet;
+import entities.projectiles.Laser;
+import gamestates.playState.GameStage;
 
 import java.util.ArrayList;
 
@@ -21,14 +23,18 @@ import java.util.ArrayList;
  * @since 2015/11/14
  */
 public class StandardShield extends Shield {
+    /**
+     * shape renderer for primilary shield drawing
+     * now defunct
+     */
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
 
 
 
 
 
-    public StandardShield(double[] point, int radius, String colour) {
-        super(point, radius, Math.PI, colour);
+    public StandardShield(int x, int y, GameStage gs, int radius, String colour, String sprite_name) {
+        super(x, y, gs, radius, Math.PI / 2, colour, sprite_name);
         reflect_effects = new ArrayList<ParticleEffect>();
         shield_effects = new ArrayList<ParticleEffect>();
         reflected = new ArrayList<Bullet>();
@@ -44,8 +50,8 @@ public class StandardShield extends Shield {
 
     @Override
     public void update(double x, double y, float delta) {
-        point[0] = x;
-        point[1] = y;
+        this.setX((int)x);
+        this.setY((int) y);
 
         updateShieldEffects();
 
@@ -55,10 +61,6 @@ public class StandardShield extends Shield {
         for (ParticleEffect effect : shield_effects) {
             effect.update(delta);
         }
-
-
-
-
     }
 
     /**
@@ -69,35 +71,36 @@ public class StandardShield extends Shield {
      */
     public boolean collideProjectile(Bullet bullet) {
         if(!reflected.contains(bullet)) {
-            double delta_x = point[0] - bullet.getX();
-            double delta_y = point[1] - bullet.getY();
-            double distance_from_player = Math.hypot(delta_x, delta_y);
-            if (distance_from_player < radius) {
-                reflected.add(bullet);
-                if (check_in_arc(bullet.getX(), bullet.getY())) {
 
-                    double slope_of_tangent = -(delta_x / delta_y);
-                    float reflected_angle = (float) Math.toDegrees(-((2 * Math.atan(slope_of_tangent) - (Math.toRadians(-bullet.getTrajectory()) + Math.PI / 2)) - Math.PI / 2));
-                    bullet.setTrajectory(reflected_angle);
+            for(double[] i : bullet.getVertices() ){
 
-                    ParticleEffect splash = new ParticleEffect();
-                    splash.load(Gdx.files.internal("splash_2.p"), Gdx.files.internal(""));
-                    splash.setPosition(bullet.getX(), bullet.getY());
-                    splash.start();
+                if(check_in_bounds(i[0], i[1])){
+                    reflected.add(bullet);
+                    if (check_in_arc(i[0], i[1])) {
 
-                    com.badlogic.gdx.utils.Array<ParticleEmitter> emitters = splash.getEmitters();
-                    for (ParticleEmitter i : emitters) {
-                        ParticleEmitter.ScaledNumericValue angle = i.getAngle();
-                        angle.setLow(360 - reflected_angle + 90 - 27);
-                        angle.setHigh(360 - reflected_angle + 90 - 27, 360 - reflected_angle + 90 - 27 + 55);
+                        double slope_of_tangent = -((this.getX() - i[0]) / (this.getY() - i[1]));
+                        float reflected_angle = (float) Math.toDegrees(-((2 * Math.atan(slope_of_tangent) - (Math.toRadians(-bullet.getTrajectory()) + Math.PI / 2)) - Math.PI / 2));
+                        bullet.setTrajectory(reflected_angle);
 
+                        ParticleEffect splash = new ParticleEffect();
+                        splash.load(Gdx.files.internal("splash_2.p"), Gdx.files.internal(""));
+                        splash.setPosition((float)i[0], (float)i[1]);
+                        splash.start();
+
+                        com.badlogic.gdx.utils.Array<ParticleEmitter> emitters = splash.getEmitters();
+                        for (ParticleEmitter emitter : emitters) {
+                            ParticleEmitter.ScaledNumericValue angle = emitter.getAngle();
+                            angle.setLow(360 - reflected_angle + 90 - 27);
+                            angle.setHigh(360 - reflected_angle + 90 - 27, 360 - reflected_angle + 90 - 27 + 70);
+
+                        }
+
+
+                        reflect_effects.add(splash);
+
+
+                        return true;
                     }
-
-
-                    reflect_effects.add(splash);
-
-
-                    return true;
                 }
             }
         }
@@ -113,15 +116,11 @@ public class StandardShield extends Shield {
      * @param trajectory: current angle of the laser
      */
     public double collideLaser(double x, double y, double trajectory) {
-        double delta_x = point[0] - x;
-        double delta_y = point[1] - y;
-        double distance_from_player = Math.hypot(delta_x, delta_y);
-
-        if (distance_from_player < radius) {
+        if(check_in_bounds(x, y)){
 
 
             if (check_in_arc(x, y)) {
-                double slope_of_tangent = -(delta_x / delta_y);
+                double slope_of_tangent = -((this.getX() - x) / (this.getY() - y));
                 return (Math.toDegrees(-((2 * Math.atan(slope_of_tangent) - (Math.toRadians(-trajectory) + Math.PI / 2)) - Math.PI / 2)));
             }
         }
@@ -136,29 +135,34 @@ public class StandardShield extends Shield {
      * @return whether or not the missile has hit an arc
      */
     public boolean collideMissile(double x, double y){
-        double delta_x = point[0] - x;
-        double delta_y = point[1] - y;
-        double distance_from_player = Math.hypot(delta_x, delta_y);
-        if (distance_from_player < radius) {
+        if(check_in_bounds(x, y)){
             if (check_in_arc(x, y)) {
+
+                ParticleEffect splash = new ParticleEffect();
+                splash.load(Gdx.files.internal("explosion.p"), Gdx.files.internal(""));
+                splash.setPosition((float)x, (float)y);
+                splash.start();
+                reflect_effects.add(splash);
+
                 return true;
             }
         }
         return false;
     }
 
-
     //TODO Implement this function
-
     /**
+     *Checks whether or not the x and y coordinate is within the arc of the shield
      *
      * @param x x value of point to be checked
      * @param y y value of point to be checked
      * @return boolean, whether its in arc or not
      */
-    private boolean check_in_arc(double x, double y) {
-        double d_x = point[0] - x;
-        double d_y = point[1] - y;
+    public boolean check_in_arc(double x, double y) {
+
+
+        double d_x = this.getX() - x;
+        double d_y = this.getY() - y;
         double d_angle = -Math.atan2(d_y, d_x);
 
         if (d_angle < 0.0) {
@@ -184,6 +188,17 @@ public class StandardShield extends Shield {
 
     }
 
+    public boolean check_in_bounds(double x, double y){
+        double delta_x = this.getX() - x;
+        double delta_y = this.getY() - y;
+        double distance_from_player = Math.hypot(delta_x, delta_y);
+        if(distance_from_player < radius + 17){
+            return true;
+        }
+        return false;
+
+    }
+
 
     /**
      * The overriden draw method in the actor class
@@ -198,7 +213,7 @@ public class StandardShield extends Shield {
         shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
         shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.arc((float) point[0], (float) point[1], radius, (float) Math.toDegrees(initial_angle) % 360, (float) Math.toDegrees(this.getFinalAngle()) % 360);
+        shapeRenderer.arc((float) this.getX(), (float) this.getY(), radius, (float) Math.toDegrees(initial_angle) % 360, (float) Math.toDegrees(this.getFinalAngle()) % 360);
         shapeRenderer.end();
         **/
         batch.begin();
@@ -218,8 +233,8 @@ public class StandardShield extends Shield {
      */
     public void createShieldEffects(){
         double s_angle = initial_angle+ 0.001;
-        double x = radius * Math.cos(s_angle) + point[0];
-        double y = radius * Math.sin(s_angle) + point[1];
+        double x = radius * Math.cos(s_angle) + this.getX();
+        double y = radius * Math.sin(s_angle) + this.getY();
 
         ParticleEffect burn_1 = new ParticleEffect();
         burn_1.setPosition((float) x, (float) y);
@@ -239,8 +254,8 @@ public class StandardShield extends Shield {
                 s_angle += Math.PI*2;
             }
 
-            x = radius * Math.cos(s_angle) + point[0];
-            y = radius * Math.sin(s_angle) + point[1];
+            x = radius * Math.cos(s_angle) + this.getX();
+            y = radius * Math.sin(s_angle) + this.getY();
 
 
             ParticleEffect burn_2 = new ParticleEffect();
@@ -256,8 +271,8 @@ public class StandardShield extends Shield {
         double s_angle = initial_angle;
         for(ParticleEffect effect : shield_effects){
 
-            double x = radius * Math.cos(s_angle) + point[0];
-            double y = radius * Math.sin(s_angle) + point[1];
+            double x = radius * Math.cos(s_angle) + this.getX();
+            double y = radius * Math.sin(s_angle) + this.getY();
             com.badlogic.gdx.utils.Array<ParticleEmitter> emitters = effect.getEmitters();
             for (ParticleEmitter i : emitters) {
 
@@ -287,6 +302,8 @@ public class StandardShield extends Shield {
         }
 
     }
+
+
 
 
 }

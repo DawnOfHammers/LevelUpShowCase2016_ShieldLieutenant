@@ -2,7 +2,9 @@ package entities.shield;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import entities.GameObject;
 import entities.projectiles.Bullet;
+import gamestates.playState.GameStage;
 
 import java.util.ArrayList;
 
@@ -12,7 +14,7 @@ import java.util.ArrayList;
  * @version 1.0
  * @since 2015/11/14
  */
-public abstract class Shield extends Actor {
+public abstract class Shield extends GameObject {
     /**
      * The location of the entities.ship. This is the point at which the entities.shield is centred.
      */
@@ -54,16 +56,15 @@ public abstract class Shield extends Actor {
     protected ArrayList<ParticleEffect> reflect_effects;
     protected ArrayList<ParticleEffect> shield_effects;
 
-
     /**
      * The primary constructor of entities.shield.
      *
-     * @param p:        Point
      * @param radius:   int
      * @param arc_size: double
      */
-    public Shield(double[] p, int radius, double arc_size, String colour) {
-        this.point = p;
+
+    public Shield(int x, int y, GameStage gs, int radius, double arc_size, String colour, String sprite_name) {
+        super(x, y, gs, sprite_name);
         this.radius = radius;
         this.arc_size = arc_size;
         this.colour = colour;
@@ -129,4 +130,8 @@ public abstract class Shield extends Actor {
      * Updates all logic of the Shield
      */
     public abstract void update(double x, double y, float delta);
+
+    public abstract boolean check_in_arc(double x, double y);
+
+    public abstract boolean check_in_bounds(double x, double y);
 }

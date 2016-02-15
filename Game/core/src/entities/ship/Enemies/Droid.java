@@ -1,5 +1,6 @@
 package entities.ship.Enemies;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import entities.projectiles.Bullet;
 import entities.ship.player.Player;
@@ -16,15 +17,15 @@ public class Droid extends Enemy {
      * @param y Y - Cord
      */
     private int firelag;    //After the firing of its weapons a droid will not move for <firelag> seconds.
-    public Droid(int x, int y, GameStage gs){
-        super(x,y,"Proto.png", gs);
+    public Droid(int x, int y, GameStage gs, String sprite_name){
+        super(x,y,sprite_name, gs);
         super.health = 5;
-        super.range = 500;
-        super.speed = 2;
+        super.range = 750;
+        super.speed = 4;
 
         super.actions = new boolean[4];
 
-        this.firelag = 0;
+        this.firelag = 1;
     }
 
 
@@ -81,20 +82,21 @@ public class Droid extends Enemy {
     }
 
     private void fire(Player player){
+
         firelag++;
         if(firelag == 5){
             //Creates a new bullet.
             double p_x = player.getX();
             double p_y = player.getY();
             gamestage.addActor(new Bullet((int) this.getX(),
-                                          (int) this.getY(),
+                                          (int) this.getY() ,
                                           - Math.toDegrees(Math.atan2(p_y - this.getY(), p_x - this.getX())) + 90,
-                                          gamestage));
-
-            System.out.println("Droid.fire(): " + Math.toDegrees(Math.atan2(p_y - this.getY(), p_x - this.getX())));
+                                          gamestage,"Bullet"));
         }
-        if(firelag == 10)
+        if(firelag == 10) {
             firelag = -1;
+        }
+
     }
 
     private void firelag(){
@@ -103,8 +105,8 @@ public class Droid extends Enemy {
 
     private void target(Player player){
         if ((int)goal_x == (int)this.getX() && (int)goal_y == (int)this.getY()) {
-            goal_x = player.getX() - range / 2 + Math.random() * range;
-            goal_y = player.getY() - range / 2 + Math.random() * range;
+            goal_x = player.getX() + ((int)(Math.random()*2) - 1) * (Math.random() * range/2 + range/4);
+            goal_y = player.getY() + ((int)(Math.random()*2) - 1) * (Math.random() * range/2 + range/4);
         }
         firelag = 0;
     }

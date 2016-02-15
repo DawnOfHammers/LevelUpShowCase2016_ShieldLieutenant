@@ -1,5 +1,6 @@
 package entities.ship.Enemies;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 
@@ -22,8 +23,8 @@ public class Fighter extends Enemy {
     private double tg_angle;
     private int turn_rate;
     private int cool_down;
-    public Fighter(int x, int y, GameStage gs){
-        super(x,y,"Proto.png", gs);
+    public Fighter(int x, int y, GameStage gs, String sprite_string){
+        super(x,y, sprite_string, gs);
         super.health = 5;
         super.speed = 3;
         super.range = 500;
@@ -98,7 +99,7 @@ public class Fighter extends Enemy {
                                      (int) this.getY(),
                                      this.angle,
                                      gamestage,
-                                     3600d));
+                                     3600d, "Bullet"));
 
         cool_down = 100;
     }

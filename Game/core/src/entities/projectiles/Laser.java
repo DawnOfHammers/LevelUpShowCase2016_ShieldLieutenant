@@ -27,9 +27,8 @@ public class Laser extends Weapon {
     private double life_time;
     private int length;
 
-    public Laser(int x, int y, double trajectory, GameStage gs, double life_time) {
-        super(x, y, trajectory, gs);
-        this.sprite = new Sprite(new Texture(("bullet.jpg")));
+    public Laser(int x, int y, double trajectory, GameStage gs, double life_time, String sprite_name) {
+        super(x, y, trajectory, gs, sprite_name);
         this.middle = new Sprite(new Texture(("S2.png")));
         this.end = new Sprite(new Texture(("S2.png")));
         this.life_time = life_time;
@@ -75,7 +74,8 @@ public class Laser extends Weapon {
     }
 
     /**
-     * Calculates x y and trajectory of each piece in the laser chain
+     * Calculates the x and y coordinates and trajectory of each piece in the laser chain
+     *
      *
      * @param game_stage
      */
@@ -171,6 +171,7 @@ public class Laser extends Weapon {
 
     @Override
     protected void update() {
+        super.update();
         chain.clear();
         calc(gamestage);
         collide = false;

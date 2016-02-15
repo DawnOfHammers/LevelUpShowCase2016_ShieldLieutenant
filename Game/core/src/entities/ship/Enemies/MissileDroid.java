@@ -1,5 +1,6 @@
 package entities.ship.Enemies;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import entities.projectiles.Bullet;
 import entities.projectiles.Missile;
@@ -18,15 +19,15 @@ public class MissileDroid extends Enemy {
      * @param y Y - Cord
      */
     private int firelag;    //After the firing of its weapons a droid will not move for <firelag> seconds.
-    public MissileDroid(int x, int y, GameStage gs){
-        super(x,y,"Proto.png", gs);
+    public MissileDroid(int x, int y, GameStage gs, String sprite_name){
+        super(x,y, sprite_name, gs);
         super.health = 5;
-        super.range = 250;
-        super.speed = 2;
+        super.range = 500;
+        super.speed = 4;
 
         super.actions = new boolean[4];
 
-        this.firelag = 0;
+        this.firelag = 1;
     }
 
     /**
@@ -89,9 +90,9 @@ public class MissileDroid extends Enemy {
             gamestage.addActor(new Missile((int) this.getX(),
                                            (int) this.getY(),
                                            Math.toDegrees(Math.atan2(p_y - this.getY(), p_x - this.getX())) + 90,
-                                           gamestage));
+                                           gamestage, "Bullet"));
 
-            System.out.println("MissileDroid.fire(): " + Math.toDegrees(Math.atan2(p_y - this.getY(), p_x - this.getX())));
+            //System.out.println("MissileDroid.fire(): " + Math.toDegrees(Math.atan2(p_y - this.getY(), p_x - this.getX())));
         }
         if (firelag == 30)
             firelag = -1;
