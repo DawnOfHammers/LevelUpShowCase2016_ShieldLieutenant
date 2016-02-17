@@ -29,7 +29,7 @@ public class StatManager {
      *      Range: 750
      *      Description: A scout of the empires forces, though weak they come in large numbers.
      *
-     * @param filepath
+     * @param filepath  file.txt
      * @throws FileNotFoundException
      */
     public StatManager(String filepath) throws IOException{
