@@ -20,6 +20,15 @@ public class StatManager {
 
     /**Creates a new statmanager based on the given file.
      *
+     * Standard Format:
+     *      Enemy: -Droid-
+     *      Sprite: Droid.png
+     *      Weapons: Bullet
+     *      Health: 5
+     *      Speed: 4
+     *      Range: 750
+     *      Description: A scout of the empires forces, though weak they come in large numbers.
+     *
      * @param filepath
      * @throws FileNotFoundException
      */
@@ -44,6 +53,9 @@ public class StatManager {
         return input.substring(input.indexOf(":") + 2);
     }
 
+    /**Prints all related stats to within the StatManager.
+     *
+     */
     public void printStats(){
         System.out.println(name);
         System.out.println(sprite_path);
