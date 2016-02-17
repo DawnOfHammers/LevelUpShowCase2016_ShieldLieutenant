@@ -26,7 +26,6 @@ public class StatManager {
     public StatManager(String filepath) throws IOException{
         BufferedReader file = new BufferedReader(new FileReader("enemies/" + filepath));
         read(file);
-        test();    //TODO remove
     }
 
     private void read(BufferedReader file) throws IOException{
@@ -45,7 +44,7 @@ public class StatManager {
         return input.substring(input.indexOf(":") + 2);
     }
 
-    private void test(){
+    public void printStats(){
         System.out.println(name);
         System.out.println(sprite_path);
         System.out.println(weapons);
