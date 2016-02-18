@@ -13,6 +13,11 @@ import java.util.Hashtable;
  * These will then be placed within a private <Hashtable></Hashtable> data type.
  */
 public class InputManager implements InputProcessor{
+    public static int inputXPos = 0;
+    public static int inputYPos = 0;
+
+
+
     //This array controls how many controls there are currently present in the game.
     //This should directly reflect the number of controls within each series that are present.
     //Maintaining accuracy here is essential for proper function of this class.
@@ -111,6 +116,8 @@ public class InputManager implements InputProcessor{
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        inputXPos = screenX;
+        inputYPos = screenY;
         return false;
     }
 
@@ -125,7 +132,7 @@ public class InputManager implements InputProcessor{
     }
 
     @Override
-    public boolean mouseMoved(int screenX, int screenY) {
+    public boolean mouseMoved(int screenX, int screenY){
         return false;
     }
 

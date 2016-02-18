@@ -73,6 +73,7 @@ public class Play extends GameState{
     public static StatManager bulletBoss, droid, fighter, finalBoss, laserBoss,
                               missileBoss, missileDroid;
 
+
     public Play(GameStateManager gsm) {
         super(gsm);
     }

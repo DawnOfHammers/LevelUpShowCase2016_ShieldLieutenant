@@ -2,6 +2,7 @@ package gamestates.almanacState.components;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import entities.managers.InputManager;
 
 /**
  * Created by Hongyu Wang on 2/15/2016.
@@ -39,7 +40,7 @@ public abstract class Component {
      * The draw function of the component:
      * This will all assets within the component.
      */
-    protected abstract void draw(SpriteBatch sb);
+    protected abstract void draw();
 
     /**
      * This is the logic on the component iff the component is touched/pressed.
@@ -49,10 +50,10 @@ public abstract class Component {
     /**
      * This method will check this component is pressed.
      * Following this, it will perform any action required
-     * @param x the x-coordinate of the press/touch
-     * @param y the y-coordinate of the press/touch
      */
-    public void checkPressed(int x, int y){
+    public void checkPressed(){
+        int x = InputManager.inputXPos;
+        int y = InputManager.inputYPos;
         if (checkInX(x) && checkInY(y)){
             doPressLogic();
         }
