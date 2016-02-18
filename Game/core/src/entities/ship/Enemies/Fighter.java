@@ -27,7 +27,7 @@ public class Fighter extends Enemy {
         super(x,y, sprite_string, gs);
 
         this.tg_angle = super.angle;
-        this.turn_rate = 3;
+        this.turn_rate = 1;
         this.cool_down = 0;
     }
 
@@ -80,7 +80,7 @@ public class Fighter extends Enemy {
 
         tg_angle = direction(player);
         
-        int turn = shortSide();
+        float turn = shortSide();
 
         if(actions[0]){
             fire();

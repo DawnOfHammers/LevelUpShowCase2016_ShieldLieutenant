@@ -95,7 +95,7 @@ public abstract class Enemy extends Ship {
             }
         }
         {// Sprite Movement
-            sprite.setRotation(this.getRotation());
+            sprite.setRotation((float)- this.angle);
             sprite.setPosition(this.getX(), this.getY());
         }
     }
@@ -113,7 +113,7 @@ public abstract class Enemy extends Ship {
             this.setY(this.getY() + (float) (speed * dy));
         }
         {// Sprite Movement
-            sprite.setRotation(this.getRotation());
+            sprite.setRotation((float)- this.angle);
             sprite.setPosition(this.getX(), this.getY());
         }
     }

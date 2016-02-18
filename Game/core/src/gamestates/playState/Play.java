@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import entities.Background.Background;
 import entities.managers.InputManager;
+import entities.managers.StatManager;
 import entities.projectiles.Bullet;
 import entities.projectiles.Laser;
 import entities.projectiles.Missile;
@@ -33,6 +34,7 @@ import javafx.scene.PointLight;
 import javafx.scene.effect.LightBuilder;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.Hashtable;
 
 /**
@@ -68,6 +70,8 @@ public class Play extends GameState{
     public static Hashtable<Integer, Boolean> key_events;
     public static OrthographicCamera cam;
 
+    public static StatManager bulletBoss, droid, fighter, finalBoss, laserBoss,
+                              missileBoss, missileDroid;
 
     public Play(GameStateManager gsm) {
         super(gsm);
@@ -75,6 +79,14 @@ public class Play extends GameState{
 
     @Override
     public void init() {
+        initVars();
+        //splitter.draw();
+        initStage();
+        initLights();
+        initStats();
+    }
+
+    private void initVars(){
         cam = new OrthographicCamera(MainGame.WIDTH, MainGame.HEIGHT);
         cam.setToOrtho(false, MainGame.WIDTH, MainGame.HEIGHT);
         ScreenViewport viewport = new ScreenViewport(cam);
@@ -90,10 +102,9 @@ public class Play extends GameState{
         enemy = new Droid(500, 500, gStage, "Proto");
         enemy2 = new Fighter(-500, 500, gStage, "Proto");
         enemy3 = new MissileDroid(-500, -500, gStage, "Proto");
-        //splitter.draw();
-        //haha hairiou i obstructed your code. hahahahahhaha.. letts see how you can fix it. I put a dot somewhere .... mwua hahahahahahha
+    }
 
-
+    private void initStage(){
         gStage.addActor(laser);
         Actor test = new TestActor();
         test.setX(0);
@@ -108,7 +119,9 @@ public class Play extends GameState{
 
         //gStage.addActor(test);
         gStage.getPlayer().updateCamera();
+    }
 
+    private void initLights(){
         //Box2dLights testing
         this.world = new World(new Vector2(0, 0), false);
         this.debug_renderer = new Box2DDebugRenderer();
@@ -143,8 +156,23 @@ public class Play extends GameState{
         //test_light3.dispose();
         //test_light4.dispose();
         //test_light5.dispose();
+    }
 
+    private void initStats(){
+        try {
 
+//            finalBoss = new StatManager("Droid.txt");
+//            laserBoss = new StatManager("Droid.txt");
+//            missileBoss = new StatManager("Droid.txt");
+//            bulletBoss = new StatManager("BulletBoss.txt");
+
+            droid = new StatManager("Droid.txt");
+            missileDroid = new StatManager("Droid.txt");
+            fighter = new StatManager("Droid.txt");
+        }
+        catch(IOException e){
+            System.out.println(e);
+        }
     }
 
     @Override
