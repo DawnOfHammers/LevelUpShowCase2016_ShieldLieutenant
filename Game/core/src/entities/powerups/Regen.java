@@ -8,7 +8,7 @@ import entities.ship.player.Player;
 public class Regen extends Powerup{
 
     public Regen(int x, int y){
-        super(120,x,y,"Bullet.jpg", 1);
+        super(120,x,y,"Bullet.jpg",0, 1);
     }
 
     public void activate(Player player){
@@ -17,7 +17,7 @@ public class Regen extends Powerup{
     }
 
     public void deactivate(Player player){
-        player.removeActivePowerup();
+        this.active = false;
     }
 
 }

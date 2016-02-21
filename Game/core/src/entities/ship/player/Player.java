@@ -35,21 +35,16 @@ public class Player extends Ship {
     private double angle;
     private ParticleEffect effect;
     public double speed;
-    private ArrayList<Powerup> powerups = new ArrayList<Powerup>();
-    private int activePowerup;
 
-    private ArrayList<Shield> shields = new ArrayList<Shield>();
+    private Powerup[] powerups;
+    private int activePowerup;
+    private int cycleDelay;
+
+    private ArrayList<Shield> shields;
 
     public Player(int x,int y, GameStage gs, String sprite_name){
         super(x, y, gs, sprite_name);
         init();
-
-
-        //this.powerups.add(new Afterburner(0, 0));
-        //this.powerups.add(new Omni(0,0));
-        this.activePowerup = 0;
-
-
 
     }
 
@@ -62,6 +57,7 @@ public class Player extends Ship {
         this.trueSpeed = 0;
         this.speed = 0;
         this.health = 1000;
+        this.shields = new ArrayList<Shield>(3);
         this.shields.add(new StandardShield((int)this.getX(),(int)this.getY(),gamestage, 75, "orange", "bullet"));
         this.shields.add(new StandardShield((int)this.getX(),(int)this.getY(),gamestage, 100, "blue", "bullet"));
 
@@ -76,9 +72,13 @@ public class Player extends Ship {
         effect.setPosition(this.getX() + sprite.getWidth()/2, this.getY());
         effect.start();
 
-
-
-
+        this.activePowerup = 1;
+        this.powerups = new Powerup[4];
+        powerups[0]=new Afterburner(0,0);
+        powerups[1]=new Omni(0,0);
+        powerups[2]=new Orbiters(0,0);
+        powerups[3]=new Regen(0,0);
+        cycleDelay=5;
     }
 
 
@@ -117,13 +117,20 @@ public class Player extends Ship {
             shields.get(1).rotateCounterClockwise();
         }
 
-        if (InputManager.get_input_state(InputManager.ACTIVATE_POWERUP_1)) {
-            if(powerups.size()>0)
-                powerups.get(activePowerup).activate(this);
-        }else{
-            if(powerups.size()>0)
-                powerups.get(activePowerup).deactivate(this);
+        if (InputManager.get_input_state(InputManager.CYCLE_POWERUP)) {
+            cyclePowerup();
         }
+        else if (InputManager.get_input_state(InputManager.ACTIVATE_POWERUP_1)) {
+            powerups[activePowerup].activate(this);
+        }
+        else{
+
+            powerups[activePowerup].deactivate(this);
+
+            cycleDelay-=1;
+        }
+
+
 
         if (InputManager.get_input_state(InputManager.PLAYER_FORWARD)) {
             if (speed < 4)
@@ -137,7 +144,6 @@ public class Player extends Ship {
             }
         }
     }
-
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -193,7 +199,7 @@ public class Player extends Ship {
         move();
 
         double[] t_coords = Laser.transform(this.getX() + this.sprite.getWidth()/2 , this.getY(), 360 - this.angle , this.getX() + this.sprite.getWidth()/2, this.getY() + this.sprite.getHeight()/2);
-        effect.setPosition((float)t_coords[0] , (float)t_coords[1]);
+        effect.setPosition((float) t_coords[0], (float) t_coords[1]);
         com.badlogic.gdx.utils.Array<ParticleEmitter> emitters = effect.getEmitters();
 
         for( ParticleEmitter i : emitters){
@@ -209,6 +215,8 @@ public class Player extends Ship {
 
         checkCollisions(weapons);
         gamestage.checkBounds(this);
+
+
     }
 
     /**
@@ -297,19 +305,30 @@ public class Player extends Ship {
         return Play.key_events.get(Input.Keys.RIGHT);
     }
 
-    public void removeActivePowerup(){
-        powerups.remove(activePowerup);
-        activePowerup-=1;
-        if (activePowerup<0)
-            activePowerup=0;
-    }
-
-    public void addShield(Shield shield){
-        shields.add(shield);
+    public void addShield(int index , Shield shield){
+        shields.add(index, shield);
     }
 
     public void removeShield(int index){
         shields.remove(index);
+    }
+
+    public GameStage getGameStage(){
+        return gamestage;
+    }
+
+    private void cyclePowerup(){
+        if(cycleDelay<0) {
+            cycleDelay = 10;
+            powerups[activePowerup].set_active(false);
+            powerups[activePowerup].deactivate(this);
+            activePowerup += 1;
+            if (activePowerup > powerups.length - 1) {
+                activePowerup = 0;
+            }
+            powerups[activePowerup].set_active(true);
+            System.out.println(powerups[activePowerup].getClass());
+        }
     }
 
 }

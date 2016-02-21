@@ -12,33 +12,40 @@ import entities.ship.player.Player;
 public abstract class Powerup extends Actor {
     /*
     */
-    private int on_screen_timer;
+    protected int on_screen_timer;
     // The amount of time that the powerup will spend on the screen.
 
-    private boolean active;
-    //Is the powerup acting on the player?
+    protected boolean active;
+    //Is the powerup available to use?
 
-    public Sprite sprite;
+    protected Sprite sprite;
     //The image of the powerup.
 
     //public String name;
     //A string representation of the powerup.
 
-    private int x;
+    protected int x;
     // X co-ordinate of the powerup.
 
-    private int y;
+    protected int y;
     // Y co-ordinate of the powerup.
 
-    public int timer;
+    protected int timer;
     //The time that the powerup will be active on the player.
 
-    public Powerup(int ost, int x, int y, String sprite_path, int timer){
+    public int index;
+    //The index number of the powerup, for on screen UI purposes and management
+
+    protected int internal_cooldown;
+
+    public Powerup(int ost, int x, int y, String sprite_path, int timer, int index){
         this.on_screen_timer = ost;
-        this.active = false;
+        this.active = true;
         this.x = x;
         this.y = y;
         this.timer = timer;
+        this.index = index;
+        internal_cooldown = 5;
 
         {
             sprite = new Sprite(new Texture((sprite_path)));
@@ -61,7 +68,9 @@ public abstract class Powerup extends Actor {
         sprite.draw(batch);
     }
 
-    public boolean get_active(){ return this.active; }//Return whether the powerup is onscreen or not
+    public boolean on_screen(){ return on_screen_timer>0; }//Return whether the powerup is onscreen or not
+
+    public void set_active(boolean a){active = a;}
 
 
 }

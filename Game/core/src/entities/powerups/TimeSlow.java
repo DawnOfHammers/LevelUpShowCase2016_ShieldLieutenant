@@ -8,7 +8,7 @@ import entities.ship.player.Player;
 public class TimeSlow extends Powerup{
 
     public TimeSlow(int x, int y){
-        super(120,x,y,"slow.jpg", 120);
+        super(120,x,y,"slow.jpg", 120,4);
     }
 
     public void activate(Player player){

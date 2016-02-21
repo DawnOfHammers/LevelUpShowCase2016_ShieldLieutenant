@@ -8,7 +8,7 @@ import entities.ship.player.Player;
 public class Well extends Powerup{
 
     public Well(int x, int y){
-        super(120,x,y,"well.jpg", 120);
+        super(120,x,y,"well.jpg", 120,5);
     }
 
     public void activate(Player player){

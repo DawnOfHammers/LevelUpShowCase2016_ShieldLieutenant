@@ -21,7 +21,7 @@ public class InputManager implements InputProcessor{
     //This array controls how many controls there are currently present in the game.
     //This should directly reflect the number of controls within each series that are present.
     //Maintaining accuracy here is essential for proper function of this class.
-    private static final int [] number_of_controls = {7, 4, 1};
+    private static final int [] number_of_controls = {7, 4, 2};
 
     //These inputs are for player control. These are the 100 series inputs.
     public static final int PLAYER_FORWARD = 100;
@@ -41,6 +41,7 @@ public class InputManager implements InputProcessor{
 
     //These inputs are for power_up control. These are the 300 series inputs.
     public static final int ACTIVATE_POWERUP_1 = 300;
+    public static final int CYCLE_POWERUP = 301;
 
     /*This is the main control centre of the game. All inputs are fed into the control table, and all inputs
     * gained from this control table. All actions to the control table should be accessed by 2 major public methods
@@ -87,6 +88,7 @@ public class InputManager implements InputProcessor{
             case Input.Keys.DOWN: return new int[]{MENU_DOWN};
             case Input.Keys.ENTER: return new int []{MENU_CONFIRM};
             case Input.Keys.T: return new int[]{ACTIVATE_POWERUP_1};
+            case Input.Keys.A: return new int[]{CYCLE_POWERUP};
 
         }
         return new int []{};

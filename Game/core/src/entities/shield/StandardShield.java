@@ -30,11 +30,17 @@ public class StandardShield extends Shield {
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
 
 
-
-
-
     public StandardShield(int x, int y, GameStage gs, int radius, String colour, String sprite_name) {
         super(x, y, gs, radius, Math.PI / 2, colour, sprite_name);
+        reflect_effects = new ArrayList<ParticleEffect>();
+        shield_effects = new ArrayList<ParticleEffect>();
+        reflected = new ArrayList<Bullet>();
+        createShieldEffects();
+
+    }
+
+    public StandardShield(int x, int y, GameStage gs, int radius, String colour, String sprite_name, double arc_size){
+        super(x, y, gs, radius, arc_size, colour, sprite_name);
         reflect_effects = new ArrayList<ParticleEffect>();
         shield_effects = new ArrayList<ParticleEffect>();
         reflected = new ArrayList<Bullet>();
@@ -302,8 +308,4 @@ public class StandardShield extends Shield {
         }
 
     }
-
-
-
-
 }
